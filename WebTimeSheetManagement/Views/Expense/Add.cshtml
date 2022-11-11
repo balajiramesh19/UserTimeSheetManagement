@@ -100,18 +100,6 @@
                     @Html.TextBoxFor(model => model.VoucherID, new { @maxlength = "30", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.VoucherID, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-md-3">
-                    @Html.Label(".Zip Attachments", new { @class = "manadatory" })
-                    <input type="file" onchange="ValidateFile(this);"  class="form-control" name="file" id="file" />
-                    <span id="val_file" class="text-danger"></span>
-                </div>
-                <div class="col-md-3">
-                    @Html.Label("Single Attachment", new { @class = "manadatory" })
-                    <input type="file" onchange="ValidateImagesOnly(this);" class="form-control" name="Singlefile" id="Singlefile" />
-                    <span id="val_fileSingle" class="text-danger"></span>
-                </div>
-
-
             </div>
             <div class="row">
                 <div class="col-md-12">
