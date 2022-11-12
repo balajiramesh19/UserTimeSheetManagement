@@ -30,22 +30,6 @@
                 <input id="datepicker_start" onkeypress="return false; alert('Choose From Date');" class="form-control" type="text" />
             </div>
 
-            <div id="_panelmainbutton" style="display:none;">
-                <div class="col-md-3">
-                    @Html.Label(".Zip Attachments", new { @class = "manadatory" })
-                    <input type="file" onchange="ValidateFile(this);" class="form-control" name="file" id="file" />
-                    <span id="val_file" class="text-danger"></span>
-                </div>
-                <div class="col-md-3">
-                    @Html.Label("Single Attachment", new { @class = "manadatory" })
-                    <input type="file" onchange="ValidateImagesOnly(this);" class="form-control" name="Singlefile" id="Singlefile" />
-                    <span id="val_fileSingle" class="text-danger"></span>
-                </div>
-                <div class="col-md-3" style="margin-top:24px">
-                    <input id="Submit" onclick="return ValidateData();" class="btn btn-success" type="submit" value="Save Details">
-                    @Html.ActionLink("Cancel", "Add", "TimeSheet", null, new { @class = "btn btn-danger" })
-                </div>
-            </div>
         </div>
 
 
@@ -431,8 +415,24 @@
                         @Html.TextAreaFor(m => m.Description_p6, new { @class = "form-control", @maxlength = "50", @rows = "1" })
                     </div>
                 </div>
+                <div style="margin:20px"></div>
+                <div class="col-md-3">
+                    @Html.Label(".Zip Attachments", new { @class = "manadatory" })
+                    <input type="file" onchange="ValidateFile(this);" class="form-control" name="file" id="file" />
+                    <span id="val_file" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Single Attachment", new { @class = "manadatory" })
+                    <input type="file" onchange="ValidateImagesOnly(this);" class="form-control" name="Singlefile" id="Singlefile" />
+                    <span id="val_fileSingle" class="text-danger"></span>
+                </div>
             </div>
             <div style="margin-bottom:10px;"></div>
+        </div>
+
+        <div id="_panelmainbutton" style="margin: 24px 0 30px 16px">
+            <input id="Submit" onclick="return ValidateData();" class="btn btn-success" type="submit" value="Save Details">
+            @Html.ActionLink("Cancel", "Add", "TimeSheet", null, new { @class = "btn btn-danger" })
         </div>
     }
 </div>
