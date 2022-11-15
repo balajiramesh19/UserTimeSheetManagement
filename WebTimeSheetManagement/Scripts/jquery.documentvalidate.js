@@ -2,7 +2,7 @@
 {
     var file = getNameFromPath($(value).val());
     var objRE = new RegExp(/^[a-zA-Z0-9]+$/);
-    var extension = file.substr(0, file.lastIndexOf('.'));
+    var extension = file.substr(file.lastIndexOf('.')+1, file.lastIndexOf('.'));
     var strName = objRE.exec(extension);
 
     if (strName == null) {
@@ -109,9 +109,8 @@ function ValidateFile(value) {
 
 function ValidateFilenameSingle(value) {
     var file = getNameFromPath($(value).val());
-    var objRE = new RegExp(/^[a-zA-Z0-9]+$/);
-    var extension = file.substr(0, file.lastIndexOf('.'));
-    var strName = objRE.exec(extension);
+    
+    var strName = file.substr(0, file.lastIndexOf('.')) ;
 
     if (strName == null) {
         var str = value.name;

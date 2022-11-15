@@ -1,12 +1,21 @@
-﻿using System;
+﻿using Amazon;
+using Amazon.Runtime;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.Graph;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
+
+
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -16,11 +25,14 @@ namespace WebTimeSheetManagement.Controllers
         IProject _IProject;
         ITimeSheet _ITimeSheet;
         IUsers _IUsers;
+        IDocument _IDocument;
+
         public TimeSheetController()
         {
             _IProject = new ProjectConcrete();
             _ITimeSheet = new TimeSheetConcrete();
             _IUsers = new UsersConcrete();
+            _IDocument = new DocumentConcrete();
         }
 
         // GET: TimeSheet
@@ -52,7 +64,42 @@ namespace WebTimeSheetManagement.Controllers
                 int TimeSheetMasterID = _ITimeSheet.AddTimeSheetMaster(objtimesheetmaster);
 
                 var count = ProjectSelectCount(timesheetmodel);
+                Documents Documents = new Documents();
+                if (Request.Files != null)
+                {
+                    foreach (string requestFile in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[requestFile];
+                        {
+                            if (file.ContentLength > 0)
+                            {
+                                string _FileName = Path.GetFileName(file.FileName);
+                                Documents.DocumentID = 0;
+                                Documents.DocumentName = _FileName;
+                                using (var binaryReader = new BinaryReader(file.InputStream))
+                                {
+                                    byte[] FileSize = binaryReader.ReadBytes(file.ContentLength);
+                                    Documents.DocumentBytes = FileSize;
+                                    Documents.CreatedOn = DateTime.Now;
+                                }
 
+
+                                Documents.ExpenseID = TimeSheetMasterID;
+                                Documents.UserID = Convert.ToInt32(Session["UserID"]);
+                                if (Path.GetExtension(file.FileName) == ".zip" || Path.GetExtension(file.FileName) == ".rar")
+                                {
+                                    Documents.DocumentType = "Multi";
+                                }
+                                else
+                                {
+                                    Documents.DocumentType = "Single";
+                                }
+
+                                _IDocument.AddDocument(Documents);
+                            }
+                        }
+                    }
+                }
                 if (TimeSheetMasterID > 0)
                 {
                     Save(timesheetmodel, TimeSheetMasterID);
@@ -61,12 +108,32 @@ namespace WebTimeSheetManagement.Controllers
                 }
 
                 TempData["TimeCardMessage"] = "Data Saved Successfully";
-
+                //SendEmail();
                 return RedirectToAction("Add", "TimeSheet");
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        private void SendEmail()
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("support@tresume.us");
+                mail.To.Add("testtresume@gmail.com");
+                mail.Subject = "Hello World";
+                mail.Body = "<h1>Hello</h1>";
+                mail.IsBodyHtml = true;
+  
+                using (SmtpClient smtp = new SmtpClient("smtp.mail.yahoo.com", 465))
+                {
+                    smtp.Credentials = new NetworkCredential("support@tresume.us", "xzkmvglehwxeqrpd");
+                    smtp.EnableSsl = true;
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Send(mail);
+                }
             }
         }
 

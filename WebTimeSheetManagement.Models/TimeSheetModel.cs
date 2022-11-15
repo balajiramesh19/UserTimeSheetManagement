@@ -241,5 +241,9 @@ namespace WebTimeSheetManagement.Models
         public int? ProjectID6 { get; set; }
         public int? ProjectID7 { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Attachments")]
+        public string FileName { get; set; }
+
     }
 }

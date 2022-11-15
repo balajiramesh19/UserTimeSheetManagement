@@ -44,6 +44,7 @@ template {
 }
 a {
   background-color: transparent;
+  color:white !important;
 }
 a:active,
 a:hover {
@@ -1097,7 +1098,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: white !important;
   text-decoration: none;
 }
 a:hover,
@@ -1373,7 +1374,7 @@ a.text-danger:focus {
 }
 .bg-primary {
   color: #fff;
-  background-color: #337ab7;
+  background-color: palevioletred;
 }
 a.bg-primary:hover,
 a.bg-primary:focus {
@@ -4493,7 +4494,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: white !important;
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
@@ -5703,11 +5704,11 @@ button.list-group-item-danger.active:focus {
 .panel-primary {
   border-color: #337ab7;
 }
-.panel-primary > .panel-heading {
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #337ab7;
-}
+    .panel-primary > .panel-heading {
+        color: #fff;
+        background-color: aqua;
+        border-color: #337ab7;
+    }
 .panel-primary > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #337ab7;
 }

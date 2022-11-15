@@ -4,10 +4,19 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 body {
-  background-color: #f8f8f8;
+  background-color: white !important;
+}
+
+rcorners1 {
+    border-radius: 50px / 15px;
+    background: #73AD21;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
 }
 #wrapper {
   width: 100%;
+  height: 100%;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -19,8 +28,10 @@ body {
     position: inherit;
     margin: 0 0 0 250px;
     padding: 0 30px;
-    border-left: 1px solid #e7e7e7;
   }
+}
+.a{
+    color:white !important;
 }
 .navbar-top-links {
   margin-right: 0;

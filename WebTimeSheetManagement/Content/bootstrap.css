@@ -61,6 +61,10 @@ body {
   margin: 0;
 }
 
+a{
+    color: white !important
+}
+
 a:focus {
   outline: thin dotted;
 }
@@ -4384,7 +4388,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
+  background-color: white !important;
   border-color: #e7e7e7;
 }
 
@@ -5460,11 +5464,11 @@ a.list-group-item:focus {
   border-color: #428bca;
 }
 
-.panel-primary > .panel-heading {
-  color: #ffffff;
-  background-color: #428bca;
-  border-color: #428bca;
-}
+    .panel-primary > .panel-heading {
+        color: #ffffff;
+        background-image: linear-gradient(to right,#bb41bf00, #68395d) !important;
+        border-color: var(--purple) !important;
+    }
 
 .panel-primary > .panel-heading + .panel-collapse .panel-body {
   border-top-color: #428bca;
