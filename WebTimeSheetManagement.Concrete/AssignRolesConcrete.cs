@@ -5,10 +5,12 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Threading.Tasks;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
 using System.Linq.Dynamic;
+using System.ComponentModel.Design;
 
 namespace WebTimeSheetManagement.Concrete
 {
@@ -142,6 +144,47 @@ namespace WebTimeSheetManagement.Concrete
                 }
             }
         }
+
+
+        public IQueryable<UserModel> GetListofUnAssignedUsers(string sortColumn, string sortColumnDir, string Search)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                try
+                {
+                    var IQueryabletimesheet = con.Query<UserModel>("Usp_GetListofUnAssignedUsers", null, null, true, 0, System.Data.CommandType.StoredProcedure);
+                    if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+                    {
+                        IQueryabletimesheet = IQueryabletimesheet.OrderBy(sortColumn + " " + sortColumnDir);
+                    }
+                    if (!string.IsNullOrEmpty(Search))
+                    {
+                        IQueryabletimesheet = (IQueryable<UserModel>)IQueryabletimesheet.Where(m => m.Name.Contains(Search));
+                    }
+
+                    return (IQueryable<UserModel>)IQueryabletimesheet;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            //var _context = new DatabaseContext();
+
+            //var IQueryabletimesheet = (from registration in _context.Registration
+            //                           where registration.RegistrationID == 2 && registration.RegistrationID !
+            //                           select new UserModel
+            //                           {
+            //                               Name = registration.Name,
+            //                               RegistrationID = registration.RegistrationID,
+            //                           });
+
+            
+
+        }
+
+
         public bool SaveAssignedRoles(AssignRolesModel AssignRolesModel)
         {
             bool result = false;
@@ -198,5 +241,6 @@ namespace WebTimeSheetManagement.Concrete
                 return false;
             }
         }
+
     }
 }

@@ -18,6 +18,7 @@ namespace WebTimeSheetManagement.Models
         public string CreatedOn { get; set; }
         public string Username { get; set; }
         public string SubmittedMonth { get; set; }
+        public int? SubmittedWeek{ get; set; }
         public string TimeSheetStatus { get; set; }
         public string Comment { get; set; }
     }

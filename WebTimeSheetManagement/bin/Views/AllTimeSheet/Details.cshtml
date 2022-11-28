@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>Details</h2>
+<h2 style="color:white">Details</h2>
 
 <style>
     table, th, td {
-    border: 1px solid black;
-}
+        border: 1px solid white;
+        background: #d1c9c7
+    }
     </style>
 <p>
     @Html.ActionLink("Back to Main View", "TimeSheet", "AllTimeSheet")
@@ -22,7 +23,7 @@
         {
 
             <td><b>@Html.DisplayFor(modelItem => item)</b></td>
-           
+
         }
         <td><b>Description</b></td>
     </tr>
@@ -54,7 +55,27 @@
                 }
                 <td><b>@ListofDescription</b></td>
             }
-</tr>
+        </tr>
     }
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @{
+                    var documents = (List<WebTimeSheetManagement.Models.DocumentsVM>)ViewBag.documents;
+                    foreach (var document in documents)
+                    {
+                        <h5>
+                            @{
+                                var filename = document.DocumentType + " Document";
+                                var link = "/AllTimeSheet/Download?ExpenseID=" + Model.TimeSheetMasterID + "&DocumentID=" + document.DocumentID;
+                            }
+                            <a href="@link">
+                                <i class="fa fa-download fa-fw"></i>@filename
+                            </a>
+                        </h5>
+                    }
+                }
+
+            </div>
+        </div>
 
 </table>

@@ -27,10 +27,178 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        color: white;
+        background-color: #1110;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 15px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #fffafa00;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+    }
+
+        .openbtn:hover {
+            background-color: #998799;
+        }
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+
+    .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: inherit;
+        perspective: 1000px;
+        padding: inherit;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    .flip-card-front {
+        background-color: black;
+        color: white;
+    }
+
+    .flip-card-back {
+        background-color: black;
+        color: grey;
+        transform: rotateY(180deg);
+    }
+</style>
+<body style="background: linear-gradient(90deg, #49274a, transparent),url(https://cdn.pixabay.com/photo/2021/07/26/21/30/clock-6495245_960_720.jpg); background-image: /* background-repeat: round; */ background-size: cover; background-size: cover;">
+    <script>
+        function openNav() {
+            var flag = document.getElementById("mySidebar").style.width == "250px";
+            document.getElementById("mySidebar").style.width = (!flag ? "250px" : "0px");
+            document.getElementById("page-wrapper").style.margin = (!flag ? "0 0 0 250px" : "0 0 0 0px");;
+        }
+    </script>
     <div id="wrapper">
+        <div id="mySidebar" class="sidebar">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="/SuperAdmin/Dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/Registration/Registration"><i class="fa fa-edit fa-fw"></i> Create User</a>
+                </li>
+                <li>
+                    <a href="/SuperAdmin/CreateAdmin"><i class="fa fa-edit fa-fw"></i> Create Admin</a>
+                </li>
+                <li>
+                    <a href="/SuperAdmin/AssignRoles"><i class="fa fa-edit fa-fw"></i>AssignRoles</a>
+                </li>
+                <li>
+                    <a href="/AllRoles/Roles"><i class="fa fa-table fa-fw"></i> All Roles</a>
+                </li>
+                <li>
+                    <a href="/Project/Add"><i class="fa fa-edit fa-fw"></i> Add Project</a>
+                </li>
+                <li>
+                    <a href="/ResetPassword/Index"><i class="fa fa-gear fa-fw"></i> Reset Password</a>
+                </li>
+                <li>
+                    <a href="/TimeSheetMasterExport/Report"><i class="fa fa-table fa-fw"></i>Export All TimeSheets</a>
+                </li>
+                <li>
+                    <a href="/AddNotification/Add"><i class="fa fa-bell fa-fw"></i>Push Notification</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">☰</button>
+            <span style="padding-left:35%;width:250px">
+                <img src="https://tresume.us/img_Home/Tresume_White_transparent.png" style="width:200px" />
+            </span>
+            <span class="pull-right">
+                <h4> @Session["Username"]</h4>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa  fa-user" style="color: #583a58"></i> <i class="fa fa-caret-down" style="color: #583a58"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+
+                    </li>
+                </ul>
+            </span>
+
+            <!-- /.dropdown-user -->
+            <!--</li>-->
+        </div>
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!--<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -39,9 +207,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">TIME MANAGER</a>
-            </div>
+            </div>-->
             <!-- /.navbar-header -->
-            <ul class="nav navbar-top-links navbar-right">
+            <!--<ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     Hi  @Session["Username"] !
                 </li>
@@ -53,13 +221,13 @@
                         <li>
                             <a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
-                    </ul>
+                    </ul>-->
                     <!-- /.dropdown-user -->
-                </li>
+                <!--</li>-->
                 <!-- /.dropdown -->
-            </ul>
+            <!--</ul>-->
             <!-- /.navbar-top-links -->
-            <div class="navbar-default sidebar" role="navigation">
+            <!--<div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
@@ -93,22 +261,26 @@
                             <a href="/AddNotification/Add"><i class="fa fa-bell fa-fw"></i>Push Notification</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <!-- /.sidebar-collapse -->
-            </div>
+            <!--</div>-->
             <!-- /.navbar-static-side -->
-        </nav>
-        <div id="page-wrapper">
+        <!--</nav>-->
+        <div id="page-wrapper" style="background: none; margin: 0 0 0 0px">
             <div class="row">
 
                 <script src="~/Scripts/datetimepicker/jquery-1.12.4.js"></script>
-        
+
                 <script src="~/Scripts/jquery.validate.min.js"></script>
                 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
                 <script src="~/Scripts/datetimepicker/jqueryui.js"></script>
                 <script src="~/Template/vendor/bootstrap/js/bootstrap.min.js"></script>
                 <script src="~/Scripts/datetimexdsoft/build/jquery.datetimepicker.full.min.js"></script>
-
+                <script>
+                    $(document).ready(function () {
+                        openNav();
+                    });
+                </script>
                 @RenderBody()
             </div>
 

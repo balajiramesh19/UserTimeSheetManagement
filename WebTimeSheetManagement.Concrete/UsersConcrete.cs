@@ -131,7 +131,7 @@ namespace WebTimeSheetManagement.Concrete
             }
             if (!string.IsNullOrEmpty(Search))
             {
-                IQueryabletimesheet = IQueryabletimesheet.Where(m => m.Name == Search);
+                IQueryabletimesheet = IQueryabletimesheet.Where(m => m.Name.Contains(Search));
             }
 
             return IQueryabletimesheet;

@@ -14,8 +14,7 @@ using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
-
-
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -107,8 +106,11 @@ namespace WebTimeSheetManagement.Controllers
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetMasterID, 1));
                 }
 
+                EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(objtimesheetmaster), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+
+
                 TempData["TimeCardMessage"] = "Data Saved Successfully";
-                //SendEmail();
+                
                 return RedirectToAction("Add", "TimeSheet");
             }
             catch (Exception)
@@ -117,6 +119,35 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
+        private string GetEmailTemplate(TimeSheetMaster timesheetmaster)
+        {
+            return "Hola! <br/><br/><br> The user <b> " + Session["Username"] + "</b> has submitted the Timesheet for the following period: <br/><br/><br> FromDate: " + timesheetmaster.FromDate
+                + "<br/><br/><br>ToDate: "
+                + timesheetmaster.ToDate
+                + "<br/><br/><br>Total Hours: "+timesheetmaster.TotalHours
+                + "<br/><br/><br>Please review at the earliest.";
+
+        }
+
+        public ActionResult Download(string ExpenseID, int DocumentID)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Convert.ToString(ExpenseID)) && !string.IsNullOrEmpty(Convert.ToString(DocumentID)))
+                {
+                    var document = _IDocument.GetDocumentByExpenseID(Convert.ToInt32(ExpenseID), Convert.ToInt32(DocumentID));
+                    return File(document.DocumentBytes, System.Net.Mime.MediaTypeNames.Application.Octet, document.DocumentName);
+                }
+                else
+                {
+                    return RedirectToAction("Expense", "ShowAllExpense");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         private void SendEmail()
         {
             using (MailMessage mail = new MailMessage())

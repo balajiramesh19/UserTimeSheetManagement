@@ -15,6 +15,7 @@ namespace WebTimeSheetManagement.Interface
         IQueryable<UserModel> ShowallRoles(string sortColumn, string sortColumnDir, string Search);
         bool RemovefromUserRole(string RegistrationID);
         List<UserModel> GetListofUnAssignedUsers();
+        IQueryable<UserModel> GetListofUnAssignedUsers(string sortColumn, string sortColumnDir, string Search);
         bool SaveAssignedRoles(AssignRolesModel AssignRolesModel);
         bool CheckIsUserAssignedRole(int RegistrationID);
     }

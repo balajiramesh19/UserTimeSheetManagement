@@ -11,6 +11,7 @@ using WebTimeSheetManagement.Models;
 using CaptchaMvc;
 using CaptchaMvc.HtmlHelpers;
 using WebTimeSheetManagement.Helpers;
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -60,6 +61,7 @@ namespace WebTimeSheetManagement.Controllers
                         }
                         else
                         {
+                            //EmailUtility.SendMailAsync("test", "BALAJI TEST", new List<string> { "balaji@tresume.us" });
                             var RoleID = result.RoleID;
                             remove_Anonymous_Cookies(); //Remove Anonymous_Cookies
 

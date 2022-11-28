@@ -52,26 +52,10 @@ function ValidateFile(value) {
     if (file != null) {
 
         switch (extension) {
-            case 'zip':
-                flag = true;
-                break;
-            case 'rar':
-                flag = true;
-                break;
             default:
-                flag = false;
+                flag = true;
         }
     }
-
-    if (flag == false) {
-
-        var str = value.name;
-        var data = "val_file";
-        $("#" + data).text("You can upload only .zip extension file");
-        $("#" + value.name).val('');
-        return false;
-    }
-    else {
 
         var Validfilename = ValidateFilename(value);
 
@@ -102,7 +86,6 @@ function ValidateFile(value) {
                 $("#" + data).text("");
             }
 
-        }
     }
 
 }
@@ -147,17 +130,11 @@ function ValidateImagesOnly(value) {
     if (file != null) {
 
         switch (extension) {
-            case 'png':
-                flag = true;
-                break;
-            case 'jpg':
-                flag = true;
-                break;
-            case 'jpeg':
-                flag = true;
+            case 'zip':
+                flag = false;
                 break;
             default:
-                flag = false;
+                flag = true;
         }
     }
 
@@ -165,7 +142,7 @@ function ValidateImagesOnly(value) {
 
         var str = value.name;
         var data = "val_fileSingle";
-        $("#" + data).text("You can upload .png .jpg extension file");
+        $("#" + data).text("You cant upload .zip extension file, Please use the other option");
         $("#" + value.name).val('');
         return false;
     }

@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Amazon.CloudSearch_2011_02_01.Model;
+using Amazon.Runtime.Internal.Transform;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -17,11 +25,14 @@ namespace WebTimeSheetManagement.Controllers
         IProject _IProject;
         IUsers _IUsers;
         ITimeSheet _ITimeSheet;
+        IDocument _IDocument;
+
         public ShowAllTimeSheetController()
         {
             _IProject = new ProjectConcrete();
             _ITimeSheet = new TimeSheetConcrete();
             _IUsers = new UsersConcrete();
+            _IDocument = new DocumentConcrete();
         }
 
         // GET: ShowAllTimeSheet
@@ -73,6 +84,7 @@ namespace WebTimeSheetManagement.Controllers
                 objMT.ListofPeriods = _ITimeSheet.GetPeriodsbyTimeSheetMasterID(Convert.ToInt32(id));
                 objMT.ListoDayofWeek = DayofWeek();
                 objMT.TimeSheetMasterID = Convert.ToInt32(id);
+                ViewBag.documents = _IDocument.GetListofDocumentByExpenseID(Convert.ToInt32(id));
                 return View(objMT);
             }
             catch (Exception)
@@ -95,6 +107,26 @@ namespace WebTimeSheetManagement.Controllers
             li.Add("Saturday");
             li.Add("Total");
             return li;
+        }
+
+        public ActionResult Download1(int ExpenseID, int DocumentID)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Convert.ToString(ExpenseID)) && !string.IsNullOrEmpty(Convert.ToString(DocumentID)))
+                {
+                    var document = _IDocument.GetDocumentByExpenseID(Convert.ToInt32(ExpenseID), Convert.ToInt32(DocumentID));
+                    return File(document.DocumentBytes, System.Net.Mime.MediaTypeNames.Application.Octet, document.DocumentName);
+                }
+                else
+                {
+                    return RedirectToAction("TimeSheet", "ShowAllTimeSheet");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public ActionResult Approval(TimeSheetApproval TimeSheetApproval)
@@ -122,6 +154,7 @@ namespace WebTimeSheetManagement.Controllers
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetApproval, 2));
                 }
 
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, true), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
 
                 return Json(true);
             }
@@ -131,6 +164,8 @@ namespace WebTimeSheetManagement.Controllers
                 throw;
             }
         }
+
+
 
         public ActionResult Rejected(TimeSheetApproval TimeSheetApproval)
         {
@@ -156,7 +191,7 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetApproval, 3));
                 }
-
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, false), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
 
                 return Json(true);
             }
@@ -167,6 +202,17 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
+        private string GetEmailTemplate(TimeSheetApproval timeSheetApproval, bool isApproved)
+        {
+            var userID= _IUsers.GetUserIDbyTimesheetID(timeSheetApproval.TimeSheetMasterID);
+            var userDetails = _IUsers.GetUserDetailsByRegistrationID(userID);
+
+            List<GetPeriods> timesheetDetail = _ITimeSheet.GetPeriodsbyTimeSheetMasterID(Convert.ToInt32(timeSheetApproval.TimeSheetMasterID));
+            return $"Dear {userDetails.Name}, <br/><br/><br> Your Admin  <b>" + Session["Username"] + $"</b> has <b> {(isApproved ? "Approved" : "Rejected")}</b> the Timesheet for the week of <br/><br/><br> FromDate : " + timesheetDetail.ElementAt(0).Period.ToString()
+                + "<br/><br/>Comment: " + timeSheetApproval.Comment
+                + (!isApproved ? "<br/><br/><br/>Please take necessary actions on this." : "<br/><br/><br/>Great Job! Please submit furhter timesheets without failing! <br/><br/>Thanks & Regards,<br/>Tresume");
+
+        }
         private TimeSheetAuditTB InsertTimeSheetAudit(TimeSheetApproval TimeSheetApproval, int Status)
         {
             try
@@ -226,6 +272,11 @@ namespace WebTimeSheetManagement.Controllers
         }
 
         public ActionResult RejectedTimeSheet()
+        {
+            return View();
+        }
+
+        public ActionResult ReminderTimesheet()
         {
             return View();
         }
@@ -314,8 +365,49 @@ namespace WebTimeSheetManagement.Controllers
 
         }
 
-     
 
+        public ActionResult SendReminderEmail()
+        {
+            Dictionary<string, List<string>> keyValuePairs = new Dictionary<string, List<string>>();
+            Dictionary<string, RegistrationViewSummaryModel> dataValuePairs = new Dictionary<string, RegistrationViewSummaryModel>();
+            IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllSubmittedTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
+            var week = new CultureInfo("en-US").Calendar.GetWeekOfYear(DateTime.UtcNow, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+            var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4) && !string.Equals(d.TimeSheetStatus, "Approved") && !string.Equals(d.TimeSheetStatus, "Submitted")).GroupBy(d => d.Username);
+            var rolesData = _IUsers.ShowallUsersUnderAdmin(null, null, null, Convert.ToInt32(Session["AdminUser"])).ToList();
+            DateTime fday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+            List<string> data = new List<string>();
+            for (int i = 1; i <= 4; i++)
+            {
+                data.Add(String.Format("{0:yyyy-MM-dd}", fday.AddDays(-7 * i)));
+            }
 
+            rolesData.ForEach(roles =>
+            {
+                keyValuePairs[roles.Username] = new List<string>(data);
+                dataValuePairs[roles.Username] = roles;
+            });
+
+            grpData.ForEach(grp =>
+            {
+                grp.ForEach(g =>
+                {
+                    keyValuePairs[g.Username].Remove(g.FromDate);
+                });
+            });
+
+            keyValuePairs.Keys.ForEach(roles =>
+            {
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetReminderEmailTemplate(dataValuePairs[roles], keyValuePairs[roles]), EmailConstants.ToEmail /*new List<string>() { dataValuePairs[roles].EmailID }*/, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+            });
+
+            return Json(true);
+
+        }
+
+        private string GetReminderEmailTemplate(RegistrationViewSummaryModel dataValue, List<string> timePeriod)
+        {
+            return $"Dear {dataValue.Name}, <br/><br/><br/> Following timesheets are missing.Details of the missing hours below.Please submit the timesheets at the earliest <br/><br/> {String.Join("<br/>", timePeriod.ToArray())}<br/><br/>Thanks and Regards,<br/>{Session["Username"]}";
+
+        }
     }
 }

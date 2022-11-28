@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
+using WebTimeSheetManagement.Models;
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -14,9 +16,12 @@ namespace WebTimeSheetManagement.Controllers
     public class ResetPasswordController : Controller
     {
         IRegistration _IRegistration;
+        private IUsers _IUsersConcrete;
+
         public ResetPasswordController()
         {
             _IRegistration = new RegistrationConcrete();
+            _IUsersConcrete = new UsersConcrete();
         }
 
         // GET: ResetPassword
@@ -64,9 +69,10 @@ namespace WebTimeSheetManagement.Controllers
 
                 var Password = EncryptionLibrary.EncryptText("default@123");
                 var isPasswordUpdated = _IRegistration.UpdatePassword(RegistrationID, Password);
-
+                RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
                 if (isPasswordUpdated)
                 {
+                    EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(user), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
                     return Json(data: true, behavior: JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -80,6 +86,10 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
-
+        private string GetEmailTemplate(RegistrationViewDetailsModel registration)
+        {
+            return $"Hi {registration.Name},<br/><br/><br> Your password  is reset and your TempPassword is : <b>default@123</b>"  +
+                "<br/><br/><br> You can change password after you login with this TempPassword.";
+        }
     }
 }

@@ -3,75 +3,182 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
 }
-<h4 class="page-header">Dashboard</h4>
+<h4 class="page-header" style="color:white">Dashboard</h4>
 
+<style>
+        :root {
+            --surface-color: #fff;
+            --curve: 40;
+        }
 
-<div class="row">
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-comments fa-5x"></i>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #fef8f8;
+        }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 2rem;
+        margin: 4rem 5vw;
+        padding: 0;
+        list-style-type: none;
+        border-radius: calc(var(--curve) * 1px);
+    }
+
+        .card {
+            position: relative;
+            display: block;
+            height: auto;
+            border-radius: calc(var(--curve) * 1px);
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .card__image {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card__overlay {
+            width: fit-content;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            border-radius: calc(var(--curve) * 1px) 0;
+            background-color: var(--surface-color);
+            transform: translateY(100%);
+            transition: .2s ease-in-out;
+        }
+
+        .card:hover .card__overlay {
+            transform: translateY(0);
+        }
+
+        .card__header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 2em;
+            padding: 2em;
+            border-radius: calc(var(--curve) * 1px) calc(var(--curve) * 1px) 0 0;
+            background-color: var(--surface-color);
+            transform: translateY(-100%);
+            transition: .2s ease-in-out;
+        }
+
+        .card__arc {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            z-index: 1;
+        }
+
+            .card__arc path {
+                fill: var(--surface-color);
+                d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+            }
+
+        .card:hover .card__header {
+            transform: translateY(0);
+        }
+
+        .card__thumb {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .card__title {
+            margin: 0 0 .3em;
+            color: #6A515E;
+        }
+
+        .card__tagline {
+            display: block;
+            margin: 1em 0;
+            font-family: "MockFlowFont";
+            font-size: .8em;
+            color: #D7BDCA;
+        }
+
+        .card__status {
+            font-size: .8em;
+            color: #D7BDCA;
+        }
+
+        .card__description {
+            padding: 0 2em 2em;
+            margin: 0;
+            color: #503051;
+            font-family: "MockFlowFont";
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+    </style>
+    <ul class="cards" style="background: #32142fa1; padding: 69px;">
+        <li>
+            <h2 style="font-size:24px;color:white">Submitted Count</h2>
+            <a target="_blank" href="/AllUsers/Users" class="card">
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <div class="card__header-text">
+                            <h3 class="card__title">
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><i class="fa fa-user" aria-hidden="true"></i>@ViewBag.UsersCount</div>
+                                </div>
+                            </h3>
+                        </div>
                     </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">@ViewBag.UsersCount</div>
-                        <div>User Count!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="/AllUsers/Users">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
+                    <p class="card__description">View details</p>
                 </div>
             </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-green">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
+        </li>
+        <li>
+            <h2 style="font-size:24px;color:white">Admin Count</h2>
+            <a class="card" target="_blank" href="/AllUsers/admin">
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <div class="card__header-text">
+                            <h3 class="card__title">
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><i class="fa fa-user-secret" aria-hidden="true"></i>@ViewBag.AdminCount</div>
+                                </div>
+                            </h3>
+                        </div>
                     </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">@ViewBag.AdminCount</div>
-                        <div>Admins Count!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="/AllUsers/admin">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
+                    <p class="card__description">
+                        View details
+                    </p>
                 </div>
             </a>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6">
-        <div class="panel panel-yellow">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-shopping-cart fa-5x"></i>
+        </li>
+        <li>
+            <h2 style="font-size:24px;color:white">Project Count</h2>
+            <a target="_blank" href="/Project/Indext" class="card">
+                <div class="card__overlay">
+                    <div class="card__header">
+                        <div class="card__header-text">
+                            <h3 class="card__title">
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge"><i class="fa fa-files-o" aria-hidden="true"></i>@ViewBag.ProjectCount</div>
+                                </div>
+                            </h3>
+                        </div>
                     </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge">@ViewBag.ProjectCount</div>
-                        <div>Total Projects Count!</div>
-                    </div>
-                </div>
-            </div>
-            <a href="/Project/Index">
-                <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
+                    <p class="card__description">View details</p>
                 </div>
             </a>
-        </div>
-    </div>
-    
-</div>
+        </li>
+    </ul>
+</body>
+

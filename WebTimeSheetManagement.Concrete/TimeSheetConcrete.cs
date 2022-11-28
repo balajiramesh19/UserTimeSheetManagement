@@ -230,7 +230,9 @@ namespace WebTimeSheetManagement.Concrete
                    SqlFunctions.DateName("year", timesheetmaster.CreatedOn),
                                            TotalHours = timesheetmaster.TotalHours,
                                            Username = registration.Username,
-                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString()
+                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString(),
+                                           SubmittedWeek = SqlFunctions.DatePart("WEEK", timesheetmaster.ToDate),
+
 
 
 
@@ -469,7 +471,8 @@ namespace WebTimeSheetManagement.Concrete
                    SqlFunctions.DateName("year", timesheetmaster.CreatedOn),
                                            TotalHours = timesheetmaster.TotalHours,
                                            Username = registration.Username,
-                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString()
+                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString(),
+                                           SubmittedWeek = SqlFunctions.DatePart("WEEK", timesheetmaster.ToDate)
 
 
 
@@ -530,6 +533,8 @@ namespace WebTimeSheetManagement.Concrete
                                            TotalHours = timesheetmaster.TotalHours,
                                            Username = registration.Username,
                                            SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString()
+                                           ,
+                                           SubmittedWeek = SqlFunctions.DatePart("WEEK", timesheetmaster.ToDate)
 
 
 
@@ -589,11 +594,8 @@ namespace WebTimeSheetManagement.Concrete
                    SqlFunctions.DateName("year", timesheetmaster.CreatedOn),
                                            TotalHours = timesheetmaster.TotalHours,
                                            Username = registration.Username,
-                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString()
-
-
-
-
+                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString(),
+                                           SubmittedWeek = SqlFunctions.DatePart("WEEK", timesheetmaster.ToDate)
                                        });
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))

@@ -16,6 +16,8 @@ namespace WebTimeSheetManagement.Models
         [Required(ErrorMessage = "Choose Admin")]
         public int RegistrationID { get; set; }
         public List<UserModel> ListofUser { get; set; }
+
+        public List<UserModel> SelectedUsers{ get; set; }
         public int? AssignToAdmin { get; set; }
         public int? CreatedBy { get; set; }
         

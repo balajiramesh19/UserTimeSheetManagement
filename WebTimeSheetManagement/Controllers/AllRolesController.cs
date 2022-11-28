@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventApplicationCore.Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,8 @@ using System.Web.Mvc;
 using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
+using WebTimeSheetManagement.Models;
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
@@ -13,9 +16,11 @@ namespace WebTimeSheetManagement.Controllers
     public class AllRolesController : Controller
     {
         IAssignRoles _IAssignRoles;
+        IUsers _IUsersConcrete;
         public AllRolesController()
         {
             _IAssignRoles = new AssignRolesConcrete();
+            _IUsersConcrete = new UsersConcrete();
         }
 
         // GET: AllRoles
@@ -61,12 +66,19 @@ namespace WebTimeSheetManagement.Controllers
                 }
 
                 var role = _IAssignRoles.RemovefromUserRole(RegistrationID);
+                EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(RegistrationID), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
                 return Json(role);
             }
             catch (Exception)
             {
                 return Json(false);
             }
+        }
+
+        private string GetEmailTemplate(string RegistrationID)
+        {
+            RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
+            return $"Hi {user.Name},<br/><br/><br>The admin {Session["Username"]} has revovked your Timesheet Access.";
         }
 
 

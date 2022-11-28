@@ -15,10 +15,13 @@ namespace WebTimeSheetManagement.Controllers
     {
         IProject _IProject;
         ITimeSheet _ITimeSheet;
+        IDocument _IDocument;
+
         public AllTimeSheetController()
         {
             _IProject = new ProjectConcrete();
             _ITimeSheet = new TimeSheetConcrete();
+            _IDocument = new DocumentConcrete();
         }
 
 
@@ -53,6 +56,25 @@ namespace WebTimeSheetManagement.Controllers
             }
 
         }
+        public ActionResult Download(int ExpenseID, int DocumentID)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Convert.ToString(ExpenseID)) && !string.IsNullOrEmpty(Convert.ToString(DocumentID)))
+                {
+                    var document = _IDocument.GetDocumentByExpenseID(Convert.ToInt32(ExpenseID), Convert.ToInt32(DocumentID));
+                    return File(document.DocumentBytes, System.Net.Mime.MediaTypeNames.Application.Octet, document.DocumentName);
+                }
+                else
+                {
+                    return RedirectToAction("Expense", "ShowAllExpense");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public ActionResult Details(string id)
         {
@@ -68,6 +90,7 @@ namespace WebTimeSheetManagement.Controllers
                 objMT.ListofPeriods = _ITimeSheet.GetPeriodsbyTimeSheetMasterID(Convert.ToInt32(id));
                 objMT.ListoDayofWeek = DayofWeek();
                 objMT.TimeSheetMasterID = Convert.ToInt32(id);
+                ViewBag.documents = _IDocument.GetListofDocumentByExpenseID(Convert.ToInt32(id));
                 return View(objMT);
             }
             catch (Exception)

@@ -564,6 +564,7 @@ h4 small,
   padding-bottom: 9px;
   margin: 40px 0 20px;
   border-bottom: 1px solid #eeeeee;
+  color:white;
 }
 
 ul,
@@ -3825,11 +3826,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding: 10px 15px;
 }
 
-.nav > li > a:hover,
-.nav > li > a:focus {
-  text-decoration: none;
-  background-color: #eeeeee;
-}
+    .nav > li > a:hover,
+    .nav > li > a:focus {
+        text-decoration: none;
+        background-color: #775e76;
+    }
 
 .nav > li.disabled > a {
   color: #999999;

@@ -1648,7 +1648,8 @@ a.bg-danger:focus, a.bg-danger:hover {
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;
-    border-bottom: 1px solid #eee
+    border-bottom: 1px solid #eee;
+    color:white
 }
 
 ol, ul {
@@ -4295,7 +4296,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 
             .nav > li > a:focus, .nav > li > a:hover {
                 text-decoration: none;
-                background-color: #eee
+                background-color: #775e76
             }
 
         .nav > li.disabled > a {

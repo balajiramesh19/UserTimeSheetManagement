@@ -1,4 +1,5 @@
-﻿using EventApplicationCore.Library;
+﻿using Amazon.CloudSearchDomain.Model;
+using EventApplicationCore.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,18 @@ using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
+using WebTimeSheetManagement.Service;
 
 namespace WebTimeSheetManagement.Controllers
 {
+     static class EmailConstants
+    {
+        public static readonly string RegistrationSubject = "Welcome to Tresume Timesheet";
+        public static readonly string TimesheetStatusUpdate = "Timesheet status update";
+        public static readonly List<string> ToEmail = new List<string> { "balaji@tresume.us" };
+        public static readonly List<string> CCEmail = new List<string> { "balaji@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
+    }
+
     [ValidateSuperAdminSession]
     public class RegistrationController : Controller
     {
@@ -45,11 +55,13 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     registration.CreatedOn = DateTime.Now;
                     registration.RoleID = _IRoles.getRolesofUserbyRolename("Users");
+                    var tempPlainPassword = registration.Password;
                     registration.Password = EncryptionLibrary.EncryptText(registration.Password);
                     registration.ConfirmPassword = EncryptionLibrary.EncryptText(registration.ConfirmPassword);
                     if (_IRegistration.AddUser(registration) > 0)
                     {
                         TempData["MessageRegistration"] = "Data Saved Successfully!";
+                        EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(registration),  EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
                         return RedirectToAction("Registration");
                     }
                     else
@@ -89,6 +101,12 @@ namespace WebTimeSheetManagement.Controllers
             {
                 throw;
             }
+        }
+
+        private string GetEmailTemplate(Registration registration)
+        {
+            return $"Hi {registration.Name},<br/><br/><br>Welcome to Tresume TimeSheet and below are your credentials:<br/><br/><br><b>User Name: </b> " + registration.Username+ "<br/><br/><br> <b>TempPassword : </b>" + EncryptionLibrary.DecryptText(registration.Password)+
+                "<br/><br/><br> You can change password after you login with this TempPassword.";
         }
 
     }
