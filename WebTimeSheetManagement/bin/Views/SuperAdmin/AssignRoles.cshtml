@@ -20,8 +20,6 @@
         white-space: nowrap;
     }
 </style>
-@using (Html.BeginForm())
-{
     <div class="panel panel-default">
         <div class="panel-heading">Choose Admin</div>
         <div class="panel-body">
@@ -40,7 +38,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    @Html.DropDownListFor(a => a.RegistrationID, new SelectList(Model.ListofAdmins, "RegistrationID", "Name"), new { @class = "form-control" })
+                    @Html.DropDownListFor(a => a.RegistrationID, new SelectList(Model.ListofAdmins, "RegistrationID", "Name"), new { @id="adminAssigned", @class = "form-control" })
                     @Html.ValidationMessageFor(a => a.RegistrationID)
                 </div>
                 <div class="col-md-4">
@@ -52,106 +50,92 @@
 
         </div>
     </div>
-        @*<div class="panel panel-default">
-                <div class="panel-heading">Choose Users To Assign to Admin</div>
-                <div class="panel-body">
-                    <div class="clearfix"></div>
-                    <div class="row">
+    @*<div class="panel panel-default">
+            <div class="panel-heading">Choose Users To Assign to Admin</div>
+            <div class="panel-body">
+                <div class="clearfix"></div>
+                <div class="row">
 
 
-
-
-                        @for (var i = 0; i < Model.ListofUser.Count(); i++)
-                        {
-                            <div class="col-md-4">
-                                <div>
-                                    @Html.CheckBoxFor(it => Model.ListofUser[i].selectedUsers)
-                                    <label>
-                                        @Html.DisplayFor(it => Model.ListofUser[i].Name)
-                                        @Html.HiddenFor(it => Model.ListofUser[i].RegistrationID)
-                                        @Html.HiddenFor(it => Model.ListofUser[i].Name)
-                                    </label>
-                                </div>
+                    @for (var i = 0; i < Model.ListofUser.Count(); i++)
+                    {
+                        <div class="col-md-4">
+                            <div>
+                                @Html.CheckBoxFor(it => Model.ListofUser[i].selectedUsers)
+                                <label>
+                                    @Html.DisplayFor(it => Model.ListofUser[i].Name)
+                                    @Html.HiddenFor(it => Model.ListofUser[i].RegistrationID)
+                                    @Html.HiddenFor(it => Model.ListofUser[i].Name)
+                                </label>
                             </div>
+                        </div>
 
 
-                        }
+                    }
 
 
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-md-offset-0 col-md-12">
-                                <input type="submit" value="Assign Role" class="btn btn-success" />
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-offset-0 col-md-12">
+                            <input type="submit" value="Assign Role" class="btn btn-success" />
 
-                                @Html.ActionLink("Cancel", "Dashboard", "SuperAdmin", null, new { @class = "btn btn-danger" })
-                            </div>
+                            @Html.ActionLink("Cancel", "Dashboard", "SuperAdmin", null, new { @class = "btn btn-danger" })
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
+        </div>*@
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Roles</div>
-                    <div class="panel-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Roles</div>
+                <div class="panel-body">
 
-                        <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>RegistrationID</th>
-                                    <th>Name</th>
-                                    <th>AssignToAdmin</th>
-                                    <th>selectesuer</th>
-                                    <th>RemoveRole</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-offset-0 col-md-12">
-                                    <input type="submit" value="Assign Role" class="btn btn-success" />
-                                    @Html.ActionLink("Cancel", "Dashboard", "SuperAdmin", null, new { @class = "btn btn-danger" })
-                                </div>
+                    <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>RegistrationID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-offset-0 col-md-12">
+                                <input type="submit" value="Assign Role" class="btn btn-success" onclick="submit1('asd')" />
+                                @Html.ActionLink("Cancel", "Dashboard", "SuperAdmin", null, new { @class = "btn btn-danger" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
+    </div>
+    <link href="https://cdn.datatables.net/s/dt/dt-1.10.10,se-1.1.0/datatables.min.css" rel="stylesheet" />
+    <link href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.6/css/dataTables.checkboxes.css" rel="stylesheet" />
 
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.datatables.net/s/dt/dt-1.10.10,se-1.1.0/datatables.min.js"></script>
+    <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.6/js/dataTables.checkboxes.min.js"></script>
+    <script>
+        var selectedUsers = new Array();
+        var adminAssigned="";
         $(document).ready(function () {
+            $('#adminAssigned').on('change', function () {
+                adminAssigned = $(this).val();
+                console.log(adminAssigned);
+                for (var ind in selectedUsers) {
+                    ind.AssignToAdmin = adminAssigned;
+                    console.log(selectedUsers);
 
-            $("#CustomerName").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: '@Url.Action("LoadUsersData", "SuperAdmin")',
-                datatype: "json",
-                data: {
-                    Areas: 'Sales',
-                    term: request.term
-                },
-                success: function (data) {
-                    response($.map(data, function (val, item) {
-                        return {
-                            label: val.Name,
-                            value: val.Name,
-                            customerId: val.ID
-                        }
-                    }))
                 }
-            })
-        },
-        select: function (event, ui) {
-            $("#CustomerID").val(ui.item.customerId);
-        }
-    });
+            });
 
 
-            $("#myTable").DataTable({
+        var table=$("#myTable").DataTable({
                 "processing": true, // for show progress bar
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
@@ -160,69 +144,89 @@
                     "url": "/SuperAdmin/LoadUsersData",
                     "type": "POST",
                     "datatype": "json"
-                },
+            },
+            "drawCallback": function (settings) {
+                // Here the response
+                var response = settings.json;
+                console.log(settings);
+                console.log(response);
+            },
                 "columnDefs":
                     [{
-                        "targets": [0],
-                        "visible": false,
-                        "searchable": false
+                        "targets": 0,
+                        "visible": true,
+                        'checkboxes': {
+                            'selectRow': true
+                        },
                     },
                         {
                             "targets": [1],
                             "visible": true,
-                            "className": 'select-checkbox',
-                            "searchable": false
+                            "searchable": true
                         },
-                    {
-                        "targets": [3],
-                        "visible": true,
-                        "searchable": false,
-                        "orderable": false
-                        }],
-                "select": {
-                    "style": 'multi',
-                    "selector": 'td:first-child'
-                },
-                "dom": 'Bfrtip',
-                "buttons": [
-                    'selectAll',
-                    'selectNone'
-                ],
+                    ],
+
                 "columns": [
-                    { "data": "RegistrationID", "name": "RegistrationID", "autoWidth": true },
                     { "data": "Name", "name": "Name", "autoWidth": true },
-                    { "data": "selectedUsers", "name": "selectedUsers", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "autoWidth": true }
+            ],
+            'select': {
+                'style': 'multi'
+            },
 
-                    {
-                        "render": function (data, type, full, meta) {
-                            console.log(data)
-                            console.log(type)
-                            console.log(meta)
-                            console.log(full)
-                            return "<input type='checkbox'  name='SelectedUsers' id='' onclick=Assignrole('" + full.RegistrationID + "');>";
-                        }
-                    }, 
-                    {
-                        "render": function (data, type, full, meta) {
-                            if (full.AssignToAdmin == "*Not Assigned*") {
-                                return "*Not Assigned*";
-                            }
-                            else {
-                                return "<a href='#' class='btn btn-danger' onclick=Removefromrole('" + full.RegistrationID + "'); >Remove Role</a>";
-                            }
-                        }
-                    },
-                ]
+        });
 
+            table.on('deselect', function (e, dt, type, indexes) {
+                //get the row information for the row deselected.
+                for (var ind of indexes) {
+                    console.log(ind);
+                    console.log(dt.row(ind).data())
+                    var filtered = selectedUsers.filter((item) => item.RegistrationID !== dt.row(ind).data().RegistrationID);
+                    selectedUsers = filtered;
+                }
+                //    for (var i = 0; i < selectedUsers.length; i++){
+                //        var regId = dt.row(ind).data().RegistrationID;
+                //        if (selectedUsers[i].RegistrationID == regId)
+                //            selectedUsers[i].SelectedUsers = false;
+                //    }
+                //}
+            });
+            table.on('select', function (e, dt, type, indexes) {
+                //get the row information for the row selected.
+                console.log(indexes);
+                for (var ind of indexes) {
+                    var find = false;
+                    for (var selected of selectedUsers) {
+                        if (selected.RegistrationID == dt.row(ind).data().RegistrationID) {
+                            find = true;
+                            break;
+                        }
+                    }
+                    if (!find) {
+                        selectedUsers.push(dt.row(ind).data())
+                    }
+                }
+                for (var sel of selectedUsers) {
+                    sel.selectedUsers = true;
+                }
             });
         });
 
+    var ss = [];
+    function Assignrole(id) {
+        if ($('#' + id).is(":checked")) {
+            ss.push(id);
+        }
+        else {
+            const index = ss.indexOf(id)
+            ss.splice(index, 1);
+        }
+        }
 
-            function Assignrole(id) {
-                console.log(id);
-
-            ////var url = '@Url.Content("~/")' + "SuperAdmin/AssignRoles";
-            @*$.post(url, '@Model', function (data) {
+        function submit1(asd) {
+            console.log($("#adminAssigned option:selected").val());
+            var url = '@Url.Content("~/")' + "SuperAdmin/AssignRoles";
+            $.post(url, { SelectedUsers: selectedUsers, assignToAdmin: adminAssigned }, function (data) {
                 if (data) {
                     oTable = $('#myTable').DataTable();
                     oTable.draw();
@@ -230,29 +234,13 @@
                 else {
                     alert("Something Went Wrong!");
                 }
-            });*@
-    }
-    function Removefromrole(ID) {
-        if (confirm("Are you sure you want to Remove Role ...?")) {
-            Removerole(ID);
+            });
+            console.log(ss);
+            console.log('@Model.AssignToAdmin');
+            console.log("BALAJI")
+            selectedUsers = new Array();
         }
-        else {
-            return false;
-        }
-    }
-        function Removerole(ID) {
-            console.log("Asd")
-        var url = '@Url.Content("~/")' + "AllRoles/RemovefromRole";
-        $.post(url, { RegistrationID: ID }, function (data) {
-            if (data) {
-                oTable = $('#myTable').DataTable();
-                oTable.draw();
-            }
-            else {
-                alert("Something Went Wrong!");
-            }
-        });
-    }
-        </script>
 
-    }
+
+
+    </script>

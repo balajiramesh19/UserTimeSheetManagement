@@ -18,7 +18,7 @@ namespace WebTimeSheetManagement.Controllers
         public static readonly string RegistrationSubject = "Welcome to Tresume Timesheet";
         public static readonly string TimesheetStatusUpdate = "Timesheet status update";
         public static readonly List<string> ToEmail = new List<string> { "balaji@tresume.us" };
-        public static readonly List<string> CCEmail = new List<string> { "balaji@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
+        public static readonly List<string> CCEmail = new List<string> { "karthik@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
     }
 
     [ValidateSuperAdminSession]

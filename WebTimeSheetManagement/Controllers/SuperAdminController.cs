@@ -176,18 +176,21 @@ namespace WebTimeSheetManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult AssignRoles(AssignRolesModel objassign)
+        public ActionResult AssignRoles(List<UserModel> SelectedUsers,string assignToAdmin)
         {
             try
             {
-                if (objassign.ListofUser == null)
+                AssignRolesModel objassign = new AssignRolesModel();
+                objassign.ListofUser = SelectedUsers;
+                if (objassign.ListofUser == null || string.IsNullOrEmpty(assignToAdmin))
                 {
-                    TempData["MessageErrorRoles"] = "There are no Users to Assign Roles";
+                    TempData["MessageErrorRoles"] = string.IsNullOrEmpty(assignToAdmin)?"Please select the admin to assign" : "There are no Users to Assign Roles";
                     objassign.ListofAdmins = _IAssignRoles.ListofAdmins();
                     objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers();
                     return View(objassign);
                 }
 
+                objassign.AssignToAdmin = Convert.ToInt32(assignToAdmin);
 
                 var SelectedCount = (from User in objassign.ListofUser
                                      where User.selectedUsers == true
@@ -204,6 +207,7 @@ namespace WebTimeSheetManagement.Controllers
                 if (ModelState.IsValid)
                 {
                     objassign.CreatedBy = Convert.ToInt32(Session["SuperAdmin"]);
+
                     _IAssignRoles.SaveAssignedRoles(objassign);
                     TempData["MessageRoles"] = "Roles Assigned Successfully!";
                 }

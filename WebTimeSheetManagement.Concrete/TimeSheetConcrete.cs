@@ -58,7 +58,7 @@ namespace WebTimeSheetManagement.Concrete
             {
                 using (var _context = new DatabaseContext())
                 {
-                    var result = (from timesheetdetails in _context.TimeSheetDetails
+                      var result = (from timesheetdetails in _context.TimeSheetDetails
                                   where timesheetdetails.Period == FromDate && timesheetdetails.UserID == UserID
                                   select timesheetdetails).Count();
 

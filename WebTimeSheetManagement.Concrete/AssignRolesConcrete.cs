@@ -94,7 +94,7 @@ namespace WebTimeSheetManagement.Concrete
             }
             if (!string.IsNullOrEmpty(Search))
             {
-                IQueryabletimesheet = IQueryabletimesheet.Where(m => m.Name == Search);
+                IQueryabletimesheet = IQueryabletimesheet.Where(m => m.Name.ToLower().Contains(Search));
             }
 
             return IQueryabletimesheet;
@@ -160,7 +160,7 @@ namespace WebTimeSheetManagement.Concrete
                     }
                     if (!string.IsNullOrEmpty(Search))
                     {
-                        IQueryabletimesheet = (IQueryable<UserModel>)IQueryabletimesheet.Where(m => m.Name.Contains(Search));
+                        IQueryabletimesheet = (IQueryable<UserModel>)IQueryabletimesheet.Where(m => m.Name.ToLower().Contains(Search)).AsQueryable();
                     }
 
                     return (IQueryable<UserModel>)IQueryabletimesheet;
@@ -199,7 +199,7 @@ namespace WebTimeSheetManagement.Concrete
                             AssignedRoles AssignedRoles = new AssignedRoles
                             {
                                 AssignedRolesID = 0,
-                                AssignToAdmin = AssignRolesModel.RegistrationID,
+                                AssignToAdmin = Convert.ToInt32(AssignRolesModel.AssignToAdmin),
                                 CreatedOn = DateTime.Now,
                                 CreatedBy = AssignRolesModel.CreatedBy,
                                 Status = "A",
