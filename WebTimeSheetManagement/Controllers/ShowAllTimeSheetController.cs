@@ -2,6 +2,7 @@
 using Amazon.Runtime.Internal.Transform;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
@@ -153,8 +154,11 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetApproval, 2));
                 }
-
-                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, true), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                var userID = _IUsers.GetUserIDbyTimesheetID(TimeSheetApproval.TimeSheetMasterID);
+                var userDetails = _IUsers.GetUserDetailsByRegistrationID(userID);
+                var adminDetails = _IUsers.GetAdminDetailsByRegistrationID(Convert.ToInt32(Session["AdminUser"]));
+                
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, true, userDetails, adminDetails), new List<String>() { userDetails.EmailID }, new List<String>() { adminDetails.EmailID }, EmailUtility.EnumEmailSentType.Login);
 
                 return Json(true);
             }
@@ -191,7 +195,10 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetApproval, 3));
                 }
-                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, false), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                var userID = _IUsers.GetUserIDbyTimesheetID(TimeSheetApproval.TimeSheetMasterID);
+                var userDetails = _IUsers.GetUserDetailsByRegistrationID(userID);
+                var adminDetails = _IUsers.GetAdminDetailsByRegistrationID(Convert.ToInt32(Session["AdminUser"]));
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(TimeSheetApproval, false, userDetails,adminDetails),new List<string>() { userDetails.EmailID }, new List<string>() { adminDetails.EmailID }, EmailUtility.EnumEmailSentType.Login);
 
                 return Json(true);
             }
@@ -202,13 +209,13 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
-        private string GetEmailTemplate(TimeSheetApproval timeSheetApproval, bool isApproved)
+        private string GetEmailTemplate(TimeSheetApproval timeSheetApproval, bool isApproved,RegistrationViewDetailsModel userDetails, RegistrationViewDetailsModel adminDetails)
         {
-            var userID= _IUsers.GetUserIDbyTimesheetID(timeSheetApproval.TimeSheetMasterID);
-            var userDetails = _IUsers.GetUserDetailsByRegistrationID(userID);
+            
+            
 
             List<GetPeriods> timesheetDetail = _ITimeSheet.GetPeriodsbyTimeSheetMasterID(Convert.ToInt32(timeSheetApproval.TimeSheetMasterID));
-            return $"Dear {userDetails.Name}, <br/><br/><br> Your Admin  <b>" + Session["Username"] + $"</b> has <b> {(isApproved ? "Approved" : "Rejected")}</b> the Timesheet for the week of <br/><br/><br> FromDate : " + timesheetDetail.ElementAt(0).Period.ToString()
+            return $"Dear {userDetails.Name}, <br/><br/><br> Your Admin  <b>" + adminDetails.Name + $"</b> has <b> {(isApproved ? "Approved" : "Rejected")}</b> the Timesheet for the week of <br/><br/><br> FromDate : " + timesheetDetail.ElementAt(0).Period.ToString()
                 + "<br/><br/>Comment: " + timeSheetApproval.Comment
                 + (!isApproved ? "<br/><br/><br/>Please take necessary actions on this." : "<br/><br/><br/>Great Job! Please submit furhter timesheets without failing! <br/><br/>Thanks & Regards,<br/>Tresume");
 
@@ -397,7 +404,7 @@ namespace WebTimeSheetManagement.Controllers
 
             keyValuePairs.Keys.ForEach(roles =>
             {
-                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetReminderEmailTemplate(dataValuePairs[roles], keyValuePairs[roles]), EmailConstants.ToEmail /*new List<string>() { dataValuePairs[roles].EmailID }*/, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetReminder, GetReminderEmailTemplate(dataValuePairs[roles], keyValuePairs[roles]), new List<string>() { dataValuePairs[roles].EmailID }, null, EmailUtility.EnumEmailSentType.Login);
             });
 
             return Json(true);

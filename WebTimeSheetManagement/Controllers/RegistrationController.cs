@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebTimeSheetManagement.Concrete;
 using WebTimeSheetManagement.Filters;
+using WebTimeSheetManagement.Helpers;
 using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
 using WebTimeSheetManagement.Service;
@@ -16,9 +17,12 @@ namespace WebTimeSheetManagement.Controllers
      static class EmailConstants
     {
         public static readonly string RegistrationSubject = "Welcome to Tresume Timesheet";
-        public static readonly string TimesheetStatusUpdate = "Timesheet status update";
-        public static readonly List<string> ToEmail = new List<string> { "balaji@tresume.us" };
-        public static readonly List<string> CCEmail = new List<string> { "karthik@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
+        public static readonly string RemoveRole = "Tresume Timesheet Access Revoked";
+        public static readonly string ResetPassword = "Tresume Timesheet Password Reset";
+        public static readonly string TimesheetStatusUpdate = "Tresume Timesheet - status update";
+        public static readonly string TimesheetReminder = "Tresume - Reminder to Fill Timesheets";
+        //public static readonly List<string> ToEmail = new List<string> { "balaji@tresume.us" };
+        //public static readonly List<string> CCEmail = new List<string> { "karthik@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
     }
 
     [ValidateSuperAdminSession]
@@ -26,10 +30,13 @@ namespace WebTimeSheetManagement.Controllers
     {
         private IRegistration _IRegistration;
         private IRoles _IRoles;
+        private ICacheManager _ICacheManager;
+
         public RegistrationController()
         {
             _IRegistration = new RegistrationConcrete();
             _IRoles = new RolesConcrete();
+            _ICacheManager = new CacheManager();
         }
 
         // GET: Registration/Create
@@ -61,7 +68,9 @@ namespace WebTimeSheetManagement.Controllers
                     if (_IRegistration.AddUser(registration) > 0)
                     {
                         TempData["MessageRegistration"] = "Data Saved Successfully!";
-                        EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(registration),  EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                        var userCount = (int)_ICacheManager.Get<object>("UsersCount") + 1;
+                        _ICacheManager.Add("UsersCount",  userCount);
+                        EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(registration),  new List<string>() {registration.EmailID}, null,EmailUtility.EnumEmailSentType.Login);
                         return RedirectToAction("Registration");
                     }
                     else
@@ -106,7 +115,7 @@ namespace WebTimeSheetManagement.Controllers
         private string GetEmailTemplate(Registration registration)
         {
             return $"Hi {registration.Name},<br/><br/><br>Welcome to Tresume TimeSheet and below are your credentials:<br/><br/><br><b>User Name: </b> " + registration.Username+ "<br/><br/><br> <b>TempPassword : </b>" + EncryptionLibrary.DecryptText(registration.Password)+
-                "<br/><br/><br> You can change password after you login with this TempPassword.";
+                "<br/><br/><br>You can login once role is assigned.<br/><br/><br> You can change password after you login with this TempPassword.";
         }
 
     }

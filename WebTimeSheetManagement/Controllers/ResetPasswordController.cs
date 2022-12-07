@@ -72,7 +72,7 @@ namespace WebTimeSheetManagement.Controllers
                 RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
                 if (isPasswordUpdated)
                 {
-                    EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(user), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                    EmailUtility.SendMailAsync(EmailConstants.ResetPassword, GetEmailTemplate(user), new List<string>() { user.EmailID }, null, EmailUtility.EnumEmailSentType.Login);
                     return Json(data: true, behavior: JsonRequestBehavior.AllowGet);
                 }
                 else

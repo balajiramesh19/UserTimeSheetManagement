@@ -562,7 +562,7 @@ namespace WebTimeSheetManagement.Concrete
                                        join timeSheetAuditTB in _context.TimeSheetAuditTB on timesheetmaster.TimeSheetMasterID equals timeSheetAuditTB.TimeSheetID
                                        join registration in _context.Registration on timesheetmaster.UserID equals registration.RegistrationID
                                        join AssignedRolesAdmin in _context.AssignedRoles on registration.RegistrationID equals AssignedRolesAdmin.RegistrationID
-                                       where AssignedRolesAdmin.AssignToAdmin == UserID && timeSheetAuditTB.Status == 1
+                                       where AssignedRolesAdmin.AssignToAdmin == UserID && timeSheetAuditTB.Status == 1 && timesheetmaster.TimeSheetStatus == 1
                                        select new TimeSheetMasterView
                                        {
                                            TimeSheetStatus = timesheetmaster.TimeSheetStatus == 1 ? "Submitted" : timesheetmaster.TimeSheetStatus == 2 ? "Approved" : "Rejected",

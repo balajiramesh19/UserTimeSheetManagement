@@ -66,7 +66,9 @@ namespace WebTimeSheetManagement.Controllers
                 }
 
                 var role = _IAssignRoles.RemovefromUserRole(RegistrationID);
-                EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(RegistrationID), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+                RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
+                RegistrationViewDetailsModel userSuperAdmin = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(Session["SuperAdmin"]));
+                EmailUtility.SendMailAsync(EmailConstants.RemoveRole, GetEmailTemplate(RegistrationID, user), new List<string>() { user.EmailID }, new List<string>() { userSuperAdmin.EmailID }, EmailUtility.EnumEmailSentType.Login);
                 return Json(role);
             }
             catch (Exception)
@@ -75,9 +77,8 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
-        private string GetEmailTemplate(string RegistrationID)
+        private string GetEmailTemplate(string RegistrationID, RegistrationViewDetailsModel user)
         {
-            RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
             return $"Hi {user.Name},<br/><br/><br>The admin {Session["Username"]} has revovked your Timesheet Access.";
         }
 

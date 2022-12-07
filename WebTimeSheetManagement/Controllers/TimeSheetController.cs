@@ -106,7 +106,11 @@ namespace WebTimeSheetManagement.Controllers
                     _ITimeSheet.InsertTimeSheetAuditLog(InsertTimeSheetAudit(TimeSheetMasterID, 1));
                 }
 
-                EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(objtimesheetmaster), EmailConstants.ToEmail, EmailConstants.CCEmail, EmailUtility.EnumEmailSentType.Login);
+               var adminID= _IUsers.GetAdminIDbyUserID(Convert.ToInt32(Session["UserID"]));
+                var adminDetails = _IUsers.GetAdminDetailsByRegistrationID(adminID);
+                var userDetails= _IUsers.GetUserDetailsByRegistrationID(Convert.ToInt32(Session["UserID"]));
+
+                EmailUtility.SendMailAsync(EmailConstants.TimesheetStatusUpdate, GetEmailTemplate(objtimesheetmaster, adminDetails), new List<String>() { adminDetails.EmailID }, new List<String>() { userDetails.EmailID }, EmailUtility.EnumEmailSentType.Login);
 
 
                 TempData["TimeCardMessage"] = "Data Saved Successfully";
@@ -119,9 +123,9 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
-        private string GetEmailTemplate(TimeSheetMaster timesheetmaster)
+        private string GetEmailTemplate(TimeSheetMaster timesheetmaster, RegistrationViewDetailsModel adminDetails)
         {
-            return "Hola! <br/><br/><br> The user <b> " + Session["Username"] + "</b> has submitted the Timesheet for the following period: <br/><br/><br> FromDate: " + timesheetmaster.FromDate
+            return $"Dear {adminDetails.Name}! <br/><br/><br> The user <b> " + Session["Username"] + "</b> has submitted the Timesheet for the following period: <br/><br/><br> FromDate: " + timesheetmaster.FromDate
                 + "<br/><br/><br>ToDate: "
                 + timesheetmaster.ToDate
                 + "<br/><br/><br>Total Hours: "+timesheetmaster.TotalHours
