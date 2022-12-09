@@ -393,9 +393,9 @@ namespace WebTimeSheetManagement.Controllers
                 int recordsTotal = 0;
                 Dictionary<string, List<string>> keyValuePairs = new Dictionary<string, List<string>>();
                 Dictionary<string, RegistrationViewSummaryModel> dataValuePairs = new Dictionary<string, RegistrationViewSummaryModel>();
-                IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllSubmittedTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
+                IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
                 var week = new CultureInfo("en-US").Calendar.GetWeekOfYear(DateTime.UtcNow, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-                var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4) && !string.Equals(d.TimeSheetStatus, "Approved") && !string.Equals(d.TimeSheetStatus, "Submitted")).GroupBy(d => d.Username);
+                var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4) ).GroupBy(d => d.Username);
                 var rolesData = _IUsers.ShowallUsersUnderAdmin(null, null, null, Convert.ToInt32(Session["AdminUser"])).ToList();
                 DateTime fday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
                 List<string> data = new List<string>();
@@ -414,7 +414,8 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     grp.ForEach(g =>
                     {
-                        keyValuePairs[g.Username].Remove(g.FromDate);
+                        if(g.TimeSheetStatus.ToLower().Equals("approved")|| g.TimeSheetStatus.ToLower().Equals("submitted"))
+                            keyValuePairs[g.Username].Remove(g.FromDate);
                     });
                 });
 
@@ -433,6 +434,7 @@ namespace WebTimeSheetManagement.Controllers
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     defaulterModels = defaulterModels.Where(m => m.UserName.ToLower().Contains(searchValue));
+                    data1= defaulterModels.Skip(skip).Take(pageSize).ToList();
                 }
                 return Json(new { draw = draw, recordsFiltered = defaulterModelsList.Count(), recordsTotal = defaulterModelsList.Count(), data = data1 });
             }
@@ -448,9 +450,9 @@ namespace WebTimeSheetManagement.Controllers
         {
             Dictionary<string, List<string>> keyValuePairs = new Dictionary<string, List<string>>();
             Dictionary<string, RegistrationViewSummaryModel> dataValuePairs = new Dictionary<string, RegistrationViewSummaryModel>();
-            IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllSubmittedTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
+            IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
             var week = new CultureInfo("en-US").Calendar.GetWeekOfYear(DateTime.UtcNow, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
-            var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4) && !string.Equals(d.TimeSheetStatus, "Approved") && !string.Equals(d.TimeSheetStatus, "Submitted")).GroupBy(d => d.Username);
+            var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4)).GroupBy(d => d.Username);
             var rolesData = _IUsers.ShowallUsersUnderAdmin(null, null, null, Convert.ToInt32(Session["AdminUser"])).ToList();
             DateTime fday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
             List<string> data = new List<string>();
@@ -469,7 +471,8 @@ namespace WebTimeSheetManagement.Controllers
             {
                 grp.ForEach(g =>
                 {
-                    keyValuePairs[g.Username].Remove(g.FromDate);
+                    if (g.TimeSheetStatus.ToLower().Equals("approved") || g.TimeSheetStatus.ToLower().Equals("submitted"))
+                        keyValuePairs[g.Username].Remove(g.FromDate);
                 });
             });
 
