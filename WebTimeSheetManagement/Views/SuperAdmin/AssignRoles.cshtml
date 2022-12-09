@@ -1,7 +1,15 @@
 ﻿@model WebTimeSheetManagement.Models.AssignRolesModel
 @{
     ViewBag.Title = "AssignRoles";
-    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+    string CurrentName = Convert.ToString(Session["SuperAdmin"]);
+    if (!string.IsNullOrEmpty(CurrentName))
+    {
+        Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
 }
 
 

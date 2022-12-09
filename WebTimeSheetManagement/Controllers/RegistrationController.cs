@@ -25,7 +25,7 @@ namespace WebTimeSheetManagement.Controllers
         //public static readonly List<string> CCEmail = new List<string> { "karthik@tresume.us" };//, "prab@astacrs.com","rohit@tresume.us"
     }
 
-    [ValidateSuperAdminSession]
+    [ValidateCommonAdminSession]
     public class RegistrationController : Controller
     {
         private IRegistration _IRegistration;

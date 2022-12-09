@@ -1,11 +1,23 @@
-﻿$(document).ready(function () {
+﻿$(document).ajaxStart(function () {
+    $("#loading").show();
+});
+$(document).ajaxComplete(function () {
+    $("#loading").hide();
+});
+$(document).ready(function ()
+{
+    $("#loading").show();
+    $("#loading").show();
     $("#_panelmain").hide();
+    $("#_panelmainbutton").hide();
     DisableonLoad();
+    $("#loading").hide();
     $("#datepicker_start").datepicker(
     {
         dateFormat: "yy-mm-dd",
         changeMonth: true,
         changeYear: true,
+        constrainInput: false,
         yearRange: new Date().getFullYear() + ':' + new Date().getFullYear(),
         onSelect: function (selectedDate) {
             CheckIsDateAlreadyUsed(selectedDate);
@@ -15,13 +27,17 @@
             return [date.getDay() === 0, ''];
         }
     });
-
+    $("#datepicker_start").keydown(false);
+    $("#datepicker_start").keypress(false);
+    $('#datepicker_start').bind("cut copy paste", function (e) {
+        e.preventDefault();
+    });
 
 });
 
 
 function CalEnd() {
-
+    $("#loading").show();
     var a = $("#datepicker_start").datepicker('getDate').getTime();
 
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -95,7 +111,7 @@ function CalEnd() {
 }
 
 $("#datepicker_end").datepicker(
-   {
+    {
        dateFormat: "yy-mm-dd",
        changeMonth: true,
        changeYear: true,
@@ -154,8 +170,9 @@ $("#datepicker_end").datepicker(
    });
 
 function CheckIsDateAlreadyUsed(selectedDate) {
+    
     var url = "/TimeSheet/CheckIsDateAlreadyUsed";
-
+    
     $.ajax({
         url: url,
         type: 'POST',
@@ -169,14 +186,18 @@ function CheckIsDateAlreadyUsed(selectedDate) {
                 $("#text5").val('');
                 $("#text6").val('');
                 $("#text7").val('');
+                
                 $("#_panelmain").hide();
+                $("#_panelmainbutton").hide();
                 alert("You have already filled Details for Choosen Date !");
-
+                $("#loading").hide();
+                
             }
             else {
                 var date2 = $('#datepicker_start').datepicker('getDate', '+1');
                 CalEnd();
                 $("#_panelmain").show();
+                $("#_panelmainbutton").show();
             }
         }
     });
@@ -186,9 +207,10 @@ function CheckIsDateAlreadyUsed(selectedDate) {
 function ValidateData() {
     if (confirm('Please check data once before submitting ?'))
     {
-
+        
         if (confirm(' Are you sure you want to save data?'))
-    {
+        {
+        $("#loading").show();
         if (ValidateTotalSundaysHours() > 24)
         {
             alert("A day cannot have more than 24 hours.");
@@ -232,7 +254,8 @@ function ValidateData() {
             return false;
         }
 
-        return true;
+            return true;
+            $("#loading").hide();
     }
     else
     {
@@ -244,7 +267,6 @@ function ValidateData() {
 }
 
 function DisableonLoad() {
-
     $("#text1_p1").prop('readonly', true);
     $("#text2_p1").prop('readonly', true);
     $("#text3_p1").prop('readonly', true);

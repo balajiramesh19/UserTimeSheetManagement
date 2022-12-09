@@ -32,3 +32,22 @@ E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Con
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.csprojResolveAssemblyReference.cache
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.dll
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Concrete.dll.config
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Concrete.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Concrete.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\Dapper.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\EntityFramework.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\System.Linq.Dynamic.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Interface.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Models.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Interface.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\WebTimeSheetManagement.Models.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\Dapper.xml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\EntityFramework.xml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.csproj.AssemblyReference.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.csproj.CopyComplete
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Release\WebTimeSheetManagement.Concrete.pdb

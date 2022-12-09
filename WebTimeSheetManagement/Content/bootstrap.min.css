@@ -2000,8 +2000,8 @@ textarea.input-lg {
 
 .btn-info {
     color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da
+    background-color: #563655;
+    border-color: #563655;
 }
 
     .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info {

@@ -50,9 +50,8 @@ function onlyNumbers(evt) {
 
 function ValidateData() {
 
-    if (confirm('Are you sure you want to save data?'))
-    {
-        
+    if (confirm('Are you sure you want to save data?')) {
+
         var Total = 0;
         var HotelAmount = 0;
         var TravelAmount = 0;
@@ -89,11 +88,30 @@ function ValidateData() {
             alert("Cannot Submit Empty Expense Form!");
             return false;
         }
-        else {
+        else if (checkFileuploads() === false)
+        {
+            $("#file").focus();
+            alert("Upload Attachment");
+            return false;
+        }
+        else
+        {
             return true;
         }
-    } else
-    {
-        return false;  
+    }
+    else {
+        return false;
+    }
+}
+
+function checkFileuploads() {
+    var file1 = $("#file").val();
+    var file2 = $("#Singlefile").val();
+
+    if (file1 === '' && file2 === '') {
+        return false
+    }
+    else {
+        return true;
     }
 }

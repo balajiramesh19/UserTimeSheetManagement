@@ -12,3 +12,12 @@ E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Int
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.csprojResolveAssemblyReference.cache
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.dll
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\bin\Release\WebTimeSheetManagement.Interface.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\bin\Release\WebTimeSheetManagement.Interface.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\bin\Release\WebTimeSheetManagement.Models.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\bin\Release\WebTimeSheetManagement.Models.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.csproj.AssemblyReference.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.csproj.CopyComplete
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Release\WebTimeSheetManagement.Interface.pdb

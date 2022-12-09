@@ -14,6 +14,7 @@
         border: 1px solid white;
         background: #c3bac1;
     }
+
 </style>
 <p>
     @Html.ActionLink("Back to Main View", "TimeSheet", "ShowAllTimeSheet")
@@ -26,8 +27,8 @@
 
             <td><b>@Html.DisplayFor(modelItem => item)</b></td>
         }
-        <td>Description</td>
-        <td>Documents Attached</td>
+        <td><b>Description</b></td>
+        <td><b>Documents Attached</b></td>
     </tr>
     <tr>
         <td></td>
@@ -92,8 +93,12 @@
         </div>
         <div class="col-md-6">
             <br />
-            <input type="submit" onclick="return Approvetimesheet();" value="Approve" class="btn btn-success" />
-            <input type="submit" onclick="return Rejecttimesheet();" value="Reject" class="btn btn-success" />
+            <button type="submit" class="btn btn-info" onclick="return Approvetimesheet();" value="Approve">
+                <i class="fa fa-check-square-o"></i> Approve
+            </button>
+            <button type="submit" class="btn btn-info" onclick="return Rejecttimesheet();" value="Reject">
+                <i class="fa fa-close"></i> Reject
+            </button>
             @Html.ActionLink("Cancel", "TimeSheet", "ShowAllTimeSheet", null, new { @class = "btn btn-danger" })
         </div>
     </div>

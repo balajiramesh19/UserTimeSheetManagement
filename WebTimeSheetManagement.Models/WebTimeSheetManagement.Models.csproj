@@ -46,6 +46,7 @@
     <Compile Include="AssignRolesModel.cs" />
     <Compile Include="AuditTB.cs" />
     <Compile Include="ChangePasswordModel.cs" />
+    <Compile Include="DefaulterModel.cs" />
     <Compile Include="DescriptionTB.cs" />
     <Compile Include="DisplayViewModel.cs" />
     <Compile Include="Documents.cs" />

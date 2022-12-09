@@ -14,7 +14,7 @@ using WebTimeSheetManagement.Models;
 
 namespace WebTimeSheetManagement.Controllers
 {
-    [ValidateSuperAdminSession]
+    [ValidateCommonAdminSession]
     public class SuperAdminController : Controller
     {
         private IRegistration _IRegistration;

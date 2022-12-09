@@ -1,7 +1,16 @@
 ﻿@model WebTimeSheetManagement.Models.Registration
 @{
-    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
-}
+    ViewBag.Title = "Registration";
+    string CurrentName = Convert.ToString(Session["SuperAdmin"]);
+    if(!string.IsNullOrEmpty(CurrentName))
+    {
+        Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}  
 
  <h4 class="page-header">Create User</h4>
 

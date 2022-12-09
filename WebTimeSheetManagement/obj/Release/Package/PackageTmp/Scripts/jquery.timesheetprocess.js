@@ -1,5 +1,5 @@
 ﻿function Approvetimesheet() {
-    if (confirm('Are you sure you want to Approve Expense?'))
+    if (confirm('Are you sure you want to Approve Timesheet?'))
     {
         if ($("#Comment").val() == '')
         {
@@ -35,7 +35,7 @@
 
 function Rejecttimesheet() {
 
-    if (confirm('Are you sure you want to Reject Expense?')) {
+    if (confirm('Are you sure you want to Reject Timesheet?')) {
         if ($("#Comment").val() == '') {
             alert("Please Enter Comment");
             return false;

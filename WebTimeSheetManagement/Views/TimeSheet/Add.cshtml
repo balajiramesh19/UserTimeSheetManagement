@@ -13,13 +13,32 @@
         alert('@TempData["TimeCardMessage"]');
     }
 </script>
+<style>
+    #loading {
+        background: white;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        z-index: 99
+    }
 
+    #loading-image {
+        position: absolute;
+        top: 40%;
+        left: 45%;
+        z-index: 100
+    } 
 
-<h4 class="page-header " style="color:ivory">TimeSheet</h4>
-@using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new { enctype = "multipart/form-data" }))
+</style>
+
+<h4 class="page-header " style="color:ivory">Fill TimeSheets</h4>
+@using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new { onsubmit = "showLoader(this);", enctype = "multipart/form-data" }))
 {
+   
     <div class="row" style="color:ivory">
-
         <div style="margin-top:10px;"></div>
         @using (Html.BeginForm("Add", "TimeSheet"))
         {
@@ -27,8 +46,8 @@
 
             <div class="panel-body">
                 <div class="col-md-3">
-                    @Html.Label("From Date", new { @class = "manadatory" })
-                    <input id="datepicker_start" onkeypress="return false; alert('Choose From Date');" class="form-control" type="text" />
+                    @Html.Label("Week Start Date", new { @class = "manadatory" })
+                    <input id="datepicker_start" placeholder="Please select From Date" onkeypress="return false; alert('Choose From Date');" class="form-control" type="text" />
                 </div>
                 <div class="col-md-3">
 
@@ -42,8 +61,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div id="_panelmain" style="display:none;">
 
                 <div class="panel-body">
@@ -387,48 +404,10 @@
                         </div>
                     </div>
                     <div style="margin:10px"></div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.DropDownListFor(m => m.ProjectID6, new SelectList(string.Empty, "ProjectID", "ProjectName"), new { @class = "form-control" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text1_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text1_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text2_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text2_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text3_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text3_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text4_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text4_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text5_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text5_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text6_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text6_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.text7_p6, new { @class = "form-control", @onblur = "TotalP6();", @maxlength = "2" })
-                            @Html.ValidationMessageFor(m => m.text7_p6, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-1">
-                            @Html.TextBoxFor(m => m.texttotal_p6, new { @class = "form-control", @readonly = "readonly", @maxlength = "2" })
-                        </div>
-                        <div class="col-md-2">
-                            @Html.TextAreaFor(m => m.Description_p6, new { @class = "form-control", @maxlength = "50", @rows = "1" })
-                        </div>
-                    </div>
+
                     <div class="col-md-3" style="padding:10px">
 
-                        @Html.Label("Attachment", new { @class = "manadatory" })
+                        @Html.Label("Attachment")
                         <input type="file" onchange="ValidateFile(this);" class="form-control" name="file" id="file" />
                         <span id="val_file" class="text-danger"></span>
                     </div>
@@ -452,7 +431,14 @@
 
 }
 <script type="text/javascript">
+    $(document).ajaxStart(function () {
+        $("#loading").show();
+    });
+    $(document).ajaxComplete(function () {
+        $("#loading").hide();
+    });
     $(document).ready(function () {
+        $("#loading").hide();
         $.getJSON('@Url.Content("~/")' + "TimeSheet/ListofProjects", function (data) {
             var items1 = '';
             items1 += "<option value='" + "" + "'>" + "----Select----" + "</option>";
@@ -500,7 +486,7 @@
             $("#ProjectID5").html(items5);
             $("#ProjectID6").html(items6);
             //$("#ProjectID7").html(items7);
-            
+
         });
     });
 </script>

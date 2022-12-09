@@ -109,6 +109,24 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
+        public RegistrationViewDetailsModel ShowallDefaultersUnderAdmin(int? RegistrationID)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                try
+                {
+                    var param = new DynamicParameters();
+                    param.Add("@RegistrationID", RegistrationID);
+                    return con.Query<RegistrationViewDetailsModel>("Usp_GetAdminDetailsByRegistrationID", param, null, true, 0, System.Data.CommandType.StoredProcedure).SingleOrDefault();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        
         public IQueryable<RegistrationViewSummaryModel> ShowallUsersUnderAdmin(string sortColumn, string sortColumnDir, string Search, int? RegistrationID)
         {
             var _context = new DatabaseContext();

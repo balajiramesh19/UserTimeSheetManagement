@@ -288,6 +288,11 @@ namespace WebTimeSheetManagement.Controllers
             return View();
         }
 
+        public ActionResult NotSubmittedPPL()
+        {
+            return View();
+        }
+
         public ActionResult LoadSubmittedTData()
         {
             try
@@ -364,6 +369,72 @@ namespace WebTimeSheetManagement.Controllers
                 var data = timesheetdata.Skip(skip).Take(pageSize).ToList();
 
                 return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public ActionResult LoadDefaultersData()
+        {
+            try
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                int recordsTotal = 0;
+                Dictionary<string, List<string>> keyValuePairs = new Dictionary<string, List<string>>();
+                Dictionary<string, RegistrationViewSummaryModel> dataValuePairs = new Dictionary<string, RegistrationViewSummaryModel>();
+                IQueryable<TimeSheetMasterView> timesheetdata = _ITimeSheet.ShowAllSubmittedTimeSheet(null, null, null, Convert.ToInt32(Session["AdminUser"]));
+                var week = new CultureInfo("en-US").Calendar.GetWeekOfYear(DateTime.UtcNow, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+                var grpData = timesheetdata.Where(d => (d.SubmittedWeek) >= (week - 4) && !string.Equals(d.TimeSheetStatus, "Approved") && !string.Equals(d.TimeSheetStatus, "Submitted")).GroupBy(d => d.Username);
+                var rolesData = _IUsers.ShowallUsersUnderAdmin(null, null, null, Convert.ToInt32(Session["AdminUser"])).ToList();
+                DateTime fday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+                List<string> data = new List<string>();
+                for (int i = 1; i <= 4; i++)
+                {
+                    data.Add(String.Format("{0:yyyy-MM-dd}", fday.AddDays(-7 * i)));
+                }
+
+                rolesData.ForEach(roles =>
+                {
+                    keyValuePairs[roles.Username] = new List<string>(data);
+                    dataValuePairs[roles.Username] = roles;
+                });
+
+                grpData.ForEach(grp =>
+                {
+                    grp.ForEach(g =>
+                    {
+                        keyValuePairs[g.Username].Remove(g.FromDate);
+                    });
+                });
+
+                IQueryable<DefaulterModel> defaulterModels;
+                List<DefaulterModel> defaulterModelsList=new List<DefaulterModel>();
+                keyValuePairs.Keys.ForEach(roles =>
+                {
+                    var defaultModel = new DefaulterModel();
+                    defaultModel.UserName = dataValuePairs[roles].Name;
+                    defaultModel.missedDatesToFill = keyValuePairs[roles];
+                    defaulterModelsList.Add(defaultModel);
+                });
+                defaulterModels = defaulterModelsList.AsQueryable<DefaulterModel>();
+                var data1 = defaulterModels.Skip(skip).Take(pageSize).ToList();
+                
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    defaulterModels = defaulterModels.Where(m => m.UserName.ToLower().Contains(searchValue));
+                }
+                return Json(new { draw = draw, recordsFiltered = defaulterModelsList.Count(), recordsTotal = defaulterModelsList.Count(), data = data1 });
             }
             catch (Exception)
             {

@@ -8,3 +8,9 @@ E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Mod
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.csprojResolveAssemblyReference.cache
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.dll
 E:\Visual Studio 2015\Projects\WebTimeSheetManagement\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\bin\Release\WebTimeSheetManagement.Models.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\bin\Release\WebTimeSheetManagement.Models.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.csproj.AssemblyReference.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.dll
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Models\obj\Release\WebTimeSheetManagement.Models.pdb

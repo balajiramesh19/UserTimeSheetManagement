@@ -1,10 +1,19 @@
 ﻿@model WebTimeSheetManagement.Models.Registration
-@using CaptchaMvc.HtmlHelpers
 @{
-    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
-}
-<div class="container">
-    <br />
+    ViewBag.Title = "Registration";
+    string CurrentName = Convert.ToString(Session["SuperAdmin"]);
+    if(!string.IsNullOrEmpty(CurrentName))
+    {
+        Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}  
+
+ <h4 class="page-header">Create User</h4>
+
     <div class="panel panel-default">
         <div class="panel-heading">Create User</div>
         <div class="panel-body">
@@ -37,8 +46,11 @@
                         @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
                     </div>
                 </div>
+           
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="clearfix"></div>
+                    <div class="col-lg-4" style="margin-top:20px;">
+                  
                         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label manadatory" })
                         @Html.RadioButtonFor(model => model.Gender, "M") @Html.Label("", "Male")
                         @Html.RadioButtonFor(model => model.Gender, "F") @Html.Label("", "Female")
@@ -51,6 +63,9 @@
                         @Html.ValidationMessageFor(model => model.Birthdate, "", new { @class = "text-danger" })
                     </div>
                     <div class="col-lg-4">
+                        @Html.LabelFor(model => model.DateofJoining, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.DateofJoining, new { @class = "form-control", @onkeypress = "alert('Choose DateofJoining');" })
+                        @Html.ValidationMessageFor(model => model.DateofJoining, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row">
@@ -70,28 +85,22 @@
                         @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div id="captcha" class="captcha">
-                            @Html.Captcha("Refresh", "Enter the text you see above", 5, "Is required field.", true)
-                        </div>
-                    </div>
-                </div>
+               
                 <br />
                 <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-10">
-                            <input type="submit" value="Create User" class="btn btn-success" />
+                    <div class="col-lg-4">
+                        <input type="submit" value="Create User" class="btn btn-success" />
+                        @Html.ActionLink("Clear", "Registration", "Registration", null, new { @class = "btn btn-danger" })
 
-                            @Html.ActionLink("Clear", "Registration", "Registration", null, new { @class = "btn btn-danger" })
-                        </div>
+                        @Html.ActionLink("All Users", "Users", "AllUsers", null, new { @class = "btn btn-info" })
+
                     </div>
                 </div>
             }
 
         </div>
     </div>
-</div>
+c
 
 
 
@@ -117,6 +126,15 @@
                     }
                 }
             });
+
+        $("#DateofJoining").datepicker
+           ({
+               dateFormat: "yy-mm-dd",
+               changeMonth: true,
+               changeYear: true,
+               yearRange: "-100:+100"
+           });
+        
     });
 
     function OnlyNumeric(evt) {

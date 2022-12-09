@@ -919,6 +919,7 @@
     <Compile Include="Controllers\AllRolesController.cs" />
     <Compile Include="Controllers\AllTimeSheetController.cs" />
     <Compile Include="Controllers\AllUsersController.cs" />
+    <Compile Include="Controllers\DefaultersController.cs" />
     <Compile Include="Controllers\DemoAssignController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
@@ -941,6 +942,7 @@
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Filters\UserAuditFilter.cs" />
     <Compile Include="Filters\ValidateAdminSession.cs" />
+    <Compile Include="Filters\ValidateCommonAdminSession.cs" />
     <Compile Include="Filters\ValidateSuperAdminSession.cs" />
     <Compile Include="Filters\ValidateUserSession.cs" />
     <Compile Include="Global.asax.cs">
@@ -956,6 +958,11 @@
     <Compile Include="Service\EmailUtility.cs" />
     <Compile Include="Service\NotificationService.cs" />
     <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Elmah.SqlServer.sql" />
@@ -977,7 +984,7 @@
     </Content>
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
-    <None Include="Properties\PublishProfiles\Sai.pubxml" />
+    <None Include="Properties\PublishProfiles\TresumeTs.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dataTablesScripts\dataTables.bootstrap.min.css" />
     <Content Include="Scripts\dataTablesScripts\dataTables.bootstrap4.min.js" />
@@ -1098,9 +1105,6 @@
     <Content Include="Template\vendor\flot\jquery.js" />
     <Content Include="Template\vendor\font-awesome\css\font-awesome.css" />
     <Content Include="Template\vendor\font-awesome\css\font-awesome.min.css" />
-    <Content Include="Template\vendor\jquery-easing\jquery.easing.compatibility.js" />
-    <Content Include="Template\vendor\jquery-easing\jquery.easing.js" />
-    <Content Include="Template\vendor\jquery-easing\jquery.easing.min.js" />
     <Content Include="Template\vendor\jquery\jquery.js" />
     <Content Include="Template\vendor\jquery\jquery.min.js" />
     <Content Include="Template\vendor\metisMenu\metisMenu.css" />
@@ -1124,7 +1128,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Registration\Registration.cshtml" />
@@ -1233,11 +1236,13 @@
     <Content Include="Views\ShowAllTimeSheet\ReminderTimesheet.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\ShowAllTimeSheet\NotSubmittedPPL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="EntityModels\" />
     <Folder Include="ErrorLog\" />
+    <Folder Include="Views\Defaulters\" />
     <Folder Include="Views\TimeSheetMaster\" />
     <Folder Include="Views\UserDashboard\App_LocalResources\" />
   </ItemGroup>

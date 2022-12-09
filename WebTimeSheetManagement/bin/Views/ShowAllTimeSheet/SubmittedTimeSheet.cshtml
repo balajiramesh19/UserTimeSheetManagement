@@ -86,11 +86,11 @@
                     { "data": "CreatedOn", "name": "CreatedOn", "autoWidth": true },
                     {
                         "render": function (data, type, full, meta)
-                        { return '<a class="btn btn-info" href="/ShowAllTimeSheet/Details/' + full.TimeSheetMasterID + '">View</a>'; }
+                        { return '<a class="btn btn-info" href="/ShowAllTimeSheet/Details/' + full.TimeSheetMasterID + '"><i class="fa fa-eye fa-fw"></i> </a>'; }
                     },
                      {
                          data: null, render: function (data, type, row) {
-                             return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.TimeSheetMasterID + "'); >Delete</a>";
+                             return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.TimeSheetMasterID + "'); ><i class='fa fa-trash fa-fw'></i> </a>";
                          }
                      },
                 ]

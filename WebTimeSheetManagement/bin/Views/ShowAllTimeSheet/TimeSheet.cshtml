@@ -32,7 +32,7 @@
                             <th>Comment</th>
                             <th>CreatedOn</th>
                             <th>Details</th>
-                            
+
                         </tr>
                     </thead>
                 </table>
@@ -41,22 +41,30 @@
     </div>
 </div>
 <script>
-        $(document).ready(function () {
-            $("#myTable").DataTable({
-                "processing": true, // for show progress bar
-                "serverSide": true, // for process server side
-                "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
-                "ajax": {
-                    "url": "/ShowAllTimeSheet/LoadTimeSheetData",
-                    "type": "POST",
-                    "datatype": "json"
-                },
-                "columnDefs":
+    $(document).ready(function () {
+        $("#myTable").DataTable({
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "processing": "<h4 style=background:white>Loading</h4>"
+            },
+            "ajax": {
+                "url": "/ShowAllTimeSheet/LoadTimeSheetData",
+                "type": "POST",
+                "datatype": "json"
+            },
+            "columnDefs":
                 [{
                     "targets": [0],
                     "visible": false,
                     "searchable": false
+                },
+                {
+                    "targets": [1],
+                    "visible": true,
+                    "searchable": true
                 },
                 {
                     "targets": [7],
@@ -74,25 +82,24 @@
                     "orderable": false
                 }
                 ],
-                "columns": [
-                    { "data": "TimeSheetMasterID", "name": "TimeSheetMasterID", "autoWidth": true },
-                    { "data": "Username", "name": "Username", "autoWidth": true },
-                    { "data": "SubmittedMonth", "title": "Month", "name": "SubmittedMonth", "autoWidth": true },
-                    { "data": "FromDate", "name": "FromDate", "autoWidth": true },
-                    { "data": "ToDate", "name": "ToDate", "autoWidth": true },
-                    { "data": "TotalHours", "name": "TotalHours", "autoWidth": true },
-                    { "data": "TimeSheetStatus", "name": "TimeSheetStatus", "title": "Status", "autoWidth": true },
-                    { "data": "Comment", "name": "Comment", "title": "Comment", "autoWidth": true },
-                    { "data": "CreatedOn", "name": "CreatedOn", "autoWidth": true },
-                    {
-                        "render": function (data, type, full, meta)
-                        { return '<a class="btn btn-info" href="/ShowAllTimeSheet/Details/' + full.TimeSheetMasterID + '">View</a>'; }
-                    }
-                     
-                ]
+            "columns": [
+                { "data": "TimeSheetMasterID", "name": "TimeSheetMasterID", "autoWidth": true },
+                { "data": "Username", "name": "Username", "autoWidth": true },
+                { "data": "SubmittedMonth", "title": "Month", "name": "SubmittedMonth", "autoWidth": true },
+                { "data": "FromDate", "name": "FromDate", "autoWidth": true },
+                { "data": "ToDate", "name": "ToDate", "autoWidth": true },
+                { "data": "TotalHours", "name": "TotalHours", "autoWidth": true },
+                { "data": "TimeSheetStatus", "name": "TimeSheetStatus", "title": "Status", "autoWidth": true },
+                { "data": "Comment", "name": "Comment", "title": "Comment", "autoWidth": true },
+                { "data": "CreatedOn", "name": "CreatedOn", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/ShowAllTimeSheet/Details/' + full.TimeSheetMasterID + '"><i class="fa fa-eye fa-fw"></i> </a>'; }
+                }
 
-            });
+            ]
+
         });
+    });
 </script>
 
 <script type="text/javascript">

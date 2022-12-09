@@ -131,6 +131,23 @@
         color: grey;
         transform: rotateY(180deg);
     }
+    #loading {
+        background: white;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        z-index: 99
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 40%;
+        left: 45%;
+        z-index: 100
+    } 
 </style>
 
 <body style="background: linear-gradient(90deg, #49274a, transparent),url(https://cdn.pixabay.com/photo/2021/07/26/21/30/clock-6495245_960_720.jpg); background-image: /* background-repeat: round; */ background-size: cover; background-size: cover">
@@ -143,6 +160,9 @@
 
     </script>
     <div id="wrapper">
+        <div id="loading">
+            <img id="loading-image" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/cd514331234507.564a1d2324e4e.gif" alt="Loading...">
+        </div>
         <div id="mySidebar" class="sidebar">
             <ul class="nav" id="side-menu">
                 <li>
@@ -155,7 +175,7 @@
                     <a href="/AllTimeSheet/TimeSheet"><i class="fa fa-edit fa-fw"></i> All TimeSheet</a>
                 </li>
                 <li>
-                    <a href="/UserProfile/ChangePassword"><i class="fa fa-table fa-fw"></i> Change Password</a>
+                    <a href="/UserProfile/ChangePassword"><i class="fa fa-key fa-fw"></i> Change Password</a>
                 </li>
                 <li>
                     <a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -203,6 +223,12 @@
                 <script src="~/signalr/Hubs/"></script>
 
                 <script>
+                    $(document).ajaxStart(function () {
+                        $("#loading").show();
+                    });
+                    $(document).ajaxComplete(function () {
+                        $("#loading").hide();
+                    });
                     $(document).ready(function () {
                         toastr.options.onCloseClick = function () { alert("welcome"); };
                         // Proxy created on the fly

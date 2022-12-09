@@ -611,6 +611,64 @@ namespace WebTimeSheetManagement.Concrete
 
         }
 
+
+        public IQueryable<TimeSheetMasterView> ShowAllDefaulters(string sortColumn, string sortColumnDir, string Search, int UserID)
+        {
+            var _context = new DatabaseContext();
+
+            var IQueryabletimesheet = (from timesheetmaster in _context.TimeSheetMaster
+                                       join timeSheetAuditTB in _context.TimeSheetAuditTB on timesheetmaster.TimeSheetMasterID equals timeSheetAuditTB.TimeSheetID
+                                       join registration in _context.Registration on timesheetmaster.UserID equals registration.RegistrationID
+                                       join AssignedRolesAdmin in _context.AssignedRoles on registration.RegistrationID equals AssignedRolesAdmin.RegistrationID
+                                       where AssignedRolesAdmin.AssignToAdmin == UserID && timeSheetAuditTB.Status == 1 && timesheetmaster.TimeSheetStatus == 1
+                                       select new TimeSheetMasterView
+                                       {
+                                           TimeSheetStatus = timesheetmaster.TimeSheetStatus == 1 ? "Submitted" : timesheetmaster.TimeSheetStatus == 2 ? "Approved" : "Rejected",
+                                           Comment = timesheetmaster.Comment,
+                                           TimeSheetMasterID = timesheetmaster.TimeSheetMasterID,
+                                           FromDate =
+                (
+                     EntityFunctions.Right(SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("yyyy", timesheetmaster.FromDate)), 4)
+
+                                            + "-"
+                    + EntityFunctions.Right(String.Concat(" ", SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("mm", timesheetmaster.FromDate))), 2)
+                        + "-"
+                        + EntityFunctions.Right(String.Concat(" ", SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("dd", timesheetmaster.FromDate))), 2)
+                       ).Replace(" ", "0"),
+
+
+                                           ToDate =
+                     (
+                     EntityFunctions.Right(SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("yyyy", timesheetmaster.ToDate)), 4)
+
+                                            + "-"
+                    + EntityFunctions.Right(String.Concat(" ", SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("mm", timesheetmaster.ToDate))), 2)
+                        + "-"
+                        + EntityFunctions.Right(String.Concat(" ", SqlFunctions.StringConvert((double?)SqlFunctions.DatePart("dd", timesheetmaster.ToDate))), 2)
+                       ).Replace(" ", "0"),
+
+                                           CreatedOn = SqlFunctions.DateName("day", timesheetmaster.CreatedOn).Trim() + "/" +
+                   SqlFunctions.StringConvert((double)timesheetmaster.CreatedOn.Value.Month).TrimStart() + "/" +
+                   SqlFunctions.DateName("year", timesheetmaster.CreatedOn),
+                                           TotalHours = timesheetmaster.TotalHours,
+                                           Username = registration.Username,
+                                           SubmittedMonth = SqlFunctions.DateName("MONTH", timesheetmaster.ToDate).ToString(),
+                                           SubmittedWeek = SqlFunctions.DatePart("WEEK", timesheetmaster.ToDate)
+                                       });
+
+            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+            {
+                IQueryabletimesheet = IQueryabletimesheet.OrderBy(sortColumn + " " + sortColumnDir);
+            }
+            if (!string.IsNullOrEmpty(Search))
+            {
+                IQueryabletimesheet = IQueryabletimesheet.Where(m => m.FromDate == Search || m.Username == Search);
+            }
+
+            return IQueryabletimesheet;
+
+        }
+
         public DisplayViewModel GetTimeSheetsCountByUserID(string UserID)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))

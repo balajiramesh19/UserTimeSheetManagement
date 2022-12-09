@@ -27,6 +27,7 @@ namespace WebTimeSheetManagement.Interface
         IQueryable<TimeSheetMasterView> ShowAllApprovedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllRejectTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllSubmittedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
+        IQueryable<TimeSheetMasterView> ShowAllDefaulters(string sortColumn, string sortColumnDir, string Search, int UserID);
         DisplayViewModel GetTimeSheetsCountByUserID(string UserID);
         IQueryable<TimeSheetMasterView> ShowTimeSheetStatus(string sortColumn, string sortColumnDir, string Search, int UserID, int TimeSheetStatus);
         bool UpdateTimeSheetAuditStatus(int TimeSheetID, string Comment, int Status);

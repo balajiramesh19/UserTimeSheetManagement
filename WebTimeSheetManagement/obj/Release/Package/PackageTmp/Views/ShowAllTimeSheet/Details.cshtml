@@ -7,12 +7,14 @@
 
 <script src="~/Scripts/ajaxjquery.min.js"></script>
 <script src="~/Scripts/jquery.timesheetprocess.js"></script>
-<h2>Details</h2>
+<h2 style="color:white">Details</h2>
 
 <style>
     table, th, td {
-        border: 1px solid black;
+        border: 1px solid white;
+        background: #c3bac1;
     }
+
 </style>
 <p>
     @Html.ActionLink("Back to Main View", "TimeSheet", "ShowAllTimeSheet")
@@ -25,14 +27,18 @@
 
             <td><b>@Html.DisplayFor(modelItem => item)</b></td>
         }
+        <td><b>Description</b></td>
+        <td><b>Documents Attached</b></td>
     </tr>
     <tr>
         <td></td>
         @foreach (var item in Model.ListofPeriods)
-            {
+        {
 
             <td><b>@Html.DisplayFor(modelItem => item.Period)</b></td>
         }
+        <td></td>
+        <td></td>
     </tr>
 
 
@@ -43,18 +49,41 @@
 
             @{
                 var ListofHours = WebTimeSheetManagement.Helpers.MethodonViews.GetHoursbyTimeSheetMasterID(Model.TimeSheetMasterID, Model.ListofProjectNames[i].ProjectID);
-
+                var ListofDescription = WebTimeSheetManagement.Helpers.MethodonViews.GetDescriptionbyTimeSheetMasterID(Model.TimeSheetMasterID, Model.ListofProjectNames[i].ProjectID);
                 foreach (var item in ListofHours)
                 {
                     <td><b>@Html.DisplayFor(modelItem => item.Hours)</b></td>
                 }
+                <td>@ListofDescription</td>
             }
+        <td>
+                    @{
+                        var documents = (List<WebTimeSheetManagement.Models.DocumentsVM>)ViewBag.documents;
+                        foreach (var document in documents)
+                        {
+                                <h5>
+                                    @{
+                                        var filename = document.DocumentName;
+                                        var link = Url.Action("Download1", "ShowAllTimeSheet", new
+                                        {
+                                            ExpenseID = Model.TimeSheetMasterID,
+                                            DocumentID = document.DocumentID
+                                        });
+                                    }
+                                    <a href="@link">
+                                        <i class="fa fa-download fa-fw"></i>@filename
+                                    </a>
+                                </h5>
+                        }
+                    }
+
+        </td>
         </tr>
-                }
+    }
     @Html.HiddenFor(model => model.TimeSheetMasterID)
 </table>
 <div class="panel panel-default">
-    <div class="panel-heading">Expense Details</div>
+    <div class="panel-heading">Timesheet Details</div>
     <div class="panel-body">
         <div class="row">
             <div class="col-md-6">
@@ -64,8 +93,12 @@
         </div>
         <div class="col-md-6">
             <br />
-            <input type="submit" onclick="return Approvetimesheet();" value="Approve" class="btn btn-success" />
-            <input type="submit" onclick="return Rejecttimesheet();" value="Reject" class="btn btn-success" />
+            <button type="submit" class="btn btn-info" onclick="return Approvetimesheet();" value="Approve">
+                <i class="fa fa-check-square-o"></i> Approve
+            </button>
+            <button type="submit" class="btn btn-info" onclick="return Rejecttimesheet();" value="Reject">
+                <i class="fa fa-close"></i> Reject
+            </button>
             @Html.ActionLink("Cancel", "TimeSheet", "ShowAllTimeSheet", null, new { @class = "btn btn-danger" })
         </div>
     </div>
