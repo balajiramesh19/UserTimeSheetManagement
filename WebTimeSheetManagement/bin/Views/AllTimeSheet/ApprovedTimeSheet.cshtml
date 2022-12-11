@@ -41,7 +41,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/AllTimeSheet/LoadApprovedTimeSheetData",
+                "url":"@Url.Action("LoadApprovedTimeSheetData", "AllTimeSheet")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -75,7 +75,10 @@
                 { "data": "Comment", "name": "Comment", "title": "Comment", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta)
-                    { return '<a class="btn btn-info" href="/AllTimeSheet/Details/' + full.TimeSheetMasterID + '"><i class="fa fa-eye fa-fw"></i> </a>'; }
+                    {
+                        var url = '@Url.Action("Details", "AllTimeSheet")/' + full.TimeSheetMasterID;
+                        return '<a class="btn btn-info" href='+url+'><i class="fa fa-eye fa-fw"></i> </a>';
+                    }
                 },
             ]
 

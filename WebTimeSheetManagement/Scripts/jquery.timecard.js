@@ -169,9 +169,8 @@ $("#datepicker_end").datepicker(
    });
 
 function CheckIsDateAlreadyUsed(selectedDate) {
-    
-    var url = "/TimeSheet/CheckIsDateAlreadyUsed";
-    
+    var url = "/timesheets/TimeSheet/CheckIsDateAlreadyUsed";
+    console.log(url)
     $.ajax({
         url: url,
         type: 'POST',

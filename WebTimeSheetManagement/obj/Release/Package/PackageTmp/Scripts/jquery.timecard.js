@@ -37,7 +37,6 @@ $(document).ready(function ()
 
 
 function CalEnd() {
-    $("#loading").show();
     var a = $("#datepicker_start").datepicker('getDate').getTime();
 
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -170,9 +169,8 @@ $("#datepicker_end").datepicker(
    });
 
 function CheckIsDateAlreadyUsed(selectedDate) {
-    
-    var url = "/TimeSheet/CheckIsDateAlreadyUsed";
-    
+    var url = "/timesheets/TimeSheet/CheckIsDateAlreadyUsed";
+    console.log(url)
     $.ajax({
         url: url,
         type: 'POST',

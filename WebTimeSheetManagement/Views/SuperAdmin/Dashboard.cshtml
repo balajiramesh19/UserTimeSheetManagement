@@ -128,7 +128,7 @@
     <ul class="cards" style="background: #32142fa1; padding: 69px;">
         <li>
             <h2 style="font-size:24px;color:white">Users Count</h2>
-            <a target="_blank" href="/AllUsers/Users" class="card">
+            <a target="_blank" href=@Url.Action("Users", "AllUsers") class="card">
                 <div class="card__overlay">
                     <div class="card__header">
                         <div class="card__header-text">
@@ -145,7 +145,7 @@
         </li>
         <li>
             <h2 style="font-size:24px;color:white">Admin Count</h2>
-            <a class="card" target="_blank" href="/AllUsers/admin">
+            <a class="card" target="_blank" href=@Url.Action("admin", "AllUsers")>
                 <div class="card__overlay">
                     <div class="card__header">
                         <div class="card__header-text">
@@ -164,7 +164,7 @@
         </li>
         <li>
             <h2 style="font-size:24px;color:white">Project Count</h2>
-            <a target="_blank" href="/Project/Index" class="card">
+            <a target="_blank" href=@Url.Action("Index", "Project") class="card">
                 <div class="card__overlay">
                     <div class="card__header">
                         <div class="card__header-text">

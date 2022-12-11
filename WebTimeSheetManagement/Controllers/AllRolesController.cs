@@ -67,7 +67,7 @@ namespace WebTimeSheetManagement.Controllers
 
                 var role = _IAssignRoles.RemovefromUserRole(RegistrationID);
                 RegistrationViewDetailsModel user = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(RegistrationID));
-                RegistrationViewDetailsModel userSuperAdmin = _IUsersConcrete.GetUserDetailsByRegistrationID(Convert.ToInt32(Session["SuperAdmin"]));
+                RegistrationViewDetailsModel userSuperAdmin = _IUsersConcrete.GetAdminDetailsByRegistrationID(Convert.ToInt32(Session["SuperAdmin"]));
                 EmailUtility.SendMailAsync(EmailConstants.RemoveRole, GetEmailTemplate(RegistrationID, user), new List<string>() { user.EmailID }, new List<string>() { userSuperAdmin.EmailID }, EmailUtility.EnumEmailSentType.Login);
                 return Json(role);
             }

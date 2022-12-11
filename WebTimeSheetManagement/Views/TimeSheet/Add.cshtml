@@ -5,7 +5,6 @@
 }
 
 <script src="~/Scripts/jquery.timecard.js"></script>
-<script src="~/Scripts/jquery.total.js"></script>
 <script src="~/Scripts/jquery.documentvalidate.js"></script>
 
 <script>
@@ -439,7 +438,7 @@
     });
     $(document).ready(function () {
         $("#loading").hide();
-        $.getJSON('@Url.Content("~/")' + "TimeSheet/ListofProjects", function (data) {
+        $.getJSON("@Url.Action("ListofProjects", "TimeSheet")" , function (data) {
             var items1 = '';
             items1 += "<option value='" + "" + "'>" + "----Select----" + "</option>";
 

@@ -131,8 +131,9 @@
         color: grey;
         transform: rotateY(180deg);
     }
+
     #loading {
-        background:white;
+        background: white;
         width: 100%;
         height: 100%;
         top: 0px;
@@ -147,15 +148,14 @@
         top: 40%;
         left: 45%;
         z-index: 100
-    } 
+    }
 </style>
-
 <body style="background: linear-gradient(90deg, #49274a, transparent),url(https://cdn.pixabay.com/photo/2021/07/26/21/30/clock-6495245_960_720.jpg); background-image: /* background-repeat: round; */ background-size: cover; background-size: cover;">
     <script>
         function openNav() {
             var flag = document.getElementById("mySidebar").style.width == "250px";
-            document.getElementById("mySidebar").style.width = (!flag ? "250px":"0px");
-            document.getElementById("page-wrapper").style.margin = (!flag ? "0 0 0 250px" : "0 0 0 0px"); ;
+            document.getElementById("mySidebar").style.width = (!flag ? "250px" : "0px");
+            document.getElementById("page-wrapper").style.margin = (!flag ? "0 0 0 250px" : "0 0 0 0px");;
         }
 
     </script>
@@ -167,19 +167,19 @@
             @*<a href="javascript:void(0)" class="closebtn" onclick="openNav()">×</a>*@
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="/User/Dashboard"><i class="fa fa-clock-o fa-fw"></i> Dashboard</a>
+                    <a href=@Url.Action("Dashboard","User")><i class="fa fa-clock-o fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="/TimeSheet/Add"><i class="fa fa-dashboard fa-fw"></i> TimeSheet</a>
+                    <a href="@Url.Action("Add","TimeSheet")"><i class="fa fa-dashboard fa-fw"></i> TimeSheet</a>
                 </li>
                 <li>
-                    <a href="/AllTimeSheet/TimeSheet"><i class="fa fa-edit fa-fw"></i> All TimeSheet</a>
+                    <a href="@Url.Action("TimeSheet","AllTimeSheet")"><i class="fa fa-edit fa-fw"></i> All TimeSheet</a>
                 </li>
                 <li>
-                    <a href="/UserProfile/ChangePassword"><i class="fa fa-table fa-fw"></i> Change Password</a>
+                    <a href="@Url.Action("ChangePassword","UserProfile")"><i class="fa fa-table fa-fw"></i> Change Password</a>
                 </li>
                 <li>
-                    <a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <a href="@Url.Action("Logout","Login")"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
         </div>
@@ -197,7 +197,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
-                                <a href="/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <a href="@Url.Action("Logout","Login")"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
 
@@ -248,7 +248,7 @@
                         function getData() {
                             var divNotificaion = $('#divNotificaion');
                             $.ajax({
-                                url: '/Notification/GetNotification',
+                                url: "@Url.Action("GetNotification", "Notification")",
                                 type: 'GET',
                                 datatype: 'json',
                                 success: function (data) {

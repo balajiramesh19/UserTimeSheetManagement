@@ -52,7 +52,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/Team/LoadUsersData",
+                "url": "@Url.Action("LoadUsersData", "Team")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -91,7 +91,7 @@
 <script type="text/javascript">
 
     function ShowUserDetails(ID) {
-        var url = '@Url.Content("~/")' + "Team/UserDetails";
+        var url = "@Url.Action("UserDetails","Team")";
         $.ajax({
             type: "POST",
             url: url,

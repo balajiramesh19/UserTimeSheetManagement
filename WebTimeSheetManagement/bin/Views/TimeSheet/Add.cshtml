@@ -5,7 +5,6 @@
 }
 
 <script src="~/Scripts/jquery.timecard.js"></script>
-<script src="~/Scripts/jquery.total.js"></script>
 <script src="~/Scripts/jquery.documentvalidate.js"></script>
 
 <script>
@@ -37,9 +36,7 @@
 <h4 class="page-header " style="color:ivory">Fill TimeSheets</h4>
 @using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new { onsubmit = "showLoader(this);", enctype = "multipart/form-data" }))
 {
-    <div id="loading">
-        <img id="loading-image" src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/cd514331234507.564a1d2324e4e.gif" alt="Loading...">
-    </div>
+   
     <div class="row" style="color:ivory">
         <div style="margin-top:10px;"></div>
         @using (Html.BeginForm("Add", "TimeSheet"))
@@ -440,7 +437,8 @@
         $("#loading").hide();
     });
     $(document).ready(function () {
-        $.getJSON('@Url.Content("~/")' + "TimeSheet/ListofProjects", function (data) {
+        $("#loading").hide();
+        $.getJSON("@Url.Action("ListofProjects", "TimeSheet")" , function (data) {
             var items1 = '';
             items1 += "<option value='" + "" + "'>" + "----Select----" + "</option>";
 

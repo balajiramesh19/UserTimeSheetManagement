@@ -3,182 +3,319 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+@*<style>
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+</style>
+<<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure" style="color:white">
+    <div id="container"></div>
+</figure>
+<script type="text/javascript">
+    
+    Highcharts.chart('container', {
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: true
+        },
+        chart: {
+            backgroundColor: 'rgba(0,0,0,0)',
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        colors: ['#8e718ffc', '#503051','white'  ],
+        title: {
+            text: 'Dashboard',
+            align: 'center',
+            style: {
+                color: 'white',
+                fill:'white',
+                font: 'bold 24px "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        subtitle: {
+            text: 'TimeSheet Counts by Status',
+            align: 'center',
+            style: {
+                color: 'white',
+                fill: 'white',
+                font: 'bold  "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        plotOptions: {
+            pie: {
+                innerSize: 100,
+                depth: 45
+            }
+        },
+        series: [{
+            name: 'Status',
+            data: [
+                ['Submitted ',  @ViewBag.SubmittedTimesheetCount],
+                ////['Rejected ', 10],
+                ['Approved ', @ViewBag.ApprovedTimesheetCount],
+                ['Rejected ', @ViewBag.RejectedTimesheetCount],
+
+            ]
+        }]
+    });
+
+    Highcharts.theme = {
+        colors: ['white', '#503051', '#baaeb7'],
+        title: {
+            style: {
+                color: 'red',
+                font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        subtitle: {
+            style: {
+                color: '#666666',
+                font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+            }
+        },
+        legend: {
+            itemStyle: {
+                font: '9pt Trebuchet MS, Verdana, sans-serif',
+                color: 'black'
+            },
+            itemHoverStyle: {
+                color: 'gray'
+            }
+        }
+    };
+    Highcharts.setOptions(Highcharts.theme);
+
+</script>*@
 <body style="background: linear-gradient(90deg, #49274a, transparent),url(https://cdn.pixabay.com/photo/2021/07/26/21/30/clock-6495245_960_720.jpg); background-image: /* background-repeat: round; */ background-size: cover; background-size: cover;">
-    <style>
-        :root {
-            --surface-color: #fff;
-            --curve: 40;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fef8f8;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 2rem;
-            margin: 4rem 5vw;
-            padding: 0;
-            list-style-type: none;
-            border-radius: calc(var(--curve) * 1px);
-        }
-
-        .card {
-            position: relative;
-            display: block;
-            height: auto;
-            border-radius: calc(var(--curve) * 1px);
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .card__image {
-            width: 100%;
-            height: 100%;
-        }
-
-        .card__overlay {
-            width: fit-content;
-            left: 0;
-            right: 0;
-            z-index: 1;
-            border-radius: calc(var(--curve) * 1px) 0;
-            background-color: var(--surface-color);
-            transform: translateY(100%);
-            transition: .2s ease-in-out;
-        }
-
-        .card:hover .card__overlay {
-            transform: translateY(0);
-        }
-
-        .card__header {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 2em;
-            padding: 2em;
-            border-radius: calc(var(--curve) * 1px) calc(var(--curve) * 1px) 0 0;
-            background-color: var(--surface-color);
-            transform: translateY(-100%);
-            transition: .2s ease-in-out;
-        }
-
-        .card__arc {
-            width: 80px;
-            height: 80px;
-            position: absolute;
-            bottom: 100%;
-            right: 0;
-            z-index: 1;
-        }
-
-            .card__arc path {
-                fill: var(--surface-color);
-                d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+        <style>
+            :root {
+                --surface-color: #fff;
+                --curve: 40;
             }
 
-        .card:hover .card__header {
-            transform: translateY(0);
-        }
+            * {
+                box-sizing: border-box;
+            }
 
-        .card__thumb {
-            flex-shrink: 0;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
+            body {
+                font-family: 'Noto Sans JP', sans-serif;
+                background-color: #fef8f8;
+            }
 
-        .card__title {
-            margin: 0 0 .3em;
-            color: #6A515E;
-        }
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 2rem;
+                margin: 4rem 5vw;
+                padding: 0;
+                list-style-type: none;
+                border-radius: calc(var(--curve) * 1px);
+            }
 
-        .card__tagline {
-            display: block;
-            margin: 1em 0;
-            font-family: "MockFlowFont";
-            font-size: .8em;
-            color: #D7BDCA;
-        }
+            .card {
+                position: relative;
+                display: block;
+                height: auto;
+                border-radius: calc(var(--curve) * 1px);
+                overflow: hidden;
+                text-decoration: none;
+            }
 
-        .card__status {
-            font-size: .8em;
-            color: #D7BDCA;
-        }
+            .card__image {
+                width: 100%;
+                height: 100%;
+            }
 
-        .card__description {
-            padding: 0 2em 2em;
-            margin: 0;
-            color: #503051;
-            font-family: "MockFlowFont";
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-        }
-    </style>
-    <ul class="cards" style="background: #32142fa1; padding: 69px;">
-        <li>
-            <h2 style="font-size:24px;color:white">Submitted Count</h2>
-            <a  target="_blank" href="/AllTimeSheet/SubmittedTimeSheet" class="card">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-clock-o" aria-hidden="true"></i> @ViewBag.SubmittedTimesheetCount</div>
-                                </div>
-                            </h3>
+            .card__overlay {
+                width: fit-content;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                border-radius: calc(var(--curve) * 1px) 0;
+                background-color: var(--surface-color);
+                transform: translateY(100%);
+                transition: .2s ease-in-out;
+            }
+
+            .card:hover .card__overlay {
+                transform: translateY(0);
+            }
+
+            .card__header {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 2em;
+                padding: 2em;
+                border-radius: calc(var(--curve) * 1px) calc(var(--curve) * 1px) 0 0;
+                background-color: var(--surface-color);
+                transform: translateY(-100%);
+                transition: .2s ease-in-out;
+            }
+
+            .card__arc {
+                width: 80px;
+                height: 80px;
+                position: absolute;
+                bottom: 100%;
+                right: 0;
+                z-index: 1;
+            }
+
+                .card__arc path {
+                    fill: var(--surface-color);
+                    d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+                }
+
+            .card:hover .card__header {
+                transform: translateY(0);
+            }
+
+            .card__thumb {
+                flex-shrink: 0;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+
+            .card__title {
+                margin: 0 0 .3em;
+                color: #6A515E;
+            }
+
+            .card__tagline {
+                display: block;
+                margin: 1em 0;
+                font-family: "MockFlowFont";
+                font-size: .8em;
+                color: #D7BDCA;
+            }
+
+            .card__status {
+                font-size: .8em;
+                color: #D7BDCA;
+            }
+
+            .card__description {
+                padding: 0 2em 2em;
+                margin: 0;
+                color: #503051;
+                font-family: "MockFlowFont";
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
+                overflow: hidden;
+            }
+        </style>
+        <ul class="cards" style="background: #32142fa1; padding: 69px;">
+            <li>
+                <h2 style="font-size:24px;color:white">Submitted Count</h2>
+                <a target="_blank" href="@Url.Action("SubmittedTimeSheet","AllTimeSheet")" class="card">
+                    <div class="card__overlay">
+                        <div class="card__header">
+                            <div class="card__header-text">
+                                <h3 class="card__title">
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><i class="fa fa-clock-o" aria-hidden="true"></i> @ViewBag.SubmittedTimesheetCount</div>
+                                    </div>
+                                </h3>
+                            </div>
                         </div>
+                        <p class="card__description">View details</p>
                     </div>
-                    <p class="card__description">View details</p>
-                </div>
-            </a>
-        </li>
-        <li>
-            <h2 style="font-size:24px;color:white">Approved Count</h2>
-            <a  class="card"  target="_blank" href="/AllTimeSheet/ApprovedTimeSheet">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-check-circle-o" aria-hidden="true"></i>@ViewBag.ApprovedTimesheetCount</div>
-                                </div>
-                            </h3>
+                </a>
+            </li>
+            <li>
+                <h2 style="font-size:24px;color:white">Approved Count</h2>
+                <a class="card" target="_blank" href="@Url.Action("ApprovedTimeSheet","AllTimeSheet")">
+                    <div class="card__overlay">
+                        <div class="card__header">
+                            <div class="card__header-text">
+                                <h3 class="card__title">
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><i class="fa fa-check-circle-o" aria-hidden="true"></i>@ViewBag.ApprovedTimesheetCount</div>
+                                    </div>
+                                </h3>
+                            </div>
                         </div>
+                        <p class="card__description">
+                            View details
+                        </p>
                     </div>
-                    <p class="card__description">
-                        View details
-                    </p>
-                </div>
-            </a>
-        </li>
-        <li>
-            <h2 style="font-size:24px;color:white">Rejected Count</h2>
-            <a target="_blank" href="/AllTimeSheet/RejectedTimeSheet" class="card">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-close" aria-hidden="true"></i>@ViewBag.RejectedTimesheetCount</div>
-                                </div>
-                            </h3>
+                </a>
+            </li>
+            <li>
+                <h2 style="font-size:24px;color:white">Rejected Count</h2>
+                <a target="_blank" href="@Url.Action("RejectedTimeSheet","AllTimeSheet")" class="card">
+                    <div class="card__overlay">
+                        <div class="card__header">
+                            <div class="card__header-text">
+                                <h3 class="card__title">
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"><i class="fa fa-close" aria-hidden="true"></i>@ViewBag.RejectedTimesheetCount</div>
+                                    </div>
+                                </h3>
+                            </div>
                         </div>
+                        <p class="card__description">View details</p>
                     </div>
-                    <p class="card__description">View details</p>
-                </div>
-            </a>
-        </li>
-    </ul>
+                </a>
+            </li>
+        </ul>
 
 
-</body>
+    </body>

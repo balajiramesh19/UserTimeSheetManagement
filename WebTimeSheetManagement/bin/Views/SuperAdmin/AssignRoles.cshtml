@@ -149,7 +149,7 @@
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
                 "ajax": {
-                    "url": "/SuperAdmin/LoadUsersData",
+                    "url": "@Url.Action("LoadUsersData", "SuperAdmin")",
                     "type": "POST",
                     "datatype": "json"
             },
@@ -233,7 +233,7 @@
 
         function submit1(asd) {
             console.log($("#adminAssigned option:selected").val());
-            var url = '@Url.Content("~/")' + "SuperAdmin/AssignRoles";
+            var url ="@Url.Action("AssignRoles", "SuperAdmin")";
             $.post(url, { SelectedUsers: selectedUsers, assignToAdmin: adminAssigned }, function (data) {
                 if (data) {
                     oTable = $('#myTable').DataTable();

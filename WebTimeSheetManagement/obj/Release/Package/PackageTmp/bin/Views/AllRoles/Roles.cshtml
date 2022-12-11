@@ -43,7 +43,7 @@
         </div>
     </div>
 </div>
-            <script>
+<script>
     $(document).ready(function () {
         $("#myTable").DataTable({
             "processing": true, // for show progress bar
@@ -51,7 +51,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/AllRoles/LoadRolesData",
+                "url": "@Url.Action("LoadRolesData", "AllRoles")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -106,7 +106,7 @@
 
         });
     });
-            </script>
+</script>
 
             <script type="text/javascript">
 
@@ -119,7 +119,7 @@
         }
     }
     function Removerole(ID) {
-        var url = '@Url.Content("~/")' + "AllRoles/RemovefromRole";
+        var url = '@Url.Action("RemovefromRole", "AllRoles")';
         $.post(url, { RegistrationID: ID }, function (data) {
             if (data) {
                 oTable = $('#myTable').DataTable();

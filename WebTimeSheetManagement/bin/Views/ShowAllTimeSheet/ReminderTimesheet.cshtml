@@ -45,7 +45,7 @@
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
                 "ajax": {
-                    "url": "/ShowAllTimeSheet/LoadApprovedData",
+                    "url": "@Url.Action("LoadApprovedData", "ShowAllTimeSheet")" ,
                     "type": "POST",
                     "datatype": "json"
                 },
@@ -87,7 +87,9 @@
                     { "data": "CreatedOn", "name": "CreatedOn", "autoWidth": true },
                     {
                         "render": function (data, type, full, meta)
-                        { return '<a class="btn btn-info" href="/ShowAllTimeSheet/Details/' + full.TimeSheetMasterID + '"><i class="fa fa-eye fa-fw"></i> </a>'; }
+                        {   var url = '@Url.Action("Details", "ShowAllTimeSheet")' + full.TimeSheetMasterID;
+                            return '<a class="btn btn-info" href=' + url + '"><i class="fa fa-eye fa-fw"></i> </a>';
+                        }
                     },
                      {
                          data: null, render: function (data, type, row) {
@@ -111,7 +113,7 @@
         }
     }
     function DeleteSheet(ID) {
-        var url = '@Url.Content("~/")' + "ShowAllTimeSheet/Delete";
+        var url = "@Url.Action("Delete", "ShowAllTimeSheet")";
         $.post(url, { TimeSheetMasterID: ID }, function (data) {
             if (data) {
                 oTable = $('#myTable').DataTable();

@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $.getJSON('@Url.Content("~/")' + "TimeSheetExport/ListofEmployees", function (data) {
+        $.getJSON("@Url.Action("ListofEmployees", "TimeSheetExport")", function (data) {
             var items1 = '';
             items1 += "<option value='" + "" + "'>" + "----Select----" + "</option>";
 

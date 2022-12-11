@@ -42,7 +42,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/Project/LoadProjectData",
+                "url": "@Url.Action("LoadProjectData", "Project")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -101,7 +101,7 @@
         }
     }
     function DeleteSheet(ID) {
-        var url = '@Url.Content("~/")' + "Project/Delete";
+        var url = "@Url.Action("Delete", "Project") ";
         $.post(url, { ProjectID: ID }, function (data) {
             if (data) {
                 oTable = $('#myTable').DataTable();

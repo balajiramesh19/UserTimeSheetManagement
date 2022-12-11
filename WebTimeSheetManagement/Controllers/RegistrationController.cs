@@ -68,7 +68,7 @@ namespace WebTimeSheetManagement.Controllers
                     if (_IRegistration.AddUser(registration) > 0)
                     {
                         TempData["MessageRegistration"] = "Data Saved Successfully!";
-                        var userCount = (int)_ICacheManager.Get<object>("UsersCount") + 1;
+                        var userCount = _ICacheManager.Get<object>("UsersCount") !=null ? ((int)_ICacheManager.Get<object>("UsersCount") + 1) : 1;
                         _ICacheManager.Add("UsersCount",  userCount);
                         EmailUtility.SendMailAsync(EmailConstants.RegistrationSubject, GetEmailTemplate(registration),  new List<string>() {registration.EmailID}, null,EmailUtility.EnumEmailSentType.Login);
                         return RedirectToAction("Registration");

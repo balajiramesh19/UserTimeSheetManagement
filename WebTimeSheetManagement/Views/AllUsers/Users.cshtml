@@ -53,7 +53,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/AllUsers/LoadUsersData",
+                "url": "@Url.Action("LoadUsersData", "AllUsers")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -89,9 +89,9 @@
                    { "data": "EmailID", "name": "EmailID", "autoWidth": true },
                          {
                              "render": function (data, type, full, meta) {
-                              
-                                 return "<a href='#' class='btn btn-info' onclick=ShowUserDetails('" + full.RegistrationID + "'); ><i class='fa fa - eye fa - fw'></i> </a>";
-                                 
+
+                                 return "<a href='#' class='btn btn-info' onclick=ShowUserDetails('" + full.RegistrationID + "'); ><i class='fa fa-eye fa-fw'></i> </a>";
+
                              }
                          },
 
@@ -104,7 +104,7 @@
 <script type="text/javascript">
 
     function ShowUserDetails(ID) {
-        var url = '@Url.Content("~/")' + "AllUsers/UserDetails";
+        var url ="@Url.Action("UserDetails", "AllUsers")";
         $.ajax({
             type: "POST",
             url: url,
@@ -114,7 +114,7 @@
             success: function (response)
             {
                 $('#contentBody').html(response);
-                $('#myModal').modal('show'); 
+                $('#myModal').modal('show');
             },
             failure: function (response) {
                 alert(response.responseText);

@@ -55,7 +55,7 @@
     </div>
 </div>
 <script>
-    
+
     $(document).ready(function () {
         $("#myTable").DataTable({
             "processing": true, // for show progress bar
@@ -67,7 +67,7 @@
             "orderMulti": false, // for disable multiple column at once
 
             "ajax": {
-                "url": "/AllTimeSheet/LoadTimeSheetData",
+                "url": "@Url.Action("LoadTimeSheetData", "AllTimeSheet")",
                 "type": "POST",
                 "datatype": "json"
             },
@@ -105,7 +105,10 @@
                 { "data": "Comment", "name": "Comment", "title": "Comment", "autoWidth": true },
                 {
                     "render": function (data, type, full, meta)
-                    { return '<a class="btn btn-info" href="/AllTimeSheet/Details/' + full.TimeSheetMasterID + '"><i class="fa fa-eye fa-fw"></i> </a>'; }
+                    {
+                        var url = '@Url.Action("Details", "AllTimeSheet")/' + full.TimeSheetMasterID;
+                        return '<a class="btn btn-info" href='+url + '><i class="fa fa-eye fa-fw"></i> </a>';
+                    }
                 },
                  {
                      data: null, render: function (data, type, row) {
@@ -137,7 +140,7 @@
         }
     }
     function DeleteSheet(ID) {
-        var url = '@Url.Content("~/")' + "TimeSheet/Delete";
+        var url = "@Url.Action("Delete", "TimeSheet")";
         $.post(url, { TimeSheetMasterID: ID }, function (data) {
             if (data) {
                 oTable = $('#myTable').DataTable();

@@ -46,7 +46,7 @@
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
             "ajax": {
-                "url": "/AddNotification/LoadNotificationData",
+                "url": @Url.Action("LoadNotificationData", "AddNotification")"",
                 "type": "POST",
                 "datatype": "json"
             },

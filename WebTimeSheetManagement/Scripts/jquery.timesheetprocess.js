@@ -14,11 +14,11 @@
                     Comment: $("#Comment").val(),
                 };
 
-            var url = '/ShowAllTimeSheet/Approval';
+            var url = '/timesheets/ShowAllTimeSheet/Approval';
             $.post(url, { TimeSheetApproval: TimeSheetModel }, function (data) {
                 if (data) {
                     alert("Timesheet Approved Successfully");
-                    window.location.href = "/ShowAllTimeSheet/TimeSheet";
+                    window.location.href = "/timesheets/ShowAllTimeSheet/TimeSheet";
                     return true;
                 }
                 else {
@@ -48,11 +48,11 @@ function Rejecttimesheet() {
                    Comment: $("#Comment").val(),
                };
 
-            var url = '/ShowAllTimeSheet/Rejected';
+            var url =  '/timesheets/ShowAllTimeSheet/Rejected';
             $.post(url, { TimeSheetApproval: TimeSheetModel }, function (data) {
                 if (data) {
                     alert("Timesheet Rejected Successfully");
-                    window.location.href = "/ShowAllTimeSheet/TimeSheet";
+                    window.location.href = "/timesheets/ShowAllTimeSheet/TimeSheet";
                     return true;
                 }
                 else {

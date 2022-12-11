@@ -34,7 +34,7 @@
                 "filter": true, // this is for disable filter (search box)
                 "orderMulti": false, // for disable multiple column at once
                 "ajax": {
-                    "url": "/ShowAllTimeSheet/LoadDefaultersData",
+                    "url": "@Url.Action("LoadDefaultersData", "ShowAllTimeSheet")",
                     "type": "POST",
                     "datatype": "json"
                 },
@@ -42,7 +42,8 @@
                 [{
                     "targets": [0],
                     "visible": true,
-                    "searchable": false
+                    "searchable": false,
+                    "orderable": false
                 },
                 {
                     "targets": [1],
@@ -52,7 +53,22 @@
                 ],
                 "columns": [
                     { "data": "UserName", "name": "Username", "autoWidth": true },
-                    { "data": "missedDatesToFill", "title": "Dates Missed to Fill", "name": "missedDatesToFill", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row) {
+                            if (data.missedDatesToFill.length==0) {
+                                return "User Filled Ts for last 4 weeks";
+                            }
+                            else {
+                                var str = "<ul>";
+                                for (var dataMissed of data.missedDatesToFill) {
+                                    str = str+"<li>"+dataMissed + "</li>";
+                                }
+                                str = str + "</ul>";
+                                return str;
+                            }
+
+                        }
+                    },
                 ]
 
             });
@@ -69,7 +85,7 @@
         }
     }
     function DeleteSheet(ID) {
-        var url = '@Url.Content("~/")' + "ShowAllTimeSheet/Delete";
+        var url = "@Url.Action("Delete", "ShowAllTimeSheet")";
         $.post(url, { TimeSheetMasterID: ID }, function (data) {
             if (data) {
                 oTable = $('#myTable').DataTable();

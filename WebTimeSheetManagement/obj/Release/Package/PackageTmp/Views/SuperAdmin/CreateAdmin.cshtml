@@ -128,7 +128,7 @@
     }
 
     function CheckUsernameExists() {
-        var url = '@Url.Content("~/")' + "Registration/CheckUserNameExists";
+        var url = "@Url.Action("CheckUserNameExists", "Registration")";
         var source = "#Username";
         $.post(url, { Username: $(source).val() }, function (data) {
             if (data) {

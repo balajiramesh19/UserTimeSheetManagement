@@ -53,7 +53,7 @@
 <script type="text/javascript">
 
         function CheckProjectCode() {
-            var url = '@Url.Content("~/")' + "Project/CheckProjectCodeExists";
+            var url = "@Url.Action("CheckProjectCodeExists", "Project")";
             var source = "#ProjectCode";
             $.post(url, { ProjectCode: $(source).val() }, function (data) {
                 if (data) {
@@ -67,7 +67,7 @@
         }
 
         function CheckProjectName() {
-            var url = '@Url.Content("~/")' + "Project/CheckProjectNameExists";
+            var url =  "@Url.Action("CheckProjectNameExists", "Project")" ;
             var source = "#ProjectName";
             $.post(url, { ProjectName: $(source).val() }, function (data) {
                 if (data) {
