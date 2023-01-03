@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,6 +35,17 @@ namespace WebTimeSheetManagement.Models
 
         [Required(ErrorMessage = "Gender Required")]
         public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Status Required")]
+        public string Status { get; set; }
+
+        [Required(ErrorMessage = "LegalStatus Required")]
+        public string LegalStatus { get; set; }
+
+        public List<LegalStatusModel> LegalStatusList { get; set; }
+
+        public string OrganizationId { get; set; }
+
         public DateTime? Birthdate { get; set; }
         public DateTime? DateofJoining { get; set; }
         
@@ -43,5 +55,12 @@ namespace WebTimeSheetManagement.Models
         public string  EmployeeID { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? ForceChangePassword { get; set; }
+
+        [Table("LegalStatus")]
+        public class LegalStatusModel
+        {
+            public string ID { get; set; }
+            public string LegalStatus { get; set; }
+        }
     }
 }

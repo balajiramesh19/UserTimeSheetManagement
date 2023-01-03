@@ -1,0 +1,456 @@
+﻿
+@{
+    ViewBag.Title = "StatusData";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/themes/brand-dark.js"></script>
+
+    <style>
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 310px;
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        #container {
+            height: 400px;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #ebebeb;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td,
+        .highcharts-data-table th,
+        .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr,
+        .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+    </style>
+
+    <figure class="highcharts-figure" style="fill:#32142fa1">
+        <div id="container" style=" border-radius: calc(var(--curve) * .25px);"></div>
+        <p class="highcharts-description">
+
+        </p>
+    </figure>
+
+
+    <script type="text/javascript">
+        // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
+
+        // Create the chart
+
+        $(document).ready(function () {
+            var chart = Highcharts.chart('container', {
+                chart: {
+                    type: 'column',
+                    events: {
+                        load: requestData
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    backgroundColor: '#32142fa1',
+                    options3d: {
+                        enabled: true,
+                        alpha: 15,
+                        beta: 15,
+                        depth: 50,
+                        viewDistance: 25
+                    }
+
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    align: 'center',
+                    text: 'Employee Status Count by Month'
+                },
+                subtitle: {
+                    align: 'left',
+                    text: ''
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total  '
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+                },
+
+                series: [
+                    {
+                        name: 'Status Count',
+                        colorByPoint: true,
+                        data: [
+                            {
+                                name: 'Jan',
+                                y: @ViewBag.DashboardData["Jan"][2],
+                                drilldown: 'Jan'
+                            },
+                            {
+                                name: 'Feb',
+                                y: @ViewBag.DashboardData["Feb"][3],
+                                drilldown: 'Feb'
+                            },
+                            {
+                                name: 'Mar',
+                                y:  @ViewBag.DashboardData["Mar"][3],
+                                drilldown: 'Mar'
+                            },
+                            {
+                                name: 'Apr',
+                                y: @ViewBag.DashboardData["Apr"][3],
+                                drilldown: 'Apr'
+                            },
+                            {
+                                name: 'May',
+                                y: @ViewBag.DashboardData["May"][3],
+                                drilldown: 'May'
+                            },
+                            {
+                                name: 'June',
+                                y:  @ViewBag.DashboardData["Jun"][3],
+                                drilldown: 'June'
+                            },
+                            {
+                                name: 'Jul',
+                                y: @ViewBag.DashboardData["Jul"][3],
+                                drilldown: 'Jul'
+                            },
+                            {
+                                name: 'Aug',
+                                y: @ViewBag.DashboardData["Aug"][3],
+                                drilldown: 'Aug'
+                            },
+                            {
+                                name: 'Sep',
+                                y: @ViewBag.DashboardData["Sep"][3],
+                                drilldown: 'Sep'
+                            },
+                            {
+                                name: 'Oct',
+                                y: @ViewBag.DashboardData["Oct"][3],
+                                drilldown: 'Oct'
+                            },
+                            {
+                                name: 'Nov',
+                                y: @ViewBag.DashboardData["Nov"][3],
+                                drilldown: 'Nov'
+                            },
+                            {
+                                name: 'Dec',
+                                y: @ViewBag.DashboardData["Dec"][3],
+                                drilldown: 'Dec'
+                            }
+                        ]
+                    }
+                ],
+                drilldown: {
+                    breadcrumbs: {
+                        position: {
+                            align: 'right'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Jan',
+                            id: 'Jan',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jan"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jan"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Feb',
+                            id: 'Feb',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Feb"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Feb"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Mar',
+                            id: 'Mar',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Mar"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Mar"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Apr',
+                            id: 'Apr',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Apr"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Apr"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'May',
+                            id: 'May',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["May"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["May"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'June',
+                            id: 'June',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jun"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jun"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Jul',
+                            id: 'Jul',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jul"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jul"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Aug',
+                            id: 'Aug',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Aug"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Aug"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Sep',
+                            id: 'Sep',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Sep"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Sep"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Oct',
+                            id: 'Oct',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Oct"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Oct"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Nov',
+                            id: 'Nov',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Nov"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Nov"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Dec',
+                            id: 'Dec',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Dec"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Dec"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            function requestData() {
+                $.ajax({
+                    url: "@Url.Action("Dashboard", "Admin")",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        chart.series[0].data = data;
+                    },
+                    cache: false
+                });
+            }
+        })
+
+    </script>
+</body>
+</html>
+
+
+ 

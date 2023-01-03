@@ -431,6 +431,182 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
+        public Dictionary<string, List<string>>  GetDashboardDataByAdminID(string AdminID)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                var param = new DynamicParameters();
+                param.Add("@AdminID", AdminID);
+                List<DashboardData> dashboardDatas= con.Query<DashboardData>("Usp_GetAdminDashboardDataByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<DashboardData>();
+                Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
+                dashboarddataDict.Add("Jan", new List<string>() {"0","0","0","0","0"});
+                dashboarddataDict.Add("Feb", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Mar", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Apr", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("May", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jun", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jul", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Aug", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Sep", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Oct", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Nov", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Dec", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Total", new List<string>() { "0", "0", "0", "0", "0" });
+                dashboardDatas.ForEach((data) =>
+                {
+                    dashboarddataDict[data.TSMonth][0]=(Convert.ToString(data.SubmittedCount));
+                    dashboarddataDict[data.TSMonth][1] = (Convert.ToString(data.ApprovedCount));
+                    dashboarddataDict[data.TSMonth][2] = (Convert.ToString(data.RejectedCount));
+                    dashboarddataDict[data.TSMonth][3] = (Convert.ToString(data.TotalTimeSheets));
+                    dashboarddataDict[data.TSMonth][4] = (Convert.ToString(data.Totalhours));
+                    dashboarddataDict["Total"][1] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][1])+data.Totalhours));
+                    dashboarddataDict["Total"][0] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][0])+data.TotalTimeSheets));
+                });
+                return dashboarddataDict;
+            }
+        }
+
+        public Dictionary<string, List<string>> GetDashboardStatusDataByAdminID(string AdminID)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                var param = new DynamicParameters();
+                param.Add("@AdminID", AdminID);
+                List<StatusData> dashboardDatas = con.Query<StatusData>("Usp_GetStatusCountByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<StatusData>();
+                Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
+                dashboarddataDict.Add("Jan", new List<string>() { "0", "0", "0","0" });
+                dashboarddataDict.Add("Feb", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Mar", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Apr", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("May", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jun", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jul", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Aug", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Sep", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Oct", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Nov", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Dec", new List<string>() { "0", "0", "0", "0" });
+                dashboarddataDict.Add("Total", new List<string>() { "0", "0", "0", "0" });
+                dashboardDatas.ForEach((data) =>
+                {
+                    if ("Active".Equals(data.Status)) { 
+                        dashboarddataDict[data.StatusMonth][0] = (Convert.ToString(data.StatusCount));
+                        dashboarddataDict[data.StatusMonth][3] = (Convert.ToString(Convert.ToInt16(dashboarddataDict[data.StatusMonth][3]) + data.StatusCount)); 
+                        dashboarddataDict["Total"][0] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][0]) + data.StatusCount));
+                    }
+                    else if ("InActive".Equals(data.Status))
+                    {
+                        dashboarddataDict[data.StatusMonth][1] = (Convert.ToString(data.StatusCount));
+                        dashboarddataDict[data.StatusMonth][3] = (Convert.ToString(Convert.ToInt16(dashboarddataDict[data.StatusMonth][3]) + data.StatusCount));
+                        dashboarddataDict["Total"][1] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][0]) + data.StatusCount));
+                    }
+                    else
+                    {
+                        dashboarddataDict[data.StatusMonth][2] = (Convert.ToString(data.StatusCount));
+                        dashboarddataDict[data.StatusMonth][3] = (Convert.ToString(Convert.ToInt16(dashboarddataDict[data.StatusMonth][3]) + data.StatusCount)); 
+                        dashboarddataDict["Total"][2] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][1]) + data.StatusCount));
+                    }
+                    dashboarddataDict["Total"][3] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][3]) + data.StatusCount));
+
+                });
+                return dashboarddataDict;
+            }
+        }
+
+        public Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                var param = new DynamicParameters();
+                param.Add("@AdminID", AdminID);
+                List<LegalStatusData> dashboardDatas = con.Query<LegalStatusData>("Usp_GetLegalStatusCountsByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<LegalStatusData>();
+                Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
+                dashboarddataDict.Add("Jan", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Feb", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Mar", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Apr", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("May", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jun", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Jul", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Aug", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Sep", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Oct", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Nov", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Dec", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboarddataDict.Add("Total", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
+                dashboardDatas.ForEach((data) =>
+                {
+
+                    switch (data.LegalStatus)
+                    {
+                        case "OTHER_EAD":
+                            dashboarddataDict[data.StatusMonth][0] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][0] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "TN_VISA":
+                            dashboarddataDict[data.StatusMonth][1] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][1] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "H1-B_VISA":
+                            dashboarddataDict[data.StatusMonth][2] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][2] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "L1_VISA":
+                            dashboarddataDict[data.StatusMonth][3] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][3] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "E3_VISA":
+                            dashboarddataDict[data.StatusMonth][4] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][4] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "OTHER_VISA":
+                            dashboarddataDict[data.StatusMonth][5] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][5] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "GC-EAD":
+                            dashboarddataDict[data.StatusMonth][6] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][6] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "TPS_EAD":
+                            dashboarddataDict[data.StatusMonth][7] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][7] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "H4-EAD":
+                            dashboarddataDict[data.StatusMonth][8] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][8] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "L2-EAD":
+                            dashboarddataDict[data.StatusMonth][9] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][9] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "ASYLUM_EAD":
+                            dashboarddataDict[data.StatusMonth][10] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][10] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "OTHER_EaAD":
+                            dashboarddataDict[data.StatusMonth][11] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][11] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "ELIGIBLE_TO_WORK_IN_THE_US":
+                            dashboarddataDict[data.StatusMonth][12] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][12] = (Convert.ToString(data.TotalCount));
+                            break;
+                        case "US_CITIZEN":
+                            dashboarddataDict[data.StatusMonth][13] = (Convert.ToString(data.TotalCount));
+                            dashboarddataDict["Total"][13] = (Convert.ToString(data.TotalCount));
+                            break;
+                        default:
+                            Console.Write("Not availible right now... we're working on it ;D");
+                            break;
+
+                    }
+                    dashboarddataDict[data.StatusMonth][14] = (Convert.ToString(Convert.ToInt16(dashboarddataDict[data.StatusMonth][14]) + data.TotalCount));
+                    dashboarddataDict["Total"][14] = (Convert.ToString(Convert.ToInt16(dashboarddataDict["Total"][14]) + data.TotalCount));
+                });
+                return dashboarddataDict;
+            }
+        }
+
         public IQueryable<TimeSheetMasterView> ShowAllApprovedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID)
         {
             var _context = new DatabaseContext();

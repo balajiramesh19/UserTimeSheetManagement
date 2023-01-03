@@ -65,7 +65,7 @@
                     {
                         <h5>
                             @{
-                                var filename = document.DocumentName ;
+                                var filename = document.DocumentType+ " : "+document.DocumentName ;
                                 var link = @Url.Action("Download", "AllTimeSheet") +"/?ExpenseID=" + Model.TimeSheetMasterID + "&DocumentID=" + document.DocumentID;
                             }
                             <a href="@link">

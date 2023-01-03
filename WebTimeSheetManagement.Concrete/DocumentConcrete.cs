@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,6 +84,24 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
+        public List<Documents> GetDocumentsForUserWithinDates(DateTime? FromDate, DateTime? ToDate)
+        {
+            try
+            {
+                using (var _context = new DatabaseContext())
+                {
+                    var tempDocument = (from document in _context.Documents
+                                        where document.CreatedOn >= FromDate &&  document.CreatedOn<= ToDate
+                                        select document).ToList();
+
+                    return tempDocument;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
     }
 }

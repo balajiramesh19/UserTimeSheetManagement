@@ -1,12 +1,10 @@
-﻿using Amazon.CloudSearch_2011_02_01.Model;
-using Amazon.Runtime.Internal.Transform;
+﻿using Amazon.Runtime.Internal.Transform;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.SqlServer;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -130,7 +128,7 @@ namespace WebTimeSheetManagement.Controllers
             }
         }
 
-        public ActionResult Approval(TimeSheetApproval TimeSheetApproval)
+    public ActionResult Approval(TimeSheetApproval TimeSheetApproval)
         {
             try
             {
@@ -426,6 +424,8 @@ namespace WebTimeSheetManagement.Controllers
                     var defaultModel = new DefaulterModel();
                     defaultModel.UserName = dataValuePairs[roles].Name;
                     defaultModel.missedDatesToFill = keyValuePairs[roles];
+                    defaultModel.EmployeeStatus = dataValuePairs[roles].Status;
+                    defaultModel.LegalStatus = dataValuePairs[roles].LegalStatus;
                     defaulterModelsList.Add(defaultModel);
                 });
                 defaulterModels = defaulterModelsList.AsQueryable<DefaulterModel>();
@@ -433,7 +433,8 @@ namespace WebTimeSheetManagement.Controllers
                 
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    defaulterModels = defaulterModels.Where(m => m.UserName.ToLower().Contains(searchValue));
+                    defaulterModels = defaulterModels.Where(m => (m.UserName.ToLower().Contains(searchValue) || m.LegalStatus
+                    .ToLower().Contains(searchValue)));
                     data1= defaulterModels.Skip(skip).Take(pageSize).ToList();
                 }
                 return Json(new { draw = draw, recordsFiltered = defaulterModelsList.Count(), recordsTotal = defaulterModelsList.Count(), data = data1 });

@@ -51,7 +51,12 @@ namespace WebTimeSheetManagement.Controllers
                     ModelState.AddModelError("", "Values Posted Are Not Accurate");
                     return View();
                 }
-
+                
+                if (Session["LegalStatus"].Equals("3") && (Request.Files["file1"].ContentLength == 0))
+                {
+                    TempData["TimeCardMessage"] = "Please upload the status report as its H1 compliant and resubmit for the week.";
+                    return RedirectToAction("Add", "TimeSheet");
+                }
                 TimeSheetMaster objtimesheetmaster = new TimeSheetMaster();
                 objtimesheetmaster.TimeSheetMasterID = 0;
                 objtimesheetmaster.UserID = Convert.ToInt32(Session["UserID"]);
@@ -59,15 +64,21 @@ namespace WebTimeSheetManagement.Controllers
                 objtimesheetmaster.FromDate = timesheetmodel.hdtext1;
                 objtimesheetmaster.ToDate = timesheetmodel.hdtext7;
                 objtimesheetmaster.TotalHours = CalculateTotalHours(timesheetmodel);
+                if (objtimesheetmaster.TotalHours <= 0)
+                {
+                    ModelState.AddModelError("", "No hours logged.Please log appropriate hours.");
+                    return View();
+                }
                 objtimesheetmaster.TimeSheetStatus = 1;
                 int TimeSheetMasterID = _ITimeSheet.AddTimeSheetMaster(objtimesheetmaster);
 
                 var count = ProjectSelectCount(timesheetmodel);
-                Documents Documents = new Documents();
+                
                 if (Request.Files != null)
                 {
                     foreach (string requestFile in Request.Files)
                     {
+                        Documents Documents = new Documents();
                         HttpPostedFileBase file = Request.Files[requestFile];
                         {
                             if (file.ContentLength > 0)
@@ -85,13 +96,12 @@ namespace WebTimeSheetManagement.Controllers
 
                                 Documents.ExpenseID = TimeSheetMasterID;
                                 Documents.UserID = Convert.ToInt32(Session["UserID"]);
-                                if (Path.GetExtension(file.FileName) == ".zip" || Path.GetExtension(file.FileName) == ".rar")
-                                {
-                                    Documents.DocumentType = "Multi";
+                                if ("file".Equals(requestFile) ) {
+                                    Documents.DocumentType = "Client Approved Timesheet";
                                 }
-                                else
+                                if ("file1".Equals(requestFile))
                                 {
-                                    Documents.DocumentType = "Single";
+                                    Documents.DocumentType = "Status Report";
                                 }
 
                                 _IDocument.AddDocument(Documents);
@@ -245,6 +255,8 @@ namespace WebTimeSheetManagement.Controllers
                 throw;
             }
         }
+          
+        
 
         public JsonResult Delete(int TimeSheetMasterID)
         {

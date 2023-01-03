@@ -16,6 +16,8 @@ namespace WebTimeSheetManagement.Models
         public string EmailID { get; set; }
         public string Username { get; set; }
         public string AssignToAdmin { get; set; }
+        public string Status { get; set; }
+        public string LegalStatus { get; set; }
         
     }
 }

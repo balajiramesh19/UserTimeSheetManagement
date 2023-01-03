@@ -34,7 +34,7 @@
 </style>
 
 <h4 class="page-header " style="color:ivory">Fill TimeSheets</h4>
-@using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new { onsubmit = "showLoader(this);", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new {  enctype = "multipart/form-data" }))
 {
    
     <div class="row" style="color:ivory">
@@ -405,10 +405,15 @@
                     <div style="margin:10px"></div>
 
                     <div class="col-md-3" style="padding:10px">
-
-                        @Html.Label("Attachment")
+                        @Html.Label("Please upload client-approved Timesheet ")
                         <input type="file" onchange="ValidateFile(this);" class="form-control" name="file" id="file" />
                         <span id="val_file" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3" style="padding:10px">
+                        @Html.Label("Please upload your status report for the selected period ")
+                        <input type="file" onchange="ValidateFile(this);" class="form-control" name="file1" id="file1" />
+                        <span id="val_file1" class="text-danger"></span>
                     </div>
 
                 </div>

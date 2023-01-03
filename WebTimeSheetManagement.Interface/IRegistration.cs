@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebTimeSheetManagement.Models;
+using static WebTimeSheetManagement.Models.Registration;
 
 namespace WebTimeSheetManagement.Interface
 {
@@ -13,5 +14,6 @@ namespace WebTimeSheetManagement.Interface
         int AddUser(Registration entity);
         IQueryable<Registration> ListofRegisteredUser(string sortColumn, string sortColumnDir, string Search);
         bool UpdatePassword(string RegistrationID,string Password);
+        List<LegalStatusModel> GetAllLegalStatusList();
     }
 }

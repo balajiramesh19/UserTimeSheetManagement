@@ -18,7 +18,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-3">
-                    @Html.LabelFor(model => model.FromDate ,new { @class = "manadatory" })
+                    @Html.LabelFor(model => model.FromDate, new { @class = "manadatory" })
                     @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", @onkeypress = "return false;" })
                     @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
                 </div>
@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-offset-0 col-md-12">
-                        <input type="submit" value="Export to Excel" class="btn btn-info"  style="background-color: #6d3f62;border-color:none" />
+                        <input type="submit" value="Export to Excel" class="btn btn-info" style="background-color: #6d3f62;border-color:none" />
                     </div>
                 </div>
             </div>
@@ -47,6 +47,41 @@
     </div>
 
 }
+
+@using (Html.BeginForm("DownloadAllDocumentsForUserWithInDates", "TimeSheetExport", FormMethod.Post))
+{
+    <div style="margin-top:10px;"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Documents Download</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.FromDate, new { @class = "manadatory" })
+                    @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control", @onkeypress = "return false;" })
+                    @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.ToDate, new { @class = "manadatory" })
+                    @Html.TextBoxFor(model => model.ToDate, new { @class = "form-control", @onkeypress = "return false;" })
+                    @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <div style="margin-top:10px;"></div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-0 col-md-12">
+                        <input type="submit" value="Download Documents" class="btn btn-info" style="background-color: #6d3f62;border-color:none" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -60,11 +95,18 @@
                 items1 += "<option value='" + values.RegistrationID + "'>" + values.Name + "</option>";
             });
             $('#RegistrationID').html(items1);
-
         });
     });
 </script>
 <script type="text/javascript">
+
+    function onDownload() {
+        var url = "@Url.Action("DownloadAllDocumentsForUserWithInDates","TimeSheetExport")";
+        var x = $('#RegistrationID').val();
+        console.log(x);
+        $.post(url, { FromDate: $("#FromDate").val(), ToDate: $("#ToDate").val(), RegID: x }, function (data) {
+        });
+    }
 
     $(document).ready(function () {
         $('#ToDate').prop('disabled', true);
@@ -76,7 +118,7 @@
                 changeYear: true,
                 yearRange: new Date().getFullYear() + ':' + new Date().getFullYear(),
                 onSelect: function (date) {
-                    
+
                     $('#ToDate').prop('disabled', false);
                     var dt2 = $('#ToDate');
                     var startDate = $(this).datepicker('getDate');
@@ -87,7 +129,7 @@
                     dt2.datepicker('option', 'maxDate', startDate);
                     dt2.datepicker('option', 'minDate', minDate);
                     $(this).datepicker('option', 'minDate', minDate);
-                    
+
                 }
             });
     });

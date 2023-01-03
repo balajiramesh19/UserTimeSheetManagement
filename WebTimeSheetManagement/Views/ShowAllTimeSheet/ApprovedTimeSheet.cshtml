@@ -40,10 +40,13 @@
 <script>
         $(document).ready(function () {
             $("#myTable").DataTable({
+                order: [
+                    [0, 'desc']
+                ],
                 "processing": true, // for show progress bar
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
+                "orderMulti": true, // for disable multiple column at once
                 "ajax": {
                     "url": "@Url.Action("LoadApprovedData", "ShowAllTimeSheet")",
                     "type": "POST",
@@ -63,7 +66,6 @@
                 {
                     "targets": [8],
                     "searchable": false,
-                    "orderable": false
                 },
                 {
                     "targets": [9],

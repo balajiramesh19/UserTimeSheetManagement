@@ -58,6 +58,9 @@
 
     $(document).ready(function () {
         $("#myTable").DataTable({
+            order: [
+                [0, 'desc']
+            ],
             "processing": true, // for show progress bar
             "language": {
                 "processing": "<h4 style=background:'grey'>Loading</h4>"

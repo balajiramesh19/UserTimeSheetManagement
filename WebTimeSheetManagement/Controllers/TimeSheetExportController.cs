@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Office2010.Word;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.UI;
@@ -18,10 +21,12 @@ namespace WebTimeSheetManagement.Controllers
     {
         ITimeSheetExport _ITimeSheetExport;
         ITimeSheet _ITimeSheet;
+        IDocument _IDocument;
         public TimeSheetExportController()
         {
             _ITimeSheetExport = new TimeSheetExportConcrete();
             _ITimeSheet = new TimeSheetConcrete();
+            _IDocument = new DocumentConcrete();
         }
 
         [HttpGet]
@@ -134,6 +139,32 @@ namespace WebTimeSheetManagement.Controllers
             finally
             {
                 ds.Dispose();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DownloadAllDocumentsForUserWithInDates(TimeSheetExportUserModel objtimesheet)
+        {
+            List<Documents> documents = _IDocument.GetDocumentsForUserWithinDates(objtimesheet.FromDate, objtimesheet.ToDate);
+            var zipName = $"TestFiles-{DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss")}.zip";
+            using (MemoryStream ms = new MemoryStream())
+            {
+                //required: using System.IO.Compression;
+                using (var zip = new ZipArchive(ms, ZipArchiveMode.Create, true))
+                {
+                    //QUery the Products table and get all image content
+                    documents.ForEach(file =>
+                    {
+                        var entry = zip.CreateEntry(file.DocumentName);
+                        var document = _IDocument.GetListofDocumentByExpenseID(file.ExpenseID);
+                        using (var fileStream = new MemoryStream(file.DocumentBytes))
+                        using (var entryStream = entry.Open())
+                        {
+                            fileStream.CopyTo(entryStream);
+                        }
+                    });
+                }
+                return File(ms.ToArray(), "application/zip", zipName);
             }
         }
 
