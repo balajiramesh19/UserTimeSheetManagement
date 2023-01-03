@@ -46,6 +46,8 @@
     <Compile Include="AssignRolesModel.cs" />
     <Compile Include="AuditTB.cs" />
     <Compile Include="ChangePasswordModel.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="DashboardData.cs" />
     <Compile Include="DefaulterModel.cs" />
     <Compile Include="DescriptionTB.cs" />
     <Compile Include="DisplayViewModel.cs" />
@@ -54,6 +56,8 @@
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseApprovalModel.cs" />
     <Compile Include="ExpenseModelView.cs" />
+    <Compile Include="HighChartsData.cs" />
+    <Compile Include="LegalStatusData.cs" />
     <Compile Include="LoginViewModel.cs" />
     <Compile Include="NotificationsTB.cs" />
     <Compile Include="ProjectMaster.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="RegistrationViewDetailsModel.cs" />
     <Compile Include="RegistrationViewSummaryModel.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="StatusData.cs" />
     <Compile Include="TimeSheetAuditTB.cs" />
     <Compile Include="TimeSheetDetails.cs" />
     <Compile Include="TimeSheetDetailsView.cs" />

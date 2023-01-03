@@ -29,7 +29,9 @@ namespace WebTimeSheetManagement.Concrete
                                            RegistrationID = registration.RegistrationID,
                                            EmailID = registration.EmailID,
                                            Mobileno = registration.Mobileno,
-                                           Username = registration.Username
+                                           Username = registration.Username,
+                                           Status = registration.Status,
+                                           LegalStatus = registration.LegalStatus
                                        });
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
@@ -140,7 +142,9 @@ namespace WebTimeSheetManagement.Concrete
                                            RegistrationID = registration.RegistrationID,
                                            EmailID = registration.EmailID,
                                            Mobileno = registration.Mobileno,
-                                           Username = registration.Username
+                                           Username = registration.Username,
+                                           Status = registration.Status,
+                                           LegalStatus=registration.LegalStatus
                                        });
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))

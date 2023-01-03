@@ -40,6 +40,9 @@
             "serverSide": true, // for process server side
             "filter": true, // this is for disable filter (search box)
             "orderMulti": false, // for disable multiple column at once
+            order: [
+                [0, 'desc']
+            ],
             "ajax": {
                 "url":"@Url.Action("LoadApprovedTimeSheetData", "AllTimeSheet")",
                 "type": "POST",
@@ -58,7 +61,7 @@
               },
                 {
                     "targets": [7],
-                    "searchable": false,
+                    "searchable": false, 
                     "orderable": false
                 },
 

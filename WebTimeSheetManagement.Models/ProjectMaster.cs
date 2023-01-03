@@ -20,7 +20,16 @@ namespace WebTimeSheetManagement.Models
         [Required(ErrorMessage = "Enter Nature of Industry")]
         public string NatureofIndustry { get; set; }
 
-        [Required(ErrorMessage = "Enter ProjectName")]
+        [Required(ErrorMessage = "Enter Project Name")]
         public string ProjectName { get; set; }
+
+        [Required(ErrorMessage = "Enter NetTerms")]
+        public string NetTerms { get; set; }
+
+        [Required(ErrorMessage = "Enter Termination Notice")]
+        public string TerminationNotice { get; set; }
+
+        [Required(ErrorMessage = "Enter Status")]
+        public bool Status { get; set; }
     }
 }

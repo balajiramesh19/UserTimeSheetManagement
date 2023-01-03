@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
 }
 
-<h4 class="page-header">Add Project</h4>
+<h4 class="page-header">Add Client</h4>
 
 <script>
     if ('@TempData["ProjectMessage"]' != '') {
@@ -18,22 +18,37 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="panel panel-default">
-            <div class="panel-heading">Add Project Details</div>
+            <div class="panel-heading">Add Client Details</div>
             <div class="panel-body">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ProjectCode, new { @class = "manadatory" })
+                    @Html.Label("Client Code", new { @class = "manadatory" })
                     @Html.TextBoxFor(model => model.ProjectCode, new { @class = "form-control", @maxlength = "90", @onblur = "CheckProjectCode();" })
                     @Html.ValidationMessageFor(model => model.ProjectCode, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ProjectName, new { @class = "manadatory" })
+                    @Html.Label("Client Name", new { @class = "manadatory" })
                     @Html.TextAreaFor(model => model.ProjectName, new { @class = "form-control", @maxlength = "90", @onblur = "CheckProjectName();" })
                     @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.NatureofIndustry, new { @class = "manadatory" })
+                    @Html.Label("Nature of Industry", new { @class = "manadatory" })
                     @Html.TextAreaFor(model => model.NatureofIndustry, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.NatureofIndustry, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Net Terms", new { @class = "manadatory" })
+                    @Html.TextBoxFor(model => model.NetTerms, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NetTerms, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Termination Notice", new { @class = "manadatory" })
+                    @Html.TextBoxFor(model => model.TerminationNotice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TerminationNotice, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("Status   ", new { @class = "manadatory" })
+                    @Html.CheckBoxFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
                 <div class="row">
                     <div class="form-group">

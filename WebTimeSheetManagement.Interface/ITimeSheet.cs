@@ -24,6 +24,12 @@ namespace WebTimeSheetManagement.Interface
         int DeleteTimesheetByOnlyTimeSheetMasterID(int TimeSheetMasterID);
         int? InsertDescription(DescriptionTB DescriptionTB);
         DisplayViewModel GetTimeSheetsCountByAdminID(string AdminID);
+
+        Dictionary<string, List<string>> GetDashboardDataByAdminID(string AdminID);
+
+        Dictionary<string, List<string>> GetDashboardStatusDataByAdminID(string AdminID);
+
+        Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID);
         IQueryable<TimeSheetMasterView> ShowAllApprovedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllRejectTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllSubmittedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);

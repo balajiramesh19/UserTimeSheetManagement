@@ -55,6 +55,7 @@ function ValidateFile(value) {
             default:
                 flag = true;
         }
+
     }
 
         var Validfilename = ValidateFilename(value);
@@ -64,6 +65,7 @@ function ValidateFile(value) {
             var size = ValidateFileSize(value);
             var str = value.name;
             var data = "val_file";
+            var data1 = "val_file1";
             if (extension == "jpg" || extension == "jpeg")
             {
                 if (size > 100) {
@@ -71,6 +73,7 @@ function ValidateFile(value) {
                     $("#" + value.name).val('');
                 } else {
                     $("#" + data).text("");
+                    $("#" + data1).text("");
                 }
             }
             else if (extension == "zip")
@@ -80,10 +83,12 @@ function ValidateFile(value) {
                     $("#" + value.name).val('');
                 } else {
                     $("#" + data).text("");
+                    $("#" + data1).text("");
                 }
             }
             else {
                 $("#" + data).text("");
+                $("#" + data1).text("");
             }
 
     }

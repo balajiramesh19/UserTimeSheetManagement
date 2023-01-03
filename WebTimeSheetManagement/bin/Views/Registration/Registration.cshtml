@@ -46,11 +46,10 @@
                         @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
                     </div>
                 </div>
-           
+
                 <div class="row">
                     <div class="clearfix"></div>
                     <div class="col-lg-4" style="margin-top:20px;">
-                  
                         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label manadatory" })
                         @Html.RadioButtonFor(model => model.Gender, "M") @Html.Label("", "Male")
                         @Html.RadioButtonFor(model => model.Gender, "F") @Html.Label("", "Female")
@@ -85,21 +84,34 @@
                         @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
                 </div>
-               
-                <br />
                 <div class="row">
-                    <div class="col-lg-4">
-                        <input type="submit" value="Create User" class="btn btn-success" />
-                        @Html.ActionLink("Clear", "Registration", "Registration", null, new { @class = "btn btn-danger" })
-
-                        @Html.ActionLink("All Users", "Users", "AllUsers", null, new { @class = "btn btn-info" })
-
+                    <div class="col-lg-4" style="margin-top:20px;">
+                        @Html.LabelFor(model => model.LegalStatus, htmlAttributes: new { @class = "control-label manadatory" })
+                        @Html.DropDownListFor(a => a.LegalStatus, new SelectList(Model.LegalStatusList, "LegalStatus", "LegalStatus"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LegalStatus, "", new { @class = "text-danger" })
                     </div>
-                </div>
-            }
+                    <div class="col-lg-4" style="margin-top:20px;">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label manadatory" })
+                            @Html.RadioButtonFor(model => model.Status, "Active") @Html.Label("", "Active")
+                            @Html.RadioButtonFor(model => model.Status, "Inactive") @Html.Label("", "Inactive")
+                            @Html.RadioButtonFor(model => model.Status, "Exit") @Html.Label("", "Exit")
+                        </div>
+                    </div>
 
-        </div>
-    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <input type="submit" value="Create User" class="btn btn-success" />
+                            @Html.ActionLink("Clear", "Registration", "Registration", null, new { @class = "btn btn-danger" })
+
+                            @Html.ActionLink("All Users", "Users", "AllUsers", null, new { @class = "btn btn-info" })
+
+                        </div>
+                    </div>
+                    }
+
+                </div>
+            </div>
 c
 
 

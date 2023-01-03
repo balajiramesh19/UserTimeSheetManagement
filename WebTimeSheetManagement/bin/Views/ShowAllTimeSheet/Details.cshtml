@@ -64,12 +64,14 @@
                                 <h5>
                                     @{
                                         var filename = document.DocumentName;
+                                        var documentType = document.DocumentType;
                                         var link = Url.Action("Download1", "ShowAllTimeSheet", new
                                         {
                                             ExpenseID = Model.TimeSheetMasterID,
                                             DocumentID = document.DocumentID
                                         });
                                     }
+                                    <b> @documentType :</b>
                                     <a href="@link">
                                         <i class="fa fa-download fa-fw"></i>@filename
                                     </a>

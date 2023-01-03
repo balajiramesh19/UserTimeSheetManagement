@@ -4354,3 +4354,6 @@ C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-ma
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\System.ValueTuple.xml
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\Views\ShowAllTimeSheet\ReminderTimesheet.cshtml
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\Views\ShowAllTimeSheet\NotSubmittedPPL.cshtml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\Views\Admin\TSCountData.cshtml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\Views\Admin\StatusData.cshtml
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement\bin\Views\Admin\LegalStatusData.cshtml

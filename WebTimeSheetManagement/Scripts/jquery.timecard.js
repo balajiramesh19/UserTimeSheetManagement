@@ -251,6 +251,13 @@ function ValidateData() {
             $("#text7_p1").focus();
             return false;
         }
+        else if (ValidateTotalProjectHours() <= 0) {
+            alert("Please log work hours.No hours logged for the chosen week.");
+            $("#texttotal_p1").focus();
+            $("#loading").hide();
+            return false;
+        }
+
 
             return true;
             $("#loading").hide();
@@ -951,6 +958,31 @@ function ValidateTotalSaturdayHours() {
                  parseInt(text7_p4) +
                  parseInt(text7_p5) +
                  parseInt(text7_p6);
+
+    return TotalHours;
+}
+
+function ValidateTotalProjectHours() {
+    var text7_p1 = 0;
+    var text7_p2 = 0;
+    var text7_p3 = 0;
+    var text7_p4 = 0;
+    var text7_p5 = 0;
+    var text7_p6 = 0;
+    var TotalHours = 0;
+
+    text7_p1 = $("#texttotal_p1").val() == '' ? 0 : $("#texttotal_p1").val();
+    text7_p2 = $("#texttotal_p2").val() == '' ? 0 : $("#texttotal_p2").val();
+    text7_p3 = $("#texttotal_p3").val() == '' ? 0 : $("#texttotal_p3").val();
+    text7_p4 = $("#texttotal_p4").val() == '' ? 0 : $("#texttotal_p4").val();
+    text7_p5 = $("#texttotal_p5").val() == '' ? 0 : $("#texttotal_p5").val();
+    text7_p6 = $("#texttotal_p6").val() == '' ? 0 : $("#texttotal_p6").val();
+
+    TotalHours = parseInt(text7_p1) +
+        parseInt(text7_p2) +
+        parseInt(text7_p3) +
+        parseInt(text7_p4) +
+        parseInt(text7_p5);
 
     return TotalHours;
 }

@@ -87,6 +87,7 @@ namespace WebTimeSheetManagement.Controllers
                                 }
 
                                 Session["UserID"] = Convert.ToString(result.RegistrationID);
+                                Session["LegalStatus"] = Convert.ToString(result.LegalStatus);
 
                                 if (result.ForceChangePassword == 1)
                                 {

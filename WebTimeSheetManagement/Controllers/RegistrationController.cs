@@ -37,12 +37,15 @@ namespace WebTimeSheetManagement.Controllers
             _IRegistration = new RegistrationConcrete();
             _IRoles = new RolesConcrete();
             _ICacheManager = new CacheManager();
+
         }
 
         // GET: Registration/Create
         public ActionResult Registration()
         {
-            return View(new Registration());
+            Registration reg=new Registration();
+            reg.LegalStatusList = _IRegistration.GetAllLegalStatusList();
+            return View(reg);
         }
 
         // POST: Registration/Create

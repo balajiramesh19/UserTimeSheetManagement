@@ -9,6 +9,7 @@ using System.Linq.Dynamic;
 using System.Data.SqlClient;
 using Dapper;
 using System.Configuration;
+using static WebTimeSheetManagement.Models.Registration;
 
 namespace WebTimeSheetManagement.Concrete
 {
@@ -55,6 +56,25 @@ namespace WebTimeSheetManagement.Concrete
                 throw;
             }
         }
+
+        public List<LegalStatusModel> GetAllLegalStatusList()
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                try
+                {
+                    var result = con.Query<LegalStatusModel>("Usp_GetListofLegalStatus", null, null, true, 0, System.Data.CommandType.StoredProcedure).ToList();
+                    result.Insert(0, new LegalStatusModel { LegalStatus = "----Select----", ID = "" });
+                    return result;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
 
         public IQueryable<Registration> ListofRegisteredUser(string sortColumn, string sortColumnDir, string Search)
         {

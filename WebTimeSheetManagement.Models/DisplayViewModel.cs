@@ -14,5 +14,7 @@ namespace WebTimeSheetManagement.Models
         public int SubmittedCount { get; set; }
         public int ApprovedCount { get; set; }
         public int RejectedCount { get; set; }
+        public Dictionary<string,List<string>> DashboardData { get; set; }
+
     }
 }
