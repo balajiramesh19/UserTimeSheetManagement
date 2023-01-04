@@ -1245,6 +1245,9 @@
     <Content Include="Views\Admin\TSCountData.cshtml" />
     <Content Include="Views\Admin\StatusData.cshtml" />
     <Content Include="Views\Admin\LegalStatusData.cshtml" />
+    <Content Include="Views\SuperAdmin\TSCountData.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

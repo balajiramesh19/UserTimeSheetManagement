@@ -70,6 +70,7 @@ namespace WebTimeSheetManagement.Controllers
                             if (RoleID == 1)
                             {
                                 Session["AdminUser"] = Convert.ToString(result.RegistrationID);
+                                Session["OrganizationId"] = Convert.ToString(result.OrganizationId);
 
                                 if (result.ForceChangePassword == 1)
                                 {
@@ -99,6 +100,7 @@ namespace WebTimeSheetManagement.Controllers
                             else if (RoleID == 3)
                             {
                                 Session["SuperAdmin"] = Convert.ToString(result.RegistrationID);
+                                Session["OrganizationId"] = Convert.ToString(result.OrganizationId);
                                 return RedirectToAction("Dashboard", "SuperAdmin");
                             }
                         }

@@ -14,8 +14,8 @@ namespace WebTimeSheetManagement.Interface
         int UpdateAssigntoAdmin(string AssignToAdminID, string UserID);
         IQueryable<UserModel> ShowallRoles(string sortColumn, string sortColumnDir, string Search);
         bool RemovefromUserRole(string RegistrationID);
-        List<UserModel> GetListofUnAssignedUsers();
-        IQueryable<UserModel> GetListofUnAssignedUsers(string sortColumn, string sortColumnDir, string Search);
+        List<UserModel> GetListofUnAssignedUsers(string OrganizationID);
+        IQueryable<UserModel> GetListofUnAssignedUsers(string OrganizationID,string sortColumn, string sortColumnDir, string Search);
         bool SaveAssignedRoles(AssignRolesModel AssignRolesModel);
         bool CheckIsUserAssignedRole(int RegistrationID);
     }

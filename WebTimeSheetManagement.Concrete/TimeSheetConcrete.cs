@@ -431,12 +431,13 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
-        public Dictionary<string, List<string>>  GetDashboardDataByAdminID(string AdminID)
+        public Dictionary<string, List<string>>  GetDashboardDataByID(string AdminID,string Role)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
             {
                 var param = new DynamicParameters();
                 param.Add("@AdminID", AdminID);
+                param.Add("@UserRole", Role);
                 List<DashboardData> dashboardDatas= con.Query<DashboardData>("Usp_GetAdminDashboardDataByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<DashboardData>();
                 Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
                 dashboarddataDict.Add("Jan", new List<string>() {"0","0","0","0","0"});
@@ -466,7 +467,7 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
-        public Dictionary<string, List<string>> GetDashboardStatusDataByAdminID(string AdminID)
+        public Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
             {

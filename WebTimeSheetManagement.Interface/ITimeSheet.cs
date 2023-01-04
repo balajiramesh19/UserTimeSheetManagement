@@ -25,9 +25,9 @@ namespace WebTimeSheetManagement.Interface
         int? InsertDescription(DescriptionTB DescriptionTB);
         DisplayViewModel GetTimeSheetsCountByAdminID(string AdminID);
 
-        Dictionary<string, List<string>> GetDashboardDataByAdminID(string AdminID);
+        Dictionary<string, List<string>> GetDashboardDataByID(string AdminID,string Role);
 
-        Dictionary<string, List<string>> GetDashboardStatusDataByAdminID(string AdminID);
+        Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID);
 
         Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID);
         IQueryable<TimeSheetMasterView> ShowAllApprovedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);

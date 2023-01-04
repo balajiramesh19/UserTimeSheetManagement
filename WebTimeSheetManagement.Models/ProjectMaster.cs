@@ -31,5 +31,7 @@ namespace WebTimeSheetManagement.Models
 
         [Required(ErrorMessage = "Enter Status")]
         public bool Status { get; set; }
+
+        public string OrganizationId { get; set; }
     }
 }
