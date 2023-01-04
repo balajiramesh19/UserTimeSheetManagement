@@ -14,6 +14,7 @@ namespace WebTimeSheetManagement.Controllers
     {
         private ITimeSheet _ITimeSheet;
         private IExpense _IExpense;
+        private IUsers _IUsers;
 
         public UserController()
         {
@@ -27,7 +28,12 @@ namespace WebTimeSheetManagement.Controllers
         public ActionResult Dashboard()
         {
             var timesheetResult = _ITimeSheet.GetTimeSheetsCountByUserID(Convert.ToString(Session["UserID"]));
+            var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["UserID"]),"User");
+            var userData = _IUsers.GetUserDetailsByRegistrationID(Convert.ToInt32(Session["UserID"]));
 
+
+            ViewBag.DashboardData = datadashboard;
+            ViewBag.UserData = userData;
             if (timesheetResult != null)
             {
                 ViewBag.SubmittedTimesheetCount = timesheetResult.SubmittedCount;

@@ -68,6 +68,7 @@ namespace WebTimeSheetManagement.Controllers
                     var tempPlainPassword = registration.Password;
                     registration.Password = EncryptionLibrary.EncryptText(registration.Password);
                     registration.ConfirmPassword = EncryptionLibrary.EncryptText(registration.ConfirmPassword);
+                    registration.OrganizationId = Convert.ToString(Session["OrganizationId"]);
                     if (_IRegistration.AddUser(registration) > 0)
                     {
                         TempData["MessageRegistration"] = "Data Saved Successfully!";

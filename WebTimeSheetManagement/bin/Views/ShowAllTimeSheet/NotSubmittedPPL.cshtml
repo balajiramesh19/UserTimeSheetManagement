@@ -19,9 +19,9 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Dates Missed to Fill</th>
                             <th>Status</th>
                             <th>LegalStatus</th>
+                            <th>Dates Missed to Fill</th>
                         </tr>
                     </thead>
                 </table>
@@ -57,8 +57,19 @@
                 "columns": [
                     
                     { "data": "UserName", "name": "Username", "autoWidth": true },
-                    { "data": "LegalStatus", "name": "LegalStatus", "autoWidth": true },
                     { "data": "EmployeeStatus", "name": "EmployeeStatus", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row) {
+                            if (data.LegalStatus == 'L1_VISA') {
+                                return "<span style=\"color:red\"> " + data.LegalStatus +"</span > ";
+                            }
+                            else {
+
+                                return data.LegalStatus;
+                            }
+
+                        }
+                    },
                     {
                         data: null, render: function (data, type, row) {
                             if (data.missedDatesToFill.length==0) {

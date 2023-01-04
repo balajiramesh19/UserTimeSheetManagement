@@ -83,6 +83,7 @@ namespace WebTimeSheetManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                ProjectMaster.OrganizationId = Convert.ToString(Session["OrganizationId"]);
                 var result = _IProject.SaveProject(ProjectMaster);
 
                 if (result > 0)

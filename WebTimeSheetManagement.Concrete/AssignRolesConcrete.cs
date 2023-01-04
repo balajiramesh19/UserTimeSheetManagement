@@ -11,6 +11,7 @@ using WebTimeSheetManagement.Interface;
 using WebTimeSheetManagement.Models;
 using System.Linq.Dynamic;
 using System.ComponentModel.Design;
+using System.Security.Cryptography;
 
 namespace WebTimeSheetManagement.Concrete
 {
@@ -127,7 +128,7 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
-        public List<UserModel> GetListofUnAssignedUsers()
+        public List<UserModel> GetListofUnAssignedUsers(string OrgID)
         {
 
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
@@ -135,7 +136,9 @@ namespace WebTimeSheetManagement.Concrete
                 con.Open();
                 try
                 {
-                    var result = con.Query<UserModel>("Usp_GetListofUnAssignedUsers", null, null, true, 0, System.Data.CommandType.StoredProcedure).ToList();
+                    var param = new DynamicParameters();
+                    param.Add("@OrgId", OrgID);
+                    var result = con.Query<UserModel>("Usp_GetListofUnAssignedUsers", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList();
                     return result;
                 }
                 catch (Exception)
@@ -146,14 +149,16 @@ namespace WebTimeSheetManagement.Concrete
         }
 
 
-        public IQueryable<UserModel> GetListofUnAssignedUsers(string sortColumn, string sortColumnDir, string Search)
+        public IQueryable<UserModel> GetListofUnAssignedUsers(string OrgID,string sortColumn, string sortColumnDir, string Search)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
             {
                 con.Open();
                 try
                 {
-                    var IQueryabletimesheet = con.Query<UserModel>("Usp_GetListofUnAssignedUsers", null, null, true, 0, System.Data.CommandType.StoredProcedure);
+                    var param = new DynamicParameters();
+                    param.Add("@OrgId", OrgID);
+                    var IQueryabletimesheet = con.Query<UserModel>("Usp_GetListofUnAssignedUsers", param, null, true, 0, System.Data.CommandType.StoredProcedure);
                     if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
                     {
                         IQueryabletimesheet = IQueryabletimesheet.OrderBy(sortColumn + " " + sortColumnDir);

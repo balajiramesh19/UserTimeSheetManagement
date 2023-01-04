@@ -23,6 +23,7 @@ namespace WebTimeSheetManagement.Controllers
         private ICacheManager _ICacheManager;
         private IUsers _IUsers;
         private IProject _IProject;
+        private ITimeSheet _ITimeSheet;
         
 
         public SuperAdminController()
@@ -33,6 +34,7 @@ namespace WebTimeSheetManagement.Controllers
             _ICacheManager = new CacheManager();
             _IUsers = new UsersConcrete();
             _IProject = new ProjectConcrete();
+            _ITimeSheet = new TimeSheetConcrete();
         }
 
         // GET: SuperAdmin
@@ -40,8 +42,11 @@ namespace WebTimeSheetManagement.Controllers
         {
             try
             {
-
+                var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
+                ViewBag.DashboardData = datadashboard;
                 var adminCount = _ICacheManager.Get<object>("AdminCount");
+                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
+                var legalStatusCountdashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
 
                 if (adminCount == null)
                 {
@@ -88,6 +93,14 @@ namespace WebTimeSheetManagement.Controllers
                 throw;
             }
         }
+        public ActionResult TSCountData()
+        {
+            var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
+            ViewBag.DashboardData = datadashboard;
+            return View();
+        }
+
+
 
         [HttpGet]
         public ActionResult CreateAdmin()
@@ -139,7 +152,7 @@ namespace WebTimeSheetManagement.Controllers
             {
                 AssignRolesModel assignRolesModel = new AssignRolesModel();
                 assignRolesModel.ListofAdmins = _IAssignRoles.ListofAdmins();
-                assignRolesModel.ListofUser = _IAssignRoles.GetListofUnAssignedUsers();
+                assignRolesModel.ListofUser = _IAssignRoles.GetListofUnAssignedUsers(Convert.ToString(Session["OrganizationId"]));
                 return View(assignRolesModel);
             }
             catch (Exception)
@@ -163,7 +176,7 @@ namespace WebTimeSheetManagement.Controllers
 
                 int recordsTotal = 0;
                 
-                var rolesData = _IAssignRoles.GetListofUnAssignedUsers(sortColumn, sortColumnDir, searchValue);
+                var rolesData = _IAssignRoles.GetListofUnAssignedUsers(Convert.ToString(Session["OrganizationId"]),sortColumn, sortColumnDir, searchValue);
                 recordsTotal = rolesData.Count();
                 var data = rolesData.Skip(skip).Take(pageSize).ToList();
 
@@ -186,7 +199,7 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     TempData["MessageErrorRoles"] = string.IsNullOrEmpty(assignToAdmin)?"Please select the admin to assign" : "There are no Users to Assign Roles";
                     objassign.ListofAdmins = _IAssignRoles.ListofAdmins();
-                    objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers();
+                    objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers(Convert.ToString(Session["OrganizationId"]));
                     return View(objassign);
                 }
 
@@ -200,7 +213,7 @@ namespace WebTimeSheetManagement.Controllers
                 {
                     TempData["MessageErrorRoles"] = "You have not Selected any User to Assign Roles";
                     objassign.ListofAdmins = _IAssignRoles.ListofAdmins();
-                    objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers();
+                    objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers(Convert.ToString(Session["OrganizationId"]));
                     return View(objassign);
                 }
 
@@ -214,7 +227,7 @@ namespace WebTimeSheetManagement.Controllers
 
                 objassign = new AssignRolesModel();
                 objassign.ListofAdmins = _IAssignRoles.ListofAdmins();
-                objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers();
+                objassign.ListofUser = _IAssignRoles.GetListofUnAssignedUsers(Convert.ToString(Session["OrganizationId"]));
 
                 return RedirectToAction("AssignRoles");
             }
@@ -222,6 +235,19 @@ namespace WebTimeSheetManagement.Controllers
             {
                 throw;
             }
+        }
+        public ActionResult StatusData()
+        {
+            var datadashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
+            ViewBag.DashboardData = datadashboard;
+            return View();
+        }
+
+        public ActionResult LegalStatusData()
+        {
+            var datadashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
+            ViewBag.DashboardData = datadashboard;
+            return View();
         }
 
     }

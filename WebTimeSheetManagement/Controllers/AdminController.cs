@@ -27,8 +27,8 @@ namespace WebTimeSheetManagement.Controllers
             try
             {
                 var timesheetResult = _ITimeSheet.GetTimeSheetsCountByAdminID(Convert.ToString(Session["AdminUser"]));
-                var datadashboard = _ITimeSheet.GetDashboardDataByAdminID(Convert.ToString(Session["AdminUser"]));
-                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
+                var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["AdminUser"]), "AdminUser");
+                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
                 var legalStatusCountdashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
 
 
@@ -77,13 +77,13 @@ namespace WebTimeSheetManagement.Controllers
 
         public ActionResult TSCountData()
         {
-            var datadashboard = _ITimeSheet.GetDashboardDataByAdminID(Convert.ToString(Session["AdminUser"]));
+            var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["AdminUser"]), "AdminUser");
             ViewBag.DashboardData = datadashboard;
             return View();
         }
         public ActionResult StatusData()
         {
-            var datadashboard = _ITimeSheet.GetDashboardStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
+            var datadashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
             ViewBag.DashboardData = datadashboard;
             return View();
         }
