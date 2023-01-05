@@ -29,11 +29,9 @@ namespace WebTimeSheetManagement.Controllers
         {
             var timesheetResult = _ITimeSheet.GetTimeSheetsCountByUserID(Convert.ToString(Session["UserID"]));
             var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["UserID"]),"User");
-            var userData = _IUsers.GetUserDetailsByRegistrationID(Convert.ToInt32(Session["UserID"]));
 
 
             ViewBag.DashboardData = datadashboard;
-            ViewBag.UserData = userData;
             if (timesheetResult != null)
             {
                 ViewBag.SubmittedTimesheetCount = timesheetResult.SubmittedCount;
