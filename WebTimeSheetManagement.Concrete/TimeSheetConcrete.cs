@@ -11,6 +11,8 @@ using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Configuration;
 using Dapper;
+using System.Security.Cryptography;
+using System.Data.Entity;
 
 namespace WebTimeSheetManagement.Concrete
 {
@@ -238,7 +240,6 @@ namespace WebTimeSheetManagement.Concrete
 
 
                                        });
-
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
                 IQueryabletimesheet = IQueryabletimesheet.OrderBy(sortColumn + " " + sortColumnDir);
@@ -251,7 +252,37 @@ namespace WebTimeSheetManagement.Concrete
             return IQueryabletimesheet;
 
         }
+        public IQueryable<TimeSheetReport> ShowAllTimeSheetReportData(string sortColumn, string sortColumnDir, string Search, int UserID,string PeriodType)
+        {
 
+            IQueryable<TimeSheetReport> IQueryabletimesheet = null;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                try
+                {
+                    var param = new DynamicParameters();
+                    param.Add("@AdminID", UserID);
+                    param.Add("@Type", PeriodType);
+                    IQueryabletimesheet  = con.Query<TimeSheetReport>("Usp_GetTimeSheetReportDataByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).AsQueryable<TimeSheetReport>();
+                    if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+                    {
+                        IQueryabletimesheet = IQueryabletimesheet.OrderBy(sortColumn + " " + sortColumnDir);
+                    }
+                    if (!string.IsNullOrEmpty(Search))
+                    {
+                        IQueryabletimesheet = (IQueryable<TimeSheetReport>)IQueryabletimesheet.Where(m => m.Name.ToLower().Contains(Search)).AsQueryable();
+                    }
+                    return (IQueryable<TimeSheetReport>)IQueryabletimesheet;
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        
         public List<GetPeriods> GetPeriodsbyTimeSheetMasterID(int TimeSheetMasterID)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
@@ -893,6 +924,40 @@ namespace WebTimeSheetManagement.Concrete
 
         }
 
+        public bool EditTimesheetByTimeSheetMasterID(string hours, string tsMasterId, string projectId, int index)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                SqlTransaction sql = con.BeginTransaction();
+                List<string> x = new List<string>() { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+                try
+                {
+                    var param = new DynamicParameters();
+                    param.Add("@TSMasterId", tsMasterId);
+                    param.Add("@Hrs", hours);
+                    param.Add("@ProjectId", projectId);
+                    param.Add("@Day", x.ElementAt(index));
+                    var result = con.Execute("Usp_ChangeTimesheetHours", param, sql, 0, System.Data.CommandType.StoredProcedure);
+                    if (result > 0)
+                    {
+                        sql.Commit();
+                        return true;
+                    }
+                    else
+                    {
+                        sql.Rollback();
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    sql.Rollback();
+                    throw;
+                }
+            }
+        }
+        
         public bool UpdateTimeSheetAuditStatus(int TimeSheetID, string Comment, int Status)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))

@@ -85,3 +85,5 @@ C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-ma
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Debug\WebTimeSheetManagement.Concrete.csproj.CopyComplete
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Debug\WebTimeSheetManagement.Concrete.dll
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\obj\Debug\WebTimeSheetManagement.Concrete.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Debug\WebTimeSheetManagement.Interface.dll.config
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Concrete\bin\Debug\WebTimeSheetManagement.Models.dll.config

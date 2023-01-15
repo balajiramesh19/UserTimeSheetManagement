@@ -103,6 +103,12 @@ namespace WebTimeSheetManagement.Controllers
                                 Session["OrganizationId"] = Convert.ToString(result.OrganizationId);
                                 return RedirectToAction("Dashboard", "SuperAdmin");
                             }
+                            else if (RoleID == 4)
+                            {
+                                Session["InvoiceUser"] = Convert.ToString(result.RegistrationID);
+                                Session["OrganizationId"] = Convert.ToString(result.OrganizationId);
+                                return RedirectToAction("Invoice", "Invoice");
+                            }
                         }
                     }
                     else

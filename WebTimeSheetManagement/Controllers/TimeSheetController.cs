@@ -52,7 +52,7 @@ namespace WebTimeSheetManagement.Controllers
                     return View();
                 }
                 
-                if (Session["LegalStatus"].Equals("3") && (Request.Files["file1"].ContentLength == 0))
+                if (Session["LegalStatus"].Equals("H1-B_VISA") && (Request.Files["file1"].ContentLength == 0))
                 {
                     TempData["TimeCardMessage"] = "Please upload the status report as its H1 compliant and resubmit for the week.";
                     return RedirectToAction("Add", "TimeSheet");

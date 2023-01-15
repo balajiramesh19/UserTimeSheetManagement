@@ -65,5 +65,31 @@ namespace WebTimeSheetManagement.Helpers
             }
         }
 
+        public static string SetDetailsForTheEdits(int TimeSheetMasterID, int ProjectID)
+        {
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
+            {
+                con.Open();
+                try
+                {
+                    var param = new DynamicParameters();
+                    param.Add("@TimeSheetMasterID", TimeSheetMasterID);
+                    param.Add("@ProjectID", ProjectID);
+                    var result = con.Query<string>("GetDescriptionbyTimeSheetMasterID", param, null, true, 0, System.Data.CommandType.StoredProcedure).FirstOrDefault();
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Amazon.Runtime.Internal.Transform;
+﻿using Amazon.CloudTrail.Model;
+using Amazon.Runtime.Internal.Transform;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -39,7 +41,16 @@ namespace WebTimeSheetManagement.Controllers
         {
             return View();
         }
+        public ActionResult TimeSheetReportData()
+        {
+            return View();
+        }
 
+        public ActionResult Add(int id)
+        {
+            Console.WriteLine(id);
+            return View();
+        }
         public ActionResult LoadTimeSheetData()
         {
             try
@@ -491,5 +502,55 @@ namespace WebTimeSheetManagement.Controllers
             return $"Dear {dataValue.Name}, <br/><br/><br/> Following timesheets are missing.Details of the missing hours below.Please submit the timesheets at the earliest <br/><br/> {String.Join("<br/>", timePeriod.ToArray())}<br/><br/>Thanks and Regards,<br/>{Session["Username"]}";
 
         }
+
+        public ActionResult LoadTimeSheetReportData(string TimePeriod)
+        {
+            try
+            {
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+
+                int recordsTotal = 0;
+
+                var timesheetdata = _ITimeSheet.ShowAllTimeSheetReportData(sortColumn, sortColumnDir, searchValue, Convert.ToInt32(Session["AdminUser"]), TimePeriod);
+                recordsTotal = timesheetdata.Count();
+                var data = timesheetdata.Skip(skip).Take(pageSize).ToList();
+
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public JsonResult EditTimeSheetData(string hours, string tsMasterId, string projectId, int index)
+        {
+            try
+            {
+                var data = _ITimeSheet.EditTimesheetByTimeSheetMasterID(hours, tsMasterId,projectId,index);
+
+                if (data)
+                {
+                    return Json(data: true, behavior: JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(data: false, behavior: JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
     }
 }
