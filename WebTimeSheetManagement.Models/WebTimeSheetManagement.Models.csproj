@@ -74,6 +74,7 @@
     <Compile Include="TimeSheetMaster.cs" />
     <Compile Include="TimeSheetMasterView.cs" />
     <Compile Include="TimeSheetModel.cs" />
+    <Compile Include="TimeSheetReport.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

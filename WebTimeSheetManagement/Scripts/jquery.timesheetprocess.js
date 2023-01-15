@@ -66,3 +66,26 @@ function Rejecttimesheet() {
         return false;
     }
 }
+
+
+function EditTimesheet()
+{
+            var TimeSheetModel1 =
+            {
+                TimeSheetMasterID: $("#TimeSheetMasterID").val(),
+            };
+
+        var url = '/timesheets/ShowAllTimeSheet/Add';
+            $.post(url, { id: TimeSheetModel1 }, function (data) {
+                if (data) {
+                    alert("Timesheet Rejected Successfully");
+                    window.location.href = "/timesheets/ShowAllTimeSheet/Add";
+                    return true;
+                }
+                else {
+                    alert("Something Went Wrong!");
+                }
+            });
+
+        }
+    

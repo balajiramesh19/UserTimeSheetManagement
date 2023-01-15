@@ -35,3 +35,4 @@ C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-ma
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Debug\WebTimeSheetManagement.Interface.csproj.CopyComplete
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Debug\WebTimeSheetManagement.Interface.dll
 C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\obj\Debug\WebTimeSheetManagement.Interface.pdb
+C:\Users\Admin\Downloads\WebTimeSheetManagement-master\WebTimeSheetManagement-master\WebTimeSheetManagement.Interface\bin\Debug\WebTimeSheetManagement.Models.dll.config

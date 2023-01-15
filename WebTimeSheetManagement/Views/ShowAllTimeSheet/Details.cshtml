@@ -8,7 +8,29 @@
 <script src="~/Scripts/ajaxjquery.min.js"></script>
 <script src="~/Scripts/jquery.timesheetprocess.js"></script>
 <h2 style="color:white">Details</h2>
-
+<script>
+    function edit(el, ind) {
+        if (ind != 7) {
+            el.childNodes[0].removeAttribute("disabled");
+            el.childNodes[0].focus();
+            window.getSelection().removeAllRanges();
+            console.log(el)
+        }
+    }
+    function disable(el, tsMasterId,projectId, index) {
+        el.setAttribute("disabled", "");
+        var url = "@Url.Action("EditTimeSheetData", "ShowAllTimeSheet")";
+        $.get(url, { hours: el.value, tsMasterId: tsMasterId, projectId: projectId, index: index }, function (data) {
+            if (data) {
+                alert("Logged Hours Overriden!");
+                location.href = location.href;
+            }
+            else {
+                alert("Something Went Wrong!");
+            }
+        });
+    }
+</script>
 <style>
     table, th, td {
         border: 1px solid white;
@@ -44,15 +66,15 @@
 
     @for (int i = 0; i < Model.ListofProjectNames.Count(); i++)
     {
-        <tr>
+        <tr >
             <td><b>@Model.ListofProjectNames[i].ProjectName</b></td>
 
             @{
                 var ListofHours = WebTimeSheetManagement.Helpers.MethodonViews.GetHoursbyTimeSheetMasterID(Model.TimeSheetMasterID, Model.ListofProjectNames[i].ProjectID);
                 var ListofDescription = WebTimeSheetManagement.Helpers.MethodonViews.GetDescriptionbyTimeSheetMasterID(Model.TimeSheetMasterID, Model.ListofProjectNames[i].ProjectID);
-                foreach (var item in ListofHours)
+                for (int j = 0; j < ListofHours.Count(); j++)
                 {
-                    <td><b>@Html.DisplayFor(modelItem => item.Hours)</b></td>
+                    <td ondblclick="edit(this,@j)"  ><input style="width: 25%; " value="@Html.DisplayFor(modelItem => ListofHours[j].Hours)" disabled onblur="disable(this,@Model.TimeSheetMasterID, @Model.ListofProjectNames[i].ProjectID, @j);"></td>
                 }
                 <td>@ListofDescription</td>
             }

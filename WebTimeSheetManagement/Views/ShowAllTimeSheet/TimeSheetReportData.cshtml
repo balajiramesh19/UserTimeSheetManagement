@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "TimeSheet";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<link href="~/Scripts/dataTablesScripts/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Scripts/dataTablesScripts/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/dataTablesScripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTablesScripts/dataTables.bootstrap4.min.js"></script>
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">TimeSheet Report</div>
+            <div class="panel-body">
+                <div class="row" style="
+                                padding-left: 3%;
+                                padding-bottom: inherit;
+                                ">
+                    <select onchange="ChangeDataTable(this);" id="aasd" class="form-control form-control-sm" style="width:auto">
+                        <option value="Monthly">Monthly</option>
+                        <option value="Biweekly">Biweekly</option>
+                    </select>
+                </div>
+                <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>DataPeriod</th>
+                            <th>HoursLogged</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table id="myTable1" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>DataPeriod</th>
+                            <th>HoursLogged</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        
+        $("#myTable").DataTable({
+            order: [
+                [0, 'desc']
+            ],
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "processing": "<h4 style=background:white>Loading</h4>"
+            },
+            "ajax": {
+                "url":" @Url.Action("LoadTimeSheetReportData", "ShowAllTimeSheet")",
+                "type": "POST",
+                "datatype": "json",
+                "data": { "TimePeriod": "Monthly" },
+            },
+            "columnDefs":
+                [
+                ],
+            "columns": [
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "DataPeriod", "name": "DataPeriod", "autoWidth": true },
+                { "data": "HoursLogged", "title": "HoursLogged", "name": "HoursLogged", "autoWidth": true },
+            ]
+
+        });
+
+        $("#myTable1").DataTable({
+            order: [
+                [0, 'desc']
+            ],
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "language": {
+                "processing": "<h4 style=background:white>Loading</h4>"
+            },
+            "ajax": {
+                "url":" @Url.Action("LoadTimeSheetReportData", "ShowAllTimeSheet")",
+                "type": "POST",
+                "datatype": "json",
+                "data": { "TimePeriod": "Biweekly" },
+                
+            },
+            "columnDefs":
+                [
+                ],
+            "columns": [
+                { "data": "Name", "name": "Name", "autoWidth": true },
+                { "data": "DataPeriod", "name": "DataPeriod", "autoWidth": true },
+                { "data": "HoursLogged", "title": "HoursLogged", "name": "HoursLogged", "autoWidth": true },
+            ]
+
+        });
+        $('#myTable').parents('div.dataTables_wrapper').first().show();
+        $('#myTable1').parents('div.dataTables_wrapper').first().hide();
+    });
+
+    function ChangeDataTable(sel) {
+        console.log($('#aasd').val())
+        if ($(sel).val() == 'Biweekly') {
+            $('#myTable').parents('div.dataTables_wrapper').first().hide();
+            $('#myTable1').parents('div.dataTables_wrapper').first().show();
+        }
+        else {
+            $('#myTable').parents('div.dataTables_wrapper').first().show();
+            $('#myTable1').parents('div.dataTables_wrapper').first().hide();
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    
+</script>

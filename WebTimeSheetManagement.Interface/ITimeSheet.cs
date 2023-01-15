@@ -15,7 +15,11 @@ namespace WebTimeSheetManagement.Interface
         IQueryable<TimeSheetMasterView> ShowTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         List<TimeSheetDetailsView> TimesheetDetailsbyTimeSheetMasterID(int UserID, int TimeSheetMasterID);
         int DeleteTimesheetByTimeSheetMasterID(int TimeSheetMasterID, int UserID);
+
+        bool EditTimesheetByTimeSheetMasterID(string hours, string tsMasterId, string projectId, int index);
+
         IQueryable<TimeSheetMasterView> ShowAllTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
+        IQueryable<TimeSheetReport> ShowAllTimeSheetReportData(string sortColumn, string sortColumnDir, string Search, int UserID,string TimePeriod );
         List<TimeSheetDetailsView> TimesheetDetailsbyTimeSheetMasterID(int TimeSheetMasterID);
         List<GetPeriods> GetPeriodsbyTimeSheetMasterID(int TimeSheetMasterID);
         List<GetProjectNames> GetProjectNamesbyTimeSheetMasterID(int TimeSheetMasterID);
