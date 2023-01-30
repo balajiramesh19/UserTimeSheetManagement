@@ -1366,7 +1366,7 @@ button, input, select, textarea {
 }
 
 a {
-    color: #337ab7;
+    color: white;
     text-decoration: none
 }
 
@@ -5897,7 +5897,7 @@ a.list-group-item-danger, button.list-group-item-danger {
 
 .panel-footer {
     padding: 10px 15px;
-    background-color: #f5f5f5;
+    background-color: #4c2b44;
     border-top: 1px solid #ddd;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px
@@ -6050,7 +6050,7 @@ a.list-group-item-danger, button.list-group-item-danger {
 
     .panel-default > .panel-heading {
         color: #333;
-        background-image: linear-gradient(to right,#bb41bf00, #68395d) !important;
+        background-color: #4c2b44;
         border-color: #ddd
     }
 
@@ -6068,26 +6068,26 @@ a.list-group-item-danger, button.list-group-item-danger {
     }
 
 .panel-primary {
-    border-color: #337ab7
+    border-color: #4c2b44
 }
 
     .panel-primary > .panel-heading {
         color: #fff;
-        background-image: linear-gradient(to right,#bb41bf00, #68395d) !important;
-        border-color: #337ab7
+        background-color: #4c2b44 !important;
+        border-color: #4c2b44
     }
 
         .panel-primary > .panel-heading + .panel-collapse > .panel-body {
-            border-top-color: #337ab7
+            border-top-color: #4c2b44
         }
 
         .panel-primary > .panel-heading .badge {
-            color: #337ab7;
+            color: #4c2b44;
             background-color: #fff
         }
 
     .panel-primary > .panel-footer + .panel-collapse > .panel-body {
-        border-bottom-color: #337ab7
+        border-bottom-color: #4c2b44
     }
 
 .panel-success {

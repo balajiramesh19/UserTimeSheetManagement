@@ -28,14 +28,14 @@ namespace WebTimeSheetManagement.Controllers
             {
                 var timesheetResult = _ITimeSheet.GetTimeSheetsCountByAdminID(Convert.ToString(Session["AdminUser"]));
                 var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["AdminUser"]), "AdminUser");
-                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
-                var legalStatusCountdashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
-
+                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]), "AdminUser");
+                var legalStatusCountdashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]), "AdminUser");
 
 
                 ViewBag.DashboardData = datadashboard;
                 ViewBag.StatusCountdashboard = statusCountdashboard;
                 ViewBag.LegalStatusCountdashboard = legalStatusCountdashboard;
+                ViewBag.LegalStatusCountdashboardData = legalStatusCountdashboard;
 
 
                 if (timesheetResult != null)
@@ -83,14 +83,14 @@ namespace WebTimeSheetManagement.Controllers
         }
         public ActionResult StatusData()
         {
-            var datadashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
+            var datadashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]), "AdminUser");
             ViewBag.DashboardData = datadashboard;
             return View();
         }
 
         public ActionResult LegalStatusData()
         {
-            var datadashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
+            var datadashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]),"AdminUser");
             ViewBag.DashboardData = datadashboard;
             return View();
         }

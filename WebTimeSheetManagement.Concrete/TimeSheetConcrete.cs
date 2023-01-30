@@ -498,12 +498,13 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
-        public Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID)
+        public Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID, string Role)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
             {
                 var param = new DynamicParameters();
                 param.Add("@AdminID", AdminID);
+                param.Add("@UserRole", Role);
                 List<StatusData> dashboardDatas = con.Query<StatusData>("Usp_GetStatusCountByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<StatusData>();
                 Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
                 dashboarddataDict.Add("Jan", new List<string>() { "0", "0", "0","0" });
@@ -545,12 +546,13 @@ namespace WebTimeSheetManagement.Concrete
             }
         }
 
-        public Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID)
+        public Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID, string Role)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["TimesheetDBEntities"].ToString()))
             {
                 var param = new DynamicParameters();
                 param.Add("@AdminID", AdminID);
+                param.Add("@UserRole", Role);
                 List<LegalStatusData> dashboardDatas = con.Query<LegalStatusData>("Usp_GetLegalStatusCountsByAdminID", param, null, true, 0, System.Data.CommandType.StoredProcedure).ToList<LegalStatusData>();
                 Dictionary<string, List<string>> dashboarddataDict = new Dictionary<string, List<string>>();
                 dashboarddataDict.Add("Jan", new List<string>() { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" });
