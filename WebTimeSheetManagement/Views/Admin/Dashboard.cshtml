@@ -5,533 +5,1637 @@
 }
 
 <body style="background: linear-gradient(90deg, #49274a, transparent),url(https://cdn.pixabay.com/photo/2021/07/26/21/30/clock-6495245_960_720.jpg); background-image: /* background-repeat: round; */ background-size: cover; background-size: cover;">
-    <style>
-        :root {
-            --surface-color: #fff;
-            --curve: 40;
-        }
 
-        a {
-            color:white
-        }
-        a:hover {
-            color: white
-        }
+    <div class="row" style="padding:10px">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-clock-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #fef8f8;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 2rem;
-            margin: 4rem 5vw;
-            padding: 0;
-            list-style-type: none;
-            border-radius: calc(var(--curve) * 1px);
-        }
-
-        .card {
-            position: relative;
-            display: block;
-            height: auto;
-            border-radius: calc(var(--curve) * 1px);
-            overflow: hidden;
-            text-decoration: none;
-        }
-
-        .card__image {
-            width: 100%;
-            height: 100%;
-        }
-
-        .card__overlay {
-            width: fit-content;
-            left: 0;
-            right: 0;
-            z-index: 1;
-            border-radius: calc(var(--curve) * 1px) 0;
-            background-color: var(--surface-color);
-            transform: translateY(100%);
-            transition: .2s ease-in-out;
-        }
-
-        .card:hover .card__overlay {
-            transform: translateY(0);
-        }
-
-        .card__header {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 2em;
-            padding: 2em;
-            border-radius: calc(var(--curve) * 1px) calc(var(--curve) * 1px) 0 0;
-            background-color: var(--surface-color);
-            transform: translateY(-100%);
-            transition: .2s ease-in-out;
-        }
-
-        .card__arc {
-            width: 80px;
-            height: 80px;
-            position: absolute;
-            bottom: 100%;
-            right: 0;
-            z-index: 1;
-        }
-
-            .card__arc path {
-                fill: var(--surface-color);
-                d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
-            }
-
-        .card:hover .card__header {
-            transform: translateY(0);
-        }
-
-        .card__thumb {
-            flex-shrink: 0;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
-
-        .card__title {
-            margin: 0 0 .3em;
-            color: #6A515E;
-        }
-
-        .card__tagline {
-            display: block;
-            margin: 1em 0;
-            font-family: "MockFlowFont";
-            font-size: .8em;
-            color: #D7BDCA;
-        }
-
-        .card__status {
-            font-size: .8em;
-            color: #D7BDCA;
-        }
-
-        .card__description {
-            padding: 0 2em 2em;
-            margin: 0;
-            color: #503051;
-            font-family: "MockFlowFont";
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-        }
-        /* --------- Card Animation ---------- */
-        .card:not(:empty):hover,
-        .card:not(:empty):focus {
-            z-index: 1;
-            color: #fff;
-            background: #ea124f;
-            opacity: 1;
-            transform: scale(1.15) rotateZ(20deg);
-            cursor: pointer;
-        }
-
-            .card:not(:empty):hover:after,
-            .card:not(:empty):focus:after {
-                opacity: 1;
-            }
-
-            .card:not(:empty):hover:before,
-            .card:not(:empty):focus:before {
-                opacity: 0;
-            }
-
-        .card {
-            padding: 10px;
-            background: #351b36ed;
-            border-radius: 0.7em;
-            color: darkslateblue, opacity: 0.6;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-end;
-            transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1);
-            transition-property: background, transform, color, opacity;
-        }
-
-            .card:not(:empty):before {
-                box-shadow: -2px 2px 8px 2px rgba(0, 0, 0, 0.2);
-            }
-
-            .card:empty {
-                opacity: 0.3;
-            }
-
-            .card:before, .card:after {
-                content: "";
-                position: absolute;
-                border-radius: 0.7em;
-                z-index: -1;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                transition: opacity 0.4s cubic-bezier(0.33, 1, 0.68, 1);
-            }
-
-            .card:after {
-                box-shadow: -20px 20px 12px 6px rgba(0, 0, 0, 0.2);
-                opacity: 0;
-            }
-
-        /* --------- Grid ---------- */
-        .grid {
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            display: grid;
-            overflow: hidden;
-            grid-template-columns: repeat(5, 1fr);
-            grid-template-rows: repeat(4, 1fr);
-            grid-gap: 20px;
-        }
-
-        .item1 {
-            grid-area: 1/1/3/3;
-        }
-
-        .item2 {
-            grid-area: 3/3/4/4;
-        }
-
-            .item2.card:hover, .item2.card:focus {
-                background: #00005c;
-            }
-
-        .item3 {
-            grid-area: 4/1/5/4;
-        }
-
-        .item4 {
-            grid-area: 1/3/2/5;
-        }
-
-        .item5 {
-            grid-area: 2/4/3/5;
-        }
-
-        .item6 {
-            grid-area: 3/4/4/5;
-        }
-
-        .item7 {
-            grid-area: 3/4/5/5;
-        }
-
-        .item8 {
-            grid-area: 1/5/2/6;
-        }
-
-            .item8.card:hover, .item8.card:focus {
-                background: #f57b51;
-            }
-
-        .item9 {
-            grid-area: 2/5/3/6;
-        }
-
-        .item10 {
-            grid-area: 3/5/4/6;
-        }
-
-        .item11 {
-            grid-area: 4/5/5/6;
-        }
-
-            .item11.card:hover, .item11.card:focus {
-                background: #00a8cc;
-            }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /*--------- Layout -------- */
-        *,
-        *:before,
-        *:after {
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        body,
-        html {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: "PT Sans", sans-serif;
-            background: #fff6d9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        h1,
-        h2,
-        h3,
-        h5 {
-            color: white
-        }
-
-        h1 {
-            margin-top: 0;
-            font-size: 3.052em;
-        }
-
-        h2 {
-            font-size: 1.50em;
-        }
-
-        a:focus, a:hover {
-            color: forestgreen;
-            text-decoration: none;
-        }
-
-        /* --------- Responsive ---------- */
-        media only screen and (max-width: 600px) {
-            .grid
-
-        {
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(6, minmax(auto, 300px));
-            overflow-y: scroll;
-        }
-
-        .item1 {
-            grid-area: 1/1/2/3;
-        }
-
-        .card {
-            grid-area: auto;
-            text-align: left;
-        }
-
-            .card:empty {
-                display: none;
-            }
-
-        }
-        /*     .highcharts-figure,
-        .highcharts-data-table table {
-            min-width: 310px;
-            max-width: 800px;
-            margin: 1em auto;
-        }
-
-        #container {
-            height: 400px;
-        }
-
-        .highcharts-data-table table {
-            font-family: Verdana, sans-serif;
-            border-collapse: collapse;
-            border: 1px solid #ebebeb;
-            margin: 10px auto;
-            text-align: center;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .highcharts-data-table caption {
-            padding: 1em 0;
-            font-size: 1.2em;
-            color: #555;
-        }
-
-        .highcharts-data-table th {
-            font-weight: 600;
-            padding: 0.5em;
-        }
-
-        .highcharts-button-box {
-            color:white
-        }
-
-        .highcharts-data-table td,
-        .highcharts-data-table th,
-        .highcharts-data-table caption {
-            padding: 0.5em;
-        }
-
-        .highcharts-data-table thead tr,
-        .highcharts-data-table tr:nth-child(even) {
-            background: #32142fa1;
-        }
-
-        .highcharts-data-table tr:hover {
-            background: #808080;
-        }*/
-    </style>
-    <main class="grid">
-        <section class="content item1">
-            <h1 style="color:white" >Welcome  @Session["Username"]!</h1>
-        </section>
-        <section class="card item2">
-            <a target="_blank" href="@Url.Action("RejectedTimesheet", "ShowAllTimeSheet")">
-                <h2><b>  Rejected </b><br /><span class="pull-right"><i class="fa fa-check-circle-o" aria-hidden="true"></i>  @ViewBag.RejectedTimesheetCount</span></h2>
-                </a>
-        </section>
-        <section class="card item3">
-            <h2>
-                <a target="_blank" href="@Url.Action("TSCountData", "Admin")" >
-                    Total Timesheets For the year @ViewBag.DashboardData["Total"][0]
-                </a>
-            </h2>
-        </section>
-        <section class="card item4"></section>
-        <section class="card item5">
-            <a target="_blank" href="@Url.Action("ApprovedTimesheet", "ShowAllTimeSheet")">
-                <h2><b> Approved </b><br /><span class="pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i>  @ViewBag.ApprovedTimesheetCount</span></h2>
-            </a>
-        </section>
-        <section class="card item7">
-            <a target="_blank"
-               href="@Url.Action("StatusData", "Admin")">
-                <ul style="list-style-type:none;">
-                    <h2><b>Employee Status</b></h2>
-                    <li><b> Total Count : </b>@ViewBag.StatusCountdashboard["Total"][3] </li>
-                    <li><b> Active Count : </b>@ViewBag.StatusCountdashboard["Total"][0] </li>
-                    <li><b> Inactive Count : </b>@ViewBag.StatusCountdashboard["Total"][1] </li>
-                    <li><b> Exit Count : </b>@ViewBag.StatusCountdashboard["Total"][2] </li>
-                </ul>
-            </a>
-            
-        </section>
-        <section class="card item8">
-            <a target="_blank"
-                href="@Url.Action("SubmittedTimeSheet", "ShowAllTimeSheet")">
-                <h2><b>Submitted</b><br /><span class="pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i>  @ViewBag.SubmittedTimesheetCount</span></h2>
-            </a>
-
-</section>
-        <section class="card item9">
-            <h2>
-                <a target="_blank" href="@Url.Action("TSCountData", "Admin")">
-                    Total Hours @ViewBag.DashboardData["Total"][1]
-                </a>
-            </h2>
-        </section>
-        <section class="card item10">
-            <h2>
-                <a target="_blank" href="@Url.Action("LegalStatusData", "Admin")">
-                    Timesheet count on Legal Status @ViewBag.LegalStatusCountdashboard["Total"][14]
-                </a>
-            </h2>
-        </section>
-        <section class="card item11">
-        </section>
-    </main>
-    <!--<ul class="cards" style="background: #32142fa1; padding: 69px;">
-
-        <li>
-            <h2 style="font-size:24px;color:white">Total Timesheets </h2>
-            <a target="_blank" href="@Url.Action("TSCountData","Admin")" class="card">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-clock-o" aria-hidden="true"></i>  @ViewBag.DashboardData["Nov"][3]</div>
-                                </div>
-                            </h3>
+                            <div class="huge"> @ViewBag.DashboardData["Total"][0]</div>
+                            <div> Total Timesheets For the year!</div>
                         </div>
                     </div>
-                    <p class="card__description">View details</p>
                 </div>
-            </a>
-        </li>
-        <li>
-            <h2 style="font-size:24px;color:white">Submitted Count</h2>
-            <a target="_blank" href="@Url.Action("SubmittedTimeSheet","ShowAllTimeSheet")" class="card">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-clock-o" aria-hidden="true"></i>  @ViewBag.SubmittedTimesheetCount</div>
-                                </div>
-                            </h3>
+                <a target="_blank"
+                   href="@Url.Action("TSCountData", "Admin")">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-clock-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">@ViewBag.SubmittedTimesheetCount</div>
+                            <div>TimeSheet Submitted Count!</div>
                         </div>
                     </div>
-                    <p class="card__description">View details</p>
                 </div>
-            </a>
-        </li>
-        <li>
-            <h2 style="font-size:24px;color:white">Approved Count</h2>
-            <a class="card" target="_blank" href="@Url.Action("ApprovedTimeSheet","ShowAllTimeSheet")">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa fa-check-circle-o" aria-hidden="true"></i>  @ViewBag.ApprovedTimesheetCount</div>
-                                </div>
-                            </h3>
+                <a target="_blank"
+                   href="@Url.Action("SubmittedTimeSheet", "ShowAllTimeSheet")">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-clock-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">@ViewBag.ApprovedTimesheetCount</div>
+                                <div>TimeSheet Approved Count!</div>
+                            </div>
                         </div>
                     </div>
-                    <p class="card__description">
-                        View details
-                    </p>
-                </div>
-            </a>
-        </li>
-        <li>
-            <h2 style="font-size:24px;color:white">Rejected Count</h2>
-            <a target="_blank" href="@Url.Action("RejectedTimeSheet","ShowAllTimeSheet")" class="card">
-                <div class="card__overlay">
-                    <div class="card__header">
-                        <div class="card__header-text">
-                            <h3 class="card__title">
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge"><i class="fa  fa-close" aria-hidden="true"></i> @ViewBag.DashboardData["Jan"][0]-->
-    @*@ViewBag.RejectedTimesheetCount*@
-    <!--</div>
-                                </div>
-                            </h3>
+                    <a target="_blank" href="@Url.Action("ApprovedTimesheet", "ShowAllTimeSheet")">
+                        <div class="panel-footer">
+                            <span class="pull-left">View Details</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
                         </div>
-                    </div>
-                    <p class="card__description">View details</p>
+                    </a>
                 </div>
-            </a>
-        </li>
-    </ul>-->
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-clock-o fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">@ViewBag.RejectedTimesheetCount</div>
+                                    <div>TimeSheet Rejected Count!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a target="_blank" href="@Url.Action("RejectedTimeSheet", "ShowAllTimeSheet")">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6" style="color:black!important">
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/data.js"></script>
+            <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+            <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+
+            <style>
+                .highcharts-figure,
+                .highcharts-data-table table {
+                    min-width: 310px;
+                    max-width: 800px;
+                    margin: 1em auto;
+                }
+
+                #container {
+                    height: 400px;
+                }
+
+                .highcharts-data-table table {
+                    font-family: Verdana, sans-serif;
+                    border-collapse: collapse;
+                    border: 1px solid #ebebeb;
+                    margin: 10px auto;
+                    text-align: center;
+                    width: 100%;
+                    max-width: 500px;
+                }
+
+                .highcharts-data-table caption {
+                    padding: 1em 0;
+                    font-size: 1.2em;
+                    color: #555;
+                }
+
+                .highcharts-data-table th {
+                    font-weight: 600;
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table td,
+                .highcharts-data-table th,
+                .highcharts-data-table caption {
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table thead tr,
+                .highcharts-data-table tr:nth-child(even) {
+                    background: #f8f8f8;
+                }
+
+                .highcharts-data-table tr:hover {
+                    background: #f1f7ff;
+                }
+            </style>
+
+            <figure class="highcharts-figure" style="color:black;fill:black;margin-left:0.2em!important">
+                <div id="container" style=" border-radius: calc(var(--curve) * .25px);"></div>
+                <p class="highcharts-description">
+
+                </p>
+            </figure>
 
 
-    <script>
-    function ca() {
-            var url = '@Url.Action("RejectedTimeSheet", "ShowAllTimeSheet")';
-        $.get(url,  function (data) {
-            if (data) {
+            <script type="text/javascript">
+        // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
+
+        // Create the chart
+
+        $(document).ready(function () {
+            var chart = Highcharts.chart('container', {
+                chart: {
+                    type: 'column',
+                    events: {
+                        load: requestData
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                },
+
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    align: 'center',
+                    text: 'Timesheets Count by Month'
+                },
+                subtitle: {
+                    align: 'left',
+                    text: ''
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total timesheets '
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+                },
+                legend: {
+                    itemStyle: {
+                        color: 'blue'
+                    }
+                },
+                series: [
+                    {
+                        name: 'TimeSheets',
+                        colorByPoint: true,
+                        data: [
+                            {
+                                name: 'Jan',
+                                y: @ViewBag.DashboardData["Jan"][3],
+                                drilldown: 'Jan'
+                            },
+                            {
+                                name: 'Feb',
+                                y: @ViewBag.DashboardData["Feb"][3],
+                                drilldown: 'Feb'
+                            },
+                            {
+                                name: 'Mar',
+                                y:  @ViewBag.DashboardData["Mar"][3],
+                                drilldown: 'Mar'
+                            },
+                            {
+                                name: 'Apr',
+                                y: @ViewBag.DashboardData["Apr"][3],
+                                drilldown: 'Apr'
+                            },
+                            {
+                                name: 'May',
+                                y: @ViewBag.DashboardData["May"][3],
+                                drilldown: 'May'
+                            },
+                            {
+                                name: 'June',
+                                y:  @ViewBag.DashboardData["Jun"][3],
+                                drilldown: 'June'
+                            },
+                            {
+                                name: 'Jul',
+                                y: @ViewBag.DashboardData["Jul"][3],
+                                drilldown: 'Jul'
+                            },
+                            {
+                                name: 'Aug',
+                                y: @ViewBag.DashboardData["Aug"][3],
+                                drilldown: 'Aug'
+                            },
+                            {
+                                name: 'Sep',
+                                y: @ViewBag.DashboardData["Sep"][3],
+                                drilldown: 'Sep'
+                            },
+                            {
+                                name: 'Oct',
+                                y: @ViewBag.DashboardData["Oct"][3],
+                                drilldown: 'Oct'
+                            },
+                            {
+                                name: 'Nov',
+                                y: @ViewBag.DashboardData["Nov"][3],
+                                drilldown: 'Nov'
+                            },
+                            {
+                                name: 'Dec',
+                                y: @ViewBag.DashboardData["Dec"][3],
+                                drilldown: 'Dec'
+                            }
+                        ]
+                    }
+                ],
+                drilldown: {
+                    breadcrumbs: {
+                        position: {
+                            align: 'right'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Jan',
+                            id: 'Jan',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Jan"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Jan"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Jan"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Feb',
+                            id: 'Feb',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Feb"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Feb"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Feb"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Mar',
+                            id: 'Mar',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Mar"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Mar"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Mar"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Apr',
+                            id: 'Apr',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Apr"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Apr"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Apr"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'May',
+                            id: 'May',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["May"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["May"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["May"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'June',
+                            id: 'June',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Jun"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Jun"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Jun"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Jul',
+                            id: 'Jul',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Jul"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Jul"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Jul"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Aug',
+                            id: 'Aug',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Aug"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Aug"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Aug"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Sep',
+                            id: 'Sep',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Sep"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Sep"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Sep"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Oct',
+                            id: 'Oct',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Oct"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Oct"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Oct"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Nov',
+                            id: 'Nov',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Nov"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Nov"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Nov"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Dec',
+                            id: 'Dec',
+                            data: [
+                                [
+                                    'Submitted',
+                                    @ViewBag.DashboardData["Dec"][0]
+                                ],
+                                [
+                                    'Approved',
+                                    @ViewBag.DashboardData["Dec"][1]
+                                ],
+                                [
+                                    'Rejected',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            function requestData() {
+                $.ajax({
+                    url: "@Url.Action("Dashboard", "Admin")",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        chart.series[0].data = data;
+                    },
+                    cache: false
+                });
             }
-            else {
-                alert("Something Went Wrong!");
+        })
+
+            </script>
+
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <style>
+                .highcharts-figure,
+                .highcharts-data-table table {
+                    min-width: 310px;
+                    max-width: 800px;
+                    margin: 1em auto;
+                }
+
+                #container {
+                    height: 400px;
+                }
+
+                .highcharts-data-table table {
+                    font-family: Verdana, sans-serif;
+                    border-collapse: collapse;
+                    border: 1px solid #ebebeb;
+                    margin: 10px auto;
+                    text-align: center;
+                    width: 100%;
+                    max-width: 500px;
+                }
+
+                .highcharts-data-table caption {
+                    padding: 1em 0;
+                    font-size: 1.2em;
+                    color: #555;
+                }
+
+                .highcharts-data-table th {
+                    font-weight: 600;
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table td,
+                .highcharts-data-table th,
+                .highcharts-data-table caption {
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table thead tr,
+                .highcharts-data-table tr:nth-child(even) {
+                    background: #f8f8f8;
+                }
+
+                .highcharts-data-table tr:hover {
+                    background: #f1f7ff;
+                }
+            </style>
+            <figure class="highcharts-figure" style="color:black;fill:black;margin-left:0.2em!important">
+                <div id="container1" style=" border-radius: calc(var(--curve) * .25px);"></div>
+                <p class="highcharts-description">
+
+                </p>
+            </figure>
+
+
+            <script type="text/javascript">
+        // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
+
+        // Create the chart
+
+        $(document).ready(function () {
+            var chart = Highcharts.chart('container1', {
+                chart: {
+                    type: 'column',
+                    events: {
+                        load: requestData
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    align: 'center',
+                    text: 'Employee Status Count by Month'
+                },
+                subtitle: {
+                    align: 'left',
+                    text: ''
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total  '
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+                },
+
+                series: [
+                    {
+                        name: 'Status Count',
+                        colorByPoint: true,
+                        data: [
+                            {
+                                name: 'Jan',
+                                y: @ViewBag.DashboardData["Jan"][3],
+                                drilldown: 'Jan'
+                            },
+                            {
+                                name: 'Feb',
+                                y: @ViewBag.DashboardData["Feb"][3],
+                                drilldown: 'Feb'
+                            },
+                            {
+                                name: 'Mar',
+                                y:  @ViewBag.DashboardData["Mar"][3],
+                                drilldown: 'Mar'
+                            },
+                            {
+                                name: 'Apr',
+                                y: @ViewBag.DashboardData["Apr"][3],
+                                drilldown: 'Apr'
+                            },
+                            {
+                                name: 'May',
+                                y: @ViewBag.DashboardData["May"][3],
+                                drilldown: 'May'
+                            },
+                            {
+                                name: 'June',
+                                y:  @ViewBag.DashboardData["Jun"][3],
+                                drilldown: 'June'
+                            },
+                            {
+                                name: 'Jul',
+                                y: @ViewBag.DashboardData["Jul"][3],
+                                drilldown: 'Jul'
+                            },
+                            {
+                                name: 'Aug',
+                                y: @ViewBag.DashboardData["Aug"][3],
+                                drilldown: 'Aug'
+                            },
+                            {
+                                name: 'Sep',
+                                y: @ViewBag.DashboardData["Sep"][3],
+                                drilldown: 'Sep'
+                            },
+                            {
+                                name: 'Oct',
+                                y: @ViewBag.DashboardData["Oct"][3],
+                                drilldown: 'Oct'
+                            },
+                            {
+                                name: 'Nov',
+                                y: @ViewBag.DashboardData["Nov"][3],
+                                drilldown: 'Nov'
+                            },
+                            {
+                                name: 'Dec',
+                                y: @ViewBag.DashboardData["Dec"][3],
+                                drilldown: 'Dec'
+                            }
+                        ]
+                    }
+                ],
+                drilldown: {
+                    breadcrumbs: {
+                        position: {
+                            align: 'right'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Jan',
+                            id: 'Jan',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jan"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jan"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Feb',
+                            id: 'Feb',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Feb"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Feb"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Mar',
+                            id: 'Mar',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Mar"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Mar"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Apr',
+                            id: 'Apr',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Apr"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Apr"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'May',
+                            id: 'May',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["May"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["May"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'June',
+                            id: 'June',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jun"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jun"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Jul',
+                            id: 'Jul',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Jul"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Jul"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Aug',
+                            id: 'Aug',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Aug"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Aug"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Sep',
+                            id: 'Sep',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Sep"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Sep"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Oct',
+                            id: 'Oct',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Oct"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Oct"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Nov',
+                            id: 'Nov',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Nov"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Nov"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Dec',
+                            id: 'Dec',
+                            data: [
+                                [
+                                    'Active',
+                                    @ViewBag.DashboardData["Dec"][0]
+                                ],
+                                [
+                                    'InActive',
+                                    @ViewBag.DashboardData["Dec"][1]
+                                ],
+                                [
+                                    'Exit',
+                                    @ViewBag.DashboardData["Dec"][2]
+                                ]
+
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            function requestData() {
+                $.ajax({
+                    url: "@Url.Action("Dashboard", "Admin")",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        chart.series[0].data = data;
+                    },
+                    cache: false
+                });
             }
-        });
+        })
 
-        }
+            </script>
+        </div>
+        <div class="col-lg-6">
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/data.js"></script>
+            <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+            <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-    </script>
 
+            <style>
+                .highcharts-figure,
+                .highcharts-data-table table {
+                    min-width: 310px;
+                    max-width: 800px;
+                    margin: 1em auto;
+                }
+
+                #container {
+                    height: 400px;
+                }
+
+                .highcharts-data-table table {
+                    font-family: Verdana, sans-serif;
+                    border-collapse: collapse;
+                    border: 1px solid #ebebeb;
+                    margin: 10px auto;
+                    text-align: center;
+                    width: 100%;
+                    max-width: 500px;
+                }
+
+                .highcharts-data-table caption {
+                    padding: 1em 0;
+                    font-size: 1.2em;
+                    color: #555;
+                }
+
+                .highcharts-data-table th {
+                    font-weight: 600;
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table td,
+                .highcharts-data-table th,
+                .highcharts-data-table caption {
+                    padding: 0.5em;
+                }
+
+                .highcharts-data-table thead tr,
+                .highcharts-data-table tr:nth-child(even) {
+                    background: #f8f8f8;
+                }
+
+                .highcharts-data-table tr:hover {
+                    background: #f1f7ff;
+                }
+            </style>
+
+            <figure class="highcharts-figure" style="color:black;fill:black;margin-left:0.2em!important">
+                <div id="container2" style=" border-radius: calc(var(--curve) * .25px);"></div>
+                <p class="highcharts-description">
+
+                </p>
+            </figure>
+
+
+            <script type="text/javascript">
+        // Data retrieved from https://gs.statcounter.com/browser-market-share#monthly-202201-202201-bar
+
+        // Create the chart
+
+        $(document).ready(function () {
+            var chart = Highcharts.chart('container2', {
+                chart: {
+                    type: 'column',
+                    events: {
+                        load: requestDatals
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    align: 'center',
+                    text: 'Legal Status Count by Month'
+                },
+                subtitle: {
+                    align: 'left',
+                    text: ''
+                },
+                accessibility: {
+                    announceNewData: {
+                        enabled: true
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total  '
+                    }
+
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                        }
+                    }
+                },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> of total<br/>'
+                },
+
+                series: [
+                    {
+                        name: 'Status Count',
+                        colorByPoint: true,
+                        data: [
+                            {
+                                name: 'Jan',
+                                y: @ViewBag.LegalStatusCountdashboardData["Jan"][14],
+                                drilldown: 'Jan'
+                            },
+                            {
+                                name: 'Feb',
+                                y: @ViewBag.LegalStatusCountdashboardData["Feb"][14],
+                                drilldown: 'Feb'
+                            },
+                            {
+                                name: 'Mar',
+                                y:  @ViewBag.LegalStatusCountdashboardData["Mar"][14],
+                                drilldown: 'Mar'
+                            },
+                            {
+                                name: 'Apr',
+                                y: @ViewBag.LegalStatusCountdashboardData["Apr"][14],
+                                drilldown: 'Apr'
+                            },
+                            {
+                                name: 'May',
+                                y: @ViewBag.LegalStatusCountdashboardData["May"][14],
+                                drilldown: 'May'
+                            },
+                            {
+                                name: 'June',
+                                y:  @ViewBag.LegalStatusCountdashboardData["Jun"][14],
+                                drilldown: 'June'
+                            },
+                            {
+                                name: 'Jul',
+                                y: @ViewBag.LegalStatusCountdashboardData["Jul"][14],
+                                drilldown: 'Jul'
+                            },
+                            {
+                                name: 'Aug',
+                                y: @ViewBag.LegalStatusCountdashboardData["Aug"][14],
+                                drilldown: 'Aug'
+                            },
+                            {
+                                name: 'Sep',
+                                y: @ViewBag.LegalStatusCountdashboardData["Sep"][14],
+                                drilldown: 'Sep'
+                            },
+                            {
+                                name: 'Oct',
+                                y: @ViewBag.LegalStatusCountdashboardData["Oct"][14],
+                                drilldown: 'Oct'
+                            },
+                            {
+                                name: 'Nov',
+                                y: @ViewBag.LegalStatusCountdashboardData["Nov"][14],
+                                drilldown: 'Nov'
+                            },
+                            {
+                                name: 'Dec',
+                                y: @ViewBag.LegalStatusCountdashboardData["Dec"][14],
+                                drilldown: 'Dec'
+                            }
+                        ]
+                    }
+                ],
+                drilldown: {
+                    breadcrumbs: {
+                        position: {
+                            align: 'right'
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Jan',
+                            id: 'Jan',
+                            data: [
+                                [ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Jan"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Feb',
+                            id: 'Feb',
+                            data: [
+                             	[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Feb"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Mar',
+                            id: 'Mar',
+                            data: [
+                                								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Mar"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Apr',
+                            id: 'Apr',
+                            data: [
+                               								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Apr"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'May',
+                            id: 'May',
+                            data: [
+                                								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["May"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'June',
+                            id: 'June',
+                            data: [
+                                								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Jun"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Jul',
+                            id: 'Jul',
+                            data: [
+                               								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Jul"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Aug',
+                            id: 'Aug',
+                            data: [
+                               								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Aug"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Sep',
+                            id: 'Sep',
+                            data: [
+                               								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Sep"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Oct',
+                            id: 'Oct',
+                            data: [
+                               	[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Oct"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Nov',
+                            id: 'Nov',
+                            data: [
+                               								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Nov"][13]
+                                ]
+                            ]
+                        },
+                        {
+                            name: 'Dec',
+                            id: 'Dec',
+                            data: [
+                                								[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][0]
+                                ],
+                                ["TN_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][1]
+                                ],
+                                ["H1-B_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][2]
+                                ],[ "L1_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][3]
+                                ],[ "E3_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][4]
+                                ],[ "Other_Visa",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][5]
+                                ],[ "GC-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][6]
+                                ],[ "TPS_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][7]
+                                ],[ "H4-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][8]
+                                ],[ "L2-EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][9]
+                                ],[ "Asylum_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][10]
+                                ],[ "Other_EAD",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][11]
+                                ],[ "Eligible_to_work_in_the_US",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][12]
+                                ],[ "US_Citizen",
+                                  @ViewBag.LegalStatusCountdashboardData["Dec"][13]
+                                ]
+
+                            ]
+                        }
+                    ]
+                }
+            });
+
+            function requestDatals() {
+                $.ajax({
+                    url: "@Url.Action("LegalStatusData", "Admin")",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        chart.series[0].data = data;
+                    },
+                    cache: false
+                });
+            }
+        })
+
+            </script>
+        </div>
+    </div>
+    
 </body>

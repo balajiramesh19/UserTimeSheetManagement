@@ -45,9 +45,11 @@ namespace WebTimeSheetManagement.Controllers
                 var datadashboard = _ITimeSheet.GetDashboardDataByID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
                 ViewBag.DashboardData = datadashboard;
                 var adminCount = _ICacheManager.Get<object>("AdminCount");
-                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
-                var legalStatusCountdashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
+                var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
+                var LegalStatusCountdashboardData = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
 
+                ViewBag.StatusCountdashboard = statusCountdashboard;
+                ViewBag.LegalStatusCountdashboardData = LegalStatusCountdashboardData;
                 if (adminCount == null)
                 {
                     var admincount = _IUsers.GetTotalAdminsCount();
@@ -99,7 +101,19 @@ namespace WebTimeSheetManagement.Controllers
             ViewBag.DashboardData = datadashboard;
             return View();
         }
+        public ActionResult StatusData()
+        {
+            var statusCountdashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
+            ViewBag.statusCountdashboard = statusCountdashboard;
+            return View();
+        }
 
+        public ActionResult LegalStatusData()
+        {
+            var LegalStatusCountdashboardData = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["SuperAdmin"]), "SuperAdminUser");
+            ViewBag.LegalStatusCountdashboardData = LegalStatusCountdashboardData;
+            return View();
+        }
 
 
         [HttpGet]
@@ -236,19 +250,5 @@ namespace WebTimeSheetManagement.Controllers
                 throw;
             }
         }
-        public ActionResult StatusData()
-        {
-            var datadashboard = _ITimeSheet.GetDashboardStatusDataByID(Convert.ToString(Session["AdminUser"]));
-            ViewBag.DashboardData = datadashboard;
-            return View();
-        }
-
-        public ActionResult LegalStatusData()
-        {
-            var datadashboard = _ITimeSheet.GetDashboardLegalStatusDataByAdminID(Convert.ToString(Session["AdminUser"]));
-            ViewBag.DashboardData = datadashboard;
-            return View();
-        }
-
     }
 }

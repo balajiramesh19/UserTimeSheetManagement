@@ -31,9 +31,9 @@ namespace WebTimeSheetManagement.Interface
 
         Dictionary<string, List<string>> GetDashboardDataByID(string AdminID,string Role);
 
-        Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID);
+        Dictionary<string, List<string>> GetDashboardStatusDataByID(string AdminID, string Role);
 
-        Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID);
+        Dictionary<string, List<string>> GetDashboardLegalStatusDataByAdminID(string AdminID, string Role);
         IQueryable<TimeSheetMasterView> ShowAllApprovedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllRejectTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
         IQueryable<TimeSheetMasterView> ShowAllSubmittedTimeSheet(string sortColumn, string sortColumnDir, string Search, int UserID);
