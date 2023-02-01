@@ -1366,8 +1366,8 @@ button, input, select, textarea {
 }
 
 a {
-    color: white;
-    text-decoration: none
+    text-decoration: none;
+    color:lightpink
 }
 
     a:focus, a:hover {
@@ -5870,6 +5870,7 @@ a.list-group-item-danger, button.list-group-item-danger {
 }
 
 .panel-body {
+    color:black;
     padding: 15px
 }
 
@@ -6049,7 +6050,7 @@ a.list-group-item-danger, button.list-group-item-danger {
 }
 
     .panel-default > .panel-heading {
-        color: #333;
+        color: white;
         background-color: #4c2b44;
         border-color: #ddd
     }

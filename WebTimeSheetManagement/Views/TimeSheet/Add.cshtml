@@ -34,12 +34,12 @@
 </style>
 
 <h4 class="page-header " style="color:ivory">Fill TimeSheets</h4>
-@using (Html.BeginForm("Add1", "TimeSheet", FormMethod.Post, new {  enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Add", "TimeSheet", FormMethod.Post, new {  enctype = "multipart/form-data" }))
 {
    
     <div class="row" style="color:ivory">
         <div style="margin-top:10px;"></div>
-        @using (Html.BeginForm("Add1", "TimeSheet"))
+        @using (Html.BeginForm("Add", "TimeSheet"))
         {
             @Html.AntiForgeryToken()
 
