@@ -119,7 +119,9 @@ namespace WebTimeSheetManagement.Controllers
         [HttpGet]
         public ActionResult CreateAdmin()
         {
-            return View(new Registration());
+            Registration reg = new Registration();
+            reg.LegalStatusList = _IRegistration.GetAllLegalStatusList();
+            return View(reg);
         }
 
         [HttpPost]
