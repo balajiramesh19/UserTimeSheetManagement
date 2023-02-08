@@ -13,5 +13,10 @@ namespace WebTimeSheetManagement.Models
         public string DataPeriod { get; set; }
 
         public int HoursLogged { get; set; }
+
+        public string ClientName { get; set; }
+
+        public string LegalStatus  { get; set; }
+        
     }
 }
